@@ -1,4 +1,3 @@
-import { AnnouncementBar } from "@/components/storefront/announcement-bar";
 import { Header } from "@/components/storefront/header";
 import { Footer } from "@/components/storefront/footer";
 
@@ -8,8 +7,7 @@ export default function StorefrontLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-obsidian text-sand-100">
-      <AnnouncementBar />
+    <div className="min-h-screen flex flex-col bg-obsidian text-sand-100 overflow-x-hidden selection:bg-gold-500 selection:text-black">
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

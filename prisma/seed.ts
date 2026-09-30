@@ -86,7 +86,7 @@ async function main() {
     },
   });
 
-  const supportUser = await prisma.adminUser.create({
+  await prisma.adminUser.create({
     data: {
       email: "support@velora-ateliers.com",
       passwordHash: supportPassword,
@@ -119,7 +119,7 @@ async function main() {
     },
   });
 
-  const standardCustomer = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email: "client@mayfair-advisors.co.uk",
       passwordHash: clientPassword,
@@ -176,7 +176,7 @@ async function main() {
       name: "Haute Horlogerie",
       slug: "haute-horlogerie",
       description: "Mechanical complications hand-crafted by master watchmakers in Geneva.",
-      imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=85",
+      imageUrl: "/images/velora-hero-editorial.jpg",
     },
   });
 
@@ -189,7 +189,7 @@ async function main() {
     },
   });
 
-  const catAccessories = await prisma.category.create({
+  await prisma.category.create({
     data: {
       name: "Atelier Accessories",
       slug: "atelier-accessories",
@@ -197,7 +197,37 @@ async function main() {
     },
   });
 
-  // 5. Create Collections
+  // 5. Create Core Collections Required by Prompt: SIGNATURE, NOIR, CLASSIC
+  const colSignature = await prisma.collection.create({
+    data: {
+      name: "SIGNATURE",
+      slug: "signature",
+      description: "The definitive archetype of modern horological restraint and mechanical purity.",
+      bannerUrl: "/images/velora-hero-editorial.jpg",
+      featured: true,
+    },
+  });
+
+  const colNoir = await prisma.collection.create({
+    data: {
+      name: "NOIR",
+      slug: "noir",
+      description: "Monochromatic mastery forged in DLC-coated titanium and shadowed ruthenium.",
+      bannerUrl: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1600&q=85",
+      featured: true,
+    },
+  });
+
+  const colClassic = await prisma.collection.create({
+    data: {
+      name: "CLASSIC",
+      slug: "classic",
+      description: "Enduring proportions, Grand Feu enamel, and heritage complications refined for eternity.",
+      bannerUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1600&q=85",
+      featured: true,
+    },
+  });
+
   const colCelestial = await prisma.collection.create({
     data: {
       name: "The Celestial Complications",
@@ -219,6 +249,82 @@ async function main() {
   });
 
   // 6. Create Products with Variants, Images, and Inventory
+
+  // Product 0: VELORA SIGNATURE 01 (Flagship Centered Watch)
+  const watchSignature01 = await prisma.product.create({
+    data: {
+      name: "VELORA SIGNATURE 01",
+      slug: "velora-signature-01",
+      sku: "VEL-SIG-01",
+      shortDescription: "Automatic movement, sapphire crystal, and 316L stainless steel case.",
+      description:
+        "The VELORA SIGNATURE 01 represents the archetype of contemporary horological restraint. Driven by our in-house automatic calibre VA-100 with 68 hours of power reserve. Features a double-domed scratch-resistant sapphire crystal with five layers of anti-reflective coating, surgically machined 316L stainless steel case, an opaline dial with diamond-polished dauphine hands, and an open balance aperture.",
+      price: new Prisma.Decimal("12500.00"),
+      compareAtPrice: new Prisma.Decimal("14000.00"),
+      cost: new Prisma.Decimal("4200.00"),
+      categoryId: catHorlogerie.id,
+      tags: ["Automatic", "Sapphire", "Stainless Steel", "Signature", "Iconic"],
+      status: ProductStatus.PUBLISHED,
+      featured: true,
+      seoTitle: "VELORA SIGNATURE 01 | Automatic Luxury Timepiece in Stainless Steel",
+      seoDescription: "Discover the VELORA SIGNATURE 01. Automatic movement, double-domed sapphire crystal, and 316L stainless steel.",
+      movement: "Automatic Calibre VA-100 (In-House)",
+      powerReserve: "68 Hours",
+      caseMaterial: "316L Stainless Steel",
+      caseDiameter: "39.5 mm",
+      waterResistance: "50m / 5 ATM",
+      dialColor: "Opaline Ivory with Gold Facets",
+      strapMaterial: "Full-Grain Horween Noir Alligator",
+      collections: {
+        create: [
+          { collectionId: colSignature.id, displayOrder: 1 },
+          { collectionId: colClassic.id, displayOrder: 1 },
+        ],
+      },
+      images: {
+        create: [
+          {
+            url: "/images/velora-signature-01.jpg",
+            altText: "VELORA SIGNATURE 01 Centered Dial View",
+            sortOrder: 1,
+            isPrimary: true,
+          },
+          {
+            url: "/images/velora-hero-editorial.jpg",
+            altText: "VELORA SIGNATURE 01 On-Wrist Editorial",
+            sortOrder: 2,
+            isPrimary: false,
+          },
+        ],
+      },
+      variants: {
+        create: [
+          {
+            sku: "VEL-SIG-01-BLK",
+            title: "Horween Noir Alligator Strap",
+            price: new Prisma.Decimal("12500.00"),
+            stock: 8,
+            attributes: { strap: "Horween Noir", buckle: "Stainless Steel Deployant" },
+          },
+          {
+            sku: "VEL-SIG-01-BRN",
+            title: "Espresso Suede Calfskin Strap",
+            price: new Prisma.Decimal("12500.00"),
+            stock: 5,
+            attributes: { strap: "Espresso Suede", buckle: "Stainless Steel Deployant" },
+          },
+        ],
+      },
+      inventory: {
+        create: {
+          quantity: 13,
+          reserved: 0,
+          warehouseLocation: "Geneva Vault Alpha-1",
+        },
+      },
+    },
+  });
+
   // Product 1: VELORA Chrono-Astral I
   const watch1 = await prisma.product.create({
     data: {
@@ -245,69 +351,44 @@ async function main() {
       dialColor: "Anthracite & Brushed Ruthenium",
       strapMaterial: "Horween Noir Alligator",
       collections: {
-        create: [{ collectionId: colCelestial.id, displayOrder: 1 }],
+        create: [
+          { collectionId: colCelestial.id, displayOrder: 1 },
+          { collectionId: colSignature.id, displayOrder: 2 },
+        ],
       },
       images: {
         create: [
           {
-            url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=85",
+            url: "/images/velora-hero-editorial.jpg",
             altText: "VELORA Chrono-Astral I Dial View",
             sortOrder: 1,
             isPrimary: true,
           },
           {
-            url: "https://images.unsplash.com/photo-1547996160-71dfabb19283?auto=format&fit=crop&w=1200&q=85",
-            altText: "VELORA Chrono-Astral I Movement Detail",
+            url: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Chrono-Astral I Studio Shot",
             sortOrder: 2,
             isPrimary: false,
           },
         ],
       },
-    },
-  });
-
-  // Variants for Product 1
-  const v1 = await prisma.productVariant.create({
-    data: {
-      productId: watch1.id,
-      sku: "VEL-CHRONO-01-BLK",
-      title: "Horween Noir Leather Strap",
-      price: new Prisma.Decimal("29500.00"),
-      stock: 4,
-      attributes: { strap: "Horween Noir", clasp: "Titanium Deployant" },
-    },
-  });
-
-  const v2 = await prisma.productVariant.create({
-    data: {
-      productId: watch1.id,
-      sku: "VEL-CHRONO-01-BRN",
-      title: "Saddle Tan Alligator Strap",
-      price: new Prisma.Decimal("29800.00"),
-      stock: 3,
-      attributes: { strap: "Saddle Tan", clasp: "Titanium Deployant" },
-    },
-  });
-
-  // Inventory for watch 1
-  const inv1 = await prisma.inventory.create({
-    data: {
-      productId: watch1.id,
-      quantity: 7,
-      reserved: 1,
-      warehouseLocation: "Geneva Vault Alpha-1",
-      transactions: {
+      variants: {
         create: [
           {
-            type: InventoryTransactionType.PURCHASE_RECEIPT,
-            quantity: 7,
-            previousQuantity: 0,
-            newQuantity: 7,
-            reference: "ATELIER-PO-2026-01",
-            adminUserId: adminUser.id,
-            notes: "Initial atelier assembly completion.",
+            sku: "VEL-CHRONO-01-BLK",
+            title: "Horween Noir Leather Strap",
+            price: new Prisma.Decimal("29500.00"),
+            stock: 4,
+            attributes: { strap: "Horween Noir", clasp: "Titanium Deployant" },
           },
         ],
+      },
+      inventory: {
+        create: {
+          quantity: 7,
+          reserved: 1,
+          warehouseLocation: "Geneva Vault Alpha-1",
+        },
       },
     },
   });
@@ -337,7 +418,10 @@ async function main() {
       dialColor: "Ivory Grand Feu Enamel",
       strapMaterial: "Dark Havana Alligator",
       collections: {
-        create: [{ collectionId: colCelestial.id, displayOrder: 2 }],
+        create: [
+          { collectionId: colClassic.id, displayOrder: 2 },
+          { collectionId: colCelestial.id, displayOrder: 2 },
+        ],
       },
       images: {
         create: [
@@ -358,7 +442,53 @@ async function main() {
     },
   });
 
-  // Product 3: VELORA Nocturne Absolu Extrait
+  // Product 3: VELORA Noir Chronomètre
+  await prisma.product.create({
+    data: {
+      name: "VELORA Noir Chronomètre",
+      slug: "velora-noir-chronometre",
+      sku: "VEL-NOIR-03",
+      shortDescription: "Matte black DLC-coated titanium chronometer with shadowed ruthenium numerals.",
+      description:
+        "The embodiment of modern stealth. Forged in micro-peened titanium with a diamond-like carbon (DLC) treatment. Certified Swiss Chronometer caliber VA-330 with silicon escapement wheel.",
+      price: new Prisma.Decimal("18200.00"),
+      cost: new Prisma.Decimal("6200.00"),
+      categoryId: catHorlogerie.id,
+      tags: ["Noir", "DLC Titanium", "Chronometer", "Matte Black"],
+      status: ProductStatus.PUBLISHED,
+      featured: true,
+      seoTitle: "VELORA Noir Chronomètre | DLC Titanium Swiss Chronometer",
+      seoDescription: "Matte black DLC-coated titanium chronometer with shadowed ruthenium numerals.",
+      movement: "Automatic Chronometer Calibre VA-330",
+      powerReserve: "70 Hours",
+      caseMaterial: "DLC-Coated Grade 5 Titanium",
+      caseDiameter: "40.5 mm",
+      waterResistance: "100m / 10 ATM",
+      dialColor: "Shadow Ruthenium & Matte Onyx",
+      strapMaterial: "Textured FKM Noir Rubber with Alligator Inlay",
+      collections: {
+        create: [{ collectionId: colNoir.id, displayOrder: 1 }],
+      },
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Noir Chronomètre",
+            sortOrder: 1,
+            isPrimary: true,
+          },
+        ],
+      },
+      inventory: {
+        create: {
+          quantity: 5,
+          warehouseLocation: "Geneva Vault Alpha-3",
+        },
+      },
+    },
+  });
+
+  // Product 4: VELORA Nocturne Absolu Extrait
   const parfum1 = await prisma.product.create({
     data: {
       name: "VELORA Nocturne Absolu Extrait",
@@ -416,8 +546,8 @@ async function main() {
     },
   });
 
-  // Product 4: VELORA Santal Royal Extrait
-  const parfum2 = await prisma.product.create({
+  // Product 5: VELORA Santal Royal Extrait
+  await prisma.product.create({
     data: {
       name: "VELORA Santal Royal Extrait",
       slug: "velora-santal-royal-extrait",
@@ -478,9 +608,8 @@ async function main() {
         create: [
           {
             productId: watch1.id,
-            variantId: v1.id,
             productName: "VELORA Chrono-Astral I",
-            productSku: v1.sku,
+            productSku: "VEL-CHRONO-01",
             unitPrice: new Prisma.Decimal("29500.00"),
             quantity: 1,
             total: new Prisma.Decimal("29500.00"),
@@ -515,7 +644,7 @@ async function main() {
   });
 
   // 8. Create Coupon
-  const coupon = await prisma.coupon.create({
+  await prisma.coupon.create({
     data: {
       code: "VELORA10",
       description: "Inaugural collector private salon 10% privilege",
@@ -532,11 +661,11 @@ async function main() {
   await prisma.review.create({
     data: {
       userId: vipCustomer.id,
-      productId: watch1.id,
+      productId: watchSignature01.id,
       rating: 5,
-      title: "Horological Architecture at Its Zenith",
+      title: "Horological Architecture at Its Absolute Zenith",
       comment:
-        "The hand-beveled anglage and responsiveness of the flyback mechanism surpass my highest expectations. A truly distinctive modern heirloom.",
+        "The hand-beveled anglage, balanced open heart exhibition, and tactile crown fluting on the Signature 01 exceed every standard. A modern heirloom of quiet majesty.",
       isVerifiedPurchase: true,
       isPublished: true,
     },
@@ -548,6 +677,7 @@ async function main() {
       userId: vipCustomer.id,
       items: {
         create: [
+          { productId: watchSignature01.id },
           { productId: watch2.id },
           { productId: parfum1.id },
         ],
@@ -555,21 +685,49 @@ async function main() {
     },
   });
 
-  // 11. Create Journal Post
-  await prisma.journalPost.create({
-    data: {
-      title: "The Architecture of the Flyback Calibre VA-920",
-      slug: "architecture-of-the-flyback-calibre-va-920",
-      excerpt:
-        "An intimate look into how our Geneva micro-engineers carved three-dimensional titanium bridges to maximize chronometric stability.",
-      content:
-        "Mechanical horology is the art of mastering both entropy and geometry. In developing the VA-920, the goal was not simply high-frequency chronograph tracking, but the visual manifestation of mechanical depth...",
-      coverImageUrl: "https://images.unsplash.com/photo-1547996160-71dfabb19283?auto=format&fit=crop&w=1200&q=85",
-      category: "Horology Insights",
-      authorId: editorUser.id,
-      isPublished: true,
-      publishedAt: new Date(),
-    },
+  // 11. Create 3 Rich Journal Posts
+  await prisma.journalPost.createMany({
+    data: [
+      {
+        title: "The Architecture of the Flyback Calibre VA-920",
+        slug: "architecture-of-the-flyback-calibre-va-920",
+        excerpt:
+          "An intimate exploration into how our Geneva micro-engineers sculpted three-dimensional titanium bridges to maximize chronometric stability.",
+        content:
+          "Mechanical horology is the art of mastering entropy through geometry. In developing the VA-920, the goal was not simply high-frequency chronograph tracking, but the visual manifestation of mechanical depth...",
+        coverImageUrl: "https://images.unsplash.com/photo-1547996160-71dfabb19283?auto=format&fit=crop&w=1200&q=85",
+        category: "Horology Insights",
+        authorId: editorUser.id,
+        isPublished: true,
+        publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3),
+      },
+      {
+        title: "The Alchemy of Grasse: Macerating Rare Extraits",
+        slug: "alchemy-of-grasse-macerating-rare-extraits",
+        excerpt:
+          "How 180 days of slow maceration in seasoned French oak barrels transforms raw agarwood and orris butter into liquid velvet.",
+        content:
+          "True extraction cannot be hurried. In our private laboratory nestled in the foothills of Grasse, our master noses allow natural distillates to rest undisturbed through seasonal changes...",
+        coverImageUrl: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85",
+        category: "Haute Parfumerie",
+        authorId: editorUser.id,
+        isPublished: true,
+        publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
+      },
+      {
+        title: "The Geometry of Restraint: Defining Contemporary Horology",
+        slug: "geometry-of-restraint-the-velora-aesthetic",
+        excerpt:
+          "Why subtracting superfluous ornament reveals the purest harmony between hand-brushed titanium and opaline dials.",
+        content:
+          "To design a luxury watch today is to resist noise. At Maison Velora, we begin not with what can be added, but what can be stripped away until only unassailable proportion remains...",
+        coverImageUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
+        category: "Maison Philosophy",
+        authorId: editorUser.id,
+        isPublished: true,
+        publishedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 14),
+      },
+    ],
   });
 
   // 12. Create Site Settings
@@ -582,7 +740,259 @@ async function main() {
     ],
   });
 
-  // 13. Create Notification for VIP Customer
+  // 13. Create All 12 CMS-Controlled Homepage Sections (Matching User Specifications)
+  await prisma.homepageSection.createMany({
+    data: [
+      {
+        name: "Section 1: Hero Showcase",
+        sectionKey: "hero_main",
+        title: "TIME, REFINED.",
+        subtitle: "Contemporary timepieces created for moments that matter.",
+        sortOrder: 1,
+        isActive: true,
+        content: {
+          badge: "Maison Velora Ateliers Geneva",
+          ctaText: "DISCOVER THE COLLECTION",
+          ctaLink: "/collections/signature",
+          secondaryCtaText: "EXPLORE WATCHES",
+          secondaryCtaLink: "/watches",
+          bgImageUrl: "/images/velora-hero-editorial.jpg",
+        },
+      },
+      {
+        name: "Section 2: Featured Watch",
+        sectionKey: "featured_watch",
+        title: "THE SIGNATURE",
+        subtitle:
+          "An uncompromising study in mechanical balance. Forged in surgical 316L stainless steel with hand-beveled sapphire crystal, driven by our in-house automatic caliber VA-100.",
+        sortOrder: 2,
+        isActive: true,
+        content: {
+          productSlug: "velora-signature-01",
+          ctaText: "DISCOVER THE WATCH",
+          ctaLink: "/products/velora-signature-01",
+          tagline: "Flagship Edition No. 01",
+        },
+      },
+      {
+        name: "Section 3: Collection Story",
+        sectionKey: "collection_story",
+        title: "DESIGNED BEYOND THE MOMENT.",
+        subtitle:
+          "Where timeless horological discipline transcends fleeting trends. Every gear, bridge, and balance wheel is hand-beveled and finished in our Geneva workshop to endure for generations.",
+        sortOrder: 3,
+        isActive: true,
+        content: {
+          bgImageUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=2000&q=85",
+          ctaText: "EXPLORE OUR ATELIER",
+          ctaLink: "/about",
+        },
+      },
+      {
+        name: "Section 4: Collections",
+        sectionKey: "collections_grid",
+        title: "THE COLLECTIONS",
+        subtitle: "Three singular expressions of form, complication, and material sovereignty.",
+        sortOrder: 4,
+        isActive: true,
+        content: {
+          collectionSlugs: ["signature", "noir", "classic"],
+        },
+      },
+      {
+        name: "Section 5: Watch + Fragrance Split",
+        sectionKey: "watch_fragrance_split",
+        title: "TIME & SCENT",
+        subtitle: "Two distinct sensory realms sharing the same unyielding standard of perfection.",
+        sortOrder: 5,
+        isActive: true,
+        content: {
+          timeTitle: "TIME",
+          timeSubtitle: "Proprietary mechanical calibers assembled by master horologists in Geneva.",
+          timeLink: "/collections/signature",
+          timeImageUrl: "/images/velora-hero-editorial.jpg",
+          scentTitle: "SCENT",
+          scentSubtitle: "35% pure parfum extraits matured in Grasse oak vats.",
+          scentLink: "/collections/nocturne-prive",
+          scentImageUrl: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1600&q=85",
+        },
+      },
+      {
+        name: "Section 6: Signature Product",
+        sectionKey: "signature_product",
+        title: "VELORA SIGNATURE 01",
+        subtitle: "Contemporary timepieces created for moments that matter. The archetype of modern Swiss precision.",
+        sortOrder: 6,
+        isActive: true,
+        content: {
+          productSlug: "velora-signature-01",
+          features: [
+            "Automatic movement",
+            "Sapphire crystal",
+            "Stainless steel",
+          ],
+          ctaText: "DISCOVER",
+          ctaLink: "/products/velora-signature-01",
+          imageUrl: "/images/velora-signature-01.jpg",
+        },
+      },
+      {
+        name: "Section 7: Craftsmanship",
+        sectionKey: "craftsmanship_gallery",
+        title: "MICROMECHANICAL EXCELLENCE",
+        subtitle: "Every facet inspected at forty-times magnification before leaving our benches.",
+        sortOrder: 7,
+        isActive: true,
+        content: {
+          details: [
+            {
+              key: "dial",
+              title: "The Dial",
+              category: "DIAL FINISHING",
+              description: "Opaline surface treated with hand-applied faceted markers and micro-grooved track.",
+              imageUrl: "/images/velora-signature-01.jpg",
+            },
+            {
+              key: "hands",
+              title: "The Hands",
+              category: "HANDS CRAFT",
+              description: "Diamond-cut dauphine hands, mirror-beveled at 45° to catch fleeting ambient light.",
+              imageUrl: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=85",
+            },
+            {
+              key: "crown",
+              title: "The Crown",
+              category: "CROWN & SEAL",
+              description: "Double-fluted knurled crown with laser-engraved Maison monogram and dual gasket sealing.",
+              imageUrl: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=85",
+            },
+            {
+              key: "case",
+              title: "The Case",
+              category: "CASE ARCHITECTURE",
+              description: "Surgically forged 316L stainless steel with alternating brushed flanks and mirror-polished bezel.",
+              imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85",
+            },
+            {
+              key: "strap",
+              title: "The Strap",
+              category: "STRAP LEATHER",
+              description: "Hand-stitched Horween Noir alligator leather with hypoallergenic vegetal calfskin lining.",
+              imageUrl: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=800&q=85",
+            },
+            {
+              key: "clasp",
+              title: "The Clasp",
+              category: "DEPLOYANT CLASP",
+              description: "Solid stainless steel butterfly deployant mechanism with dual micro-sprung safety release triggers.",
+              imageUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=85",
+            },
+          ],
+        },
+      },
+      {
+        name: "Section 8: Fragrance Editorial",
+        sectionKey: "fragrance_editorial",
+        title: "A SCENT THAT BECOMES YOUR SIGNATURE.",
+        subtitle:
+          "Compounded in small batches in Grasse, France. Formulated with wild orris butter, aged Cambodian agarwood, and rare ambers.",
+        sortOrder: 8,
+        isActive: true,
+        content: {
+          ctaText: "EXPLORE HIGH PERFUMERY",
+          ctaLink: "/fragrances",
+          bgImageUrl: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=2000&q=85",
+        },
+      },
+      {
+        name: "Section 9: Gifting & Bespoke Packaging",
+        sectionKey: "gifting_packaging",
+        title: "MADE TO BE REMEMBERED.",
+        subtitle:
+          "Each acquisition arrives in our bespoke American walnut presentation vault with obsidian leather trim, wax-sealed certificate, and personalized hand-lettering.",
+        sortOrder: 9,
+        isActive: true,
+        content: {
+          ctaText: "EXPLORE BESPOKE GIFTING",
+          ctaLink: "/concierge",
+          imageUrl: "/images/velora-gifting-packaging.jpg",
+        },
+      },
+      {
+        name: "Section 10: Brand Story",
+        sectionKey: "brand_story",
+        title: "BORN FROM PATIENCE, DRIVEN BY DISCIPLINE.",
+        subtitle:
+          "We do not believe in mass creation. From the hand-finishing of bridges in Geneva to the patient aging of extraits in Grasse, our work honors time itself.",
+        sortOrder: 10,
+        isActive: true,
+        content: {
+          quote: "In an accelerated world, true luxury is the quiet confidence of objects crafted without compromise.",
+          author: "The Velora Atelier Masters",
+          ctaText: "DISCOVER THE MAISON",
+          ctaLink: "/about",
+          location: "Geneva & Grasse",
+        },
+      },
+      {
+        name: "Section 11: Journal Gazette",
+        sectionKey: "journal_preview",
+        title: "THE JOURNAL",
+        subtitle: "Chronicles of horological innovation, artisanal techniques, and material discoveries.",
+        sortOrder: 11,
+        isActive: true,
+        content: {
+          ctaText: "VIEW ALL ARTICLES",
+          ctaLink: "/journal",
+          limit: 3,
+        },
+      },
+      {
+        name: "Section 12: Newsletter",
+        sectionKey: "newsletter_section",
+        title: "ENTER THE WORLD OF VELORA.",
+        subtitle: "Subscribe to receive confidential allocations, private salon invitations, and quarterly horological journals.",
+        sortOrder: 12,
+        isActive: true,
+        content: {
+          ctaText: "REQUEST INVITATION",
+          placeholder: "Enter your email address...",
+        },
+      },
+    ],
+  });
+
+  // 14. Create Media Vault Assets
+  await prisma.media.createMany({
+    data: [
+      {
+        filename: "velora-hero-editorial.jpg",
+        url: "/images/velora-hero-editorial.jpg",
+        mimeType: "image/jpeg",
+        sizeInBytes: 658509,
+        altText: "VELORA Contemporary Timepieces Hero Shot",
+        folder: "homepage",
+      },
+      {
+        filename: "velora-signature-01.jpg",
+        url: "/images/velora-signature-01.jpg",
+        mimeType: "image/jpeg",
+        sizeInBytes: 663423,
+        altText: "VELORA SIGNATURE 01 Centered View",
+        folder: "products",
+      },
+      {
+        filename: "velora-gifting-packaging.jpg",
+        url: "/images/velora-gifting-packaging.jpg",
+        mimeType: "image/jpeg",
+        sizeInBytes: 807297,
+        altText: "VELORA Bespoke Walnut and Obsidian Presentation Box",
+        folder: "gifting",
+      },
+    ],
+  });
+
+  // 15. Create Notification for VIP Customer
   await prisma.notification.create({
     data: {
       userId: vipCustomer.id,

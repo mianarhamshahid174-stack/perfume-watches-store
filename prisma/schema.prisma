@@ -72,6 +72,7 @@ enum AddressType {
 enum DiscountType {
   PERCENTAGE
   FIXED_AMOUNT
+  FREE_SHIPPING
 }
 
 enum InventoryTransactionType {
@@ -170,18 +171,23 @@ model Category {
 }
 
 model Collection {
-  id          String              @id @default(cuid())
-  name        String
-  slug        String              @unique
-  description String?             @db.Text
-  bannerUrl   String?
-  featured    Boolean             @default(false)
-  products    ProductCollection[]
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @updatedAt
+  id             String              @id @default(cuid())
+  name           String
+  slug           String              @unique
+  description    String?             @db.Text
+  heroImage      String?
+  bannerUrl      String?
+  featured       Boolean             @default(false)
+  isActive       Boolean             @default(true)
+  seoTitle       String?
+  seoDescription String?
+  products       ProductCollection[]
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
 
   @@index([slug])
   @@index([featured])
+  @@index([isActive])
 }
 
 model ProductCollection {
@@ -531,6 +537,9 @@ model Coupon {
   discountValue     Decimal       @db.Decimal(12, 2)
   minOrderAmount    Decimal?      @db.Decimal(12, 2)
   maxDiscountAmount Decimal?      @db.Decimal(12, 2)
+  targetType        String        @default("ALL") // ALL, PRODUCTS, COLLECTIONS
+  productIds        String[]      @default([])
+  collectionIds     String[]      @default([])
   startsAt          DateTime      @default(now())
   expiresAt         DateTime?
   usageLimit        Int?
@@ -572,12 +581,15 @@ model Review {
   comment            String   @db.Text
   isVerifiedPurchase Boolean  @default(false)
   isPublished        Boolean  @default(false)
+  isFeatured         Boolean  @default(false)
+  status             String   @default("PENDING") // PENDING, APPROVED, REJECTED, HIDDEN
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
   @@index([productId])
   @@index([userId])
   @@index([isPublished])
+  @@index([status])
 }
 
 // -----------------------------------------------------------------------------

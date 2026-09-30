@@ -5,8 +5,10 @@ import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 
 export interface DialogProps {
-  isOpen: boolean;
-  onClose: () => void;
+  isOpen?: boolean;
+  open?: boolean;
+  onClose?: () => void;
+  onOpenChange?: (open: boolean) => void;
   title?: string;
   description?: string;
   children: React.ReactNode;
@@ -15,17 +17,26 @@ export interface DialogProps {
 
 export function Dialog({
   isOpen,
+  open,
   onClose,
+  onOpenChange,
   title,
   description,
   children,
   className,
 }: DialogProps) {
+  const isVisible = open !== undefined ? open : isOpen ?? false;
+
+  const handleClose = React.useCallback(() => {
+    if (onClose) onClose();
+    if (onOpenChange) onOpenChange(false);
+  }, [onClose, onOpenChange]);
+
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") handleClose();
     };
-    if (isOpen) {
+    if (isVisible) {
       document.body.style.overflow = "hidden";
       window.addEventListener("keydown", handleKeyDown);
     }
@@ -33,9 +44,9 @@ export function Dialog({
       document.body.style.overflow = "unset";
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen, onClose]);
+  }, [isVisible, handleClose]);
 
-  if (!isOpen) return null;
+  if (!isVisible) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

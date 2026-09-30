@@ -1,52 +1,66 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-serif), "Times New Roman", serif;
+  --font-serif: var(--font-serif), "Cormorant Garamond", "Times New Roman", serif;
   --font-sans: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-mono), monospace;
 
-  /* Luxury Noir & Obsidian */
+  /* Black & Obsidian */
   --color-obsidian: #080808;
-  --color-noir-950: #0d0d0f;
-  --color-noir-900: #121316;
-  --color-noir-850: #18191e;
-  --color-noir-800: #202228;
-  --color-noir-700: #2e313b;
-  --color-noir-600: #4b4f5e;
-  
-  /* Luxury Gold & Champagne Accents */
+  --color-noir: #0b0b0d;
+  --color-black: #050505;
+
+  /* Deep Charcoal */
+  --color-charcoal-950: #0f1013;
+  --color-charcoal-900: #15161a;
+  --color-charcoal-850: #1a1c22;
+  --color-charcoal-800: #22242b;
+  --color-charcoal-700: #2c2f38;
+  --color-charcoal-600: #424653;
+  --color-charcoal: #15161a;
+
+  /* Warm Ivory */
+  --color-ivory-50: #faf8f5;
+  --color-ivory-100: #f5f2eb;
+  --color-ivory-200: #efebe1;
+  --color-ivory-300: #e2dbcd;
+  --color-ivory-400: #c9bea9;
+  --color-ivory: #faf8f5;
+
+  /* Subtle Warm Metallic Accents (Champagne / Aged Brass / Gold) */
+  --color-metallic-light: #ebdcc6;
+  --color-metallic: #c5a880;
+  --color-metallic-brass: #bfa175;
+  --color-metallic-bronze: #9a7d52;
+  --color-metallic-dark: #705833;
   --color-gold-300: #e9d5a1;
   --color-gold-400: #d8b873;
   --color-gold-500: #c5a059;
   --color-gold-600: #a9823e;
-  --color-gold-700: #88652b;
 
-  /* Platinum & Silver Metallics */
-  --color-platinum-100: #f7f7f8;
-  --color-platinum-200: #edeef0;
-  --color-platinum-300: #dcdee2;
-  --color-platinum-400: #b5b8c0;
-  --color-platinum-500: #8c909c;
-
-  /* Subtle Warm Sand & Alabaster */
+  /* Muted Neutral Tones (Cashmere, Stone, Oyster, Slate) */
+  --color-neutral-oyster: #e7e2d9;
+  --color-neutral-cashmere: #d6d0c6;
+  --color-neutral-stone: #9e988f;
+  --color-neutral-slate: #736e67;
   --color-sand-50: #faf8f5;
   --color-sand-100: #f4efe6;
   --color-sand-200: #e8ded0;
-  --color-sand-800: #3f3930;
 
   /* Easing */
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-editorial: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 :root {
   --background: #080808;
-  --foreground: #f4efe6;
-  --surface: #121316;
-  --surface-hover: #18191e;
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --accent-gold: #c5a059;
-  --accent-gold-glow: rgba(197, 160, 89, 0.15);
+  --foreground: #faf8f5;
+  --surface: #15161a;
+  --surface-hover: #1a1c22;
+  --border-subtle: rgba(250, 248, 245, 0.08);
+  --border-strong: rgba(250, 248, 245, 0.18);
+  --accent-metallic: #c5a880;
+  --accent-metallic-glow: rgba(197, 168, 128, 0.18);
 }
 
 /* Base resets & typography */
@@ -64,59 +78,99 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Luxury typography utilities */
+/* Editorial Typography Utilities */
 .font-serif-luxury {
   font-family: var(--font-serif);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.font-sans-luxury {
+  font-family: var(--font-sans);
+  font-feature-settings: "cv02" 1, "cv03" 1, "cv04" 1;
+}
+
+.tracking-editorial {
+  letter-spacing: 0.18em;
 }
 
 .tracking-luxury {
-  letter-spacing: 0.22em;
+  letter-spacing: 0.25em;
 }
 
 .tracking-ultra {
-  letter-spacing: 0.35em;
+  letter-spacing: 0.38em;
 }
 
-/* Glassmorphic luxury effects */
+/* Luxury metallic gradient text & borders */
+.metallic-gradient-text {
+  background: linear-gradient(135deg, #f7ebd7 0%, #c5a880 50%, #9a7d52 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ivory-gradient-text {
+  background: linear-gradient(180deg, #ffffff 0%, #faf8f5 60%, #e2dbcd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glassmorphism Panels */
 .glass-panel {
-  background: rgba(18, 19, 22, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(21, 22, 26, 0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(250, 248, 245, 0.08);
 }
 
 .glass-panel-subtle {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(250, 248, 245, 0.03);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(250, 248, 245, 0.06);
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #f7ecd2 0%, #c5a059 50%, #9a7837 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.glass-panel-ivory {
+  background: rgba(250, 248, 245, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(26, 28, 34, 0.08);
 }
 
-.silver-gradient-text {
-  background: linear-gradient(135deg, #ffffff 0%, #c5c8d0 50%, #8d929f 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Image reveal clip path utilities */
+.clip-path-curtain {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Custom delicate scrollbars */
+.clip-path-curtain-revealed {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Delicate Luxury Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: #080808;
 }
 ::-webkit-scrollbar-thumb {
-  background: #252730;
-  border-radius: 3px;
+  background: #22242b;
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b3e4c;
+  background: #3b3e4a;
 }

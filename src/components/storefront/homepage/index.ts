@@ -1,0 +1,12 @@
+export { HeroSection } from "./hero-section";
+export { FeaturedWatchSection } from "./featured-watch-section";
+export { CollectionStorySection } from "./collection-story-section";
+export { CollectionsGridSection } from "./collections-grid-section";
+export { WatchFragranceSplitSection } from "./watch-fragrance-split-section";
+export { SignatureProductSection } from "./signature-product-section";
+export { CraftsmanshipGallerySection } from "./craftsmanship-gallery-section";
+export { FragranceEditorialSection } from "./fragrance-editorial-section";
+export { GiftingSection } from "./gifting-section";
+export { BrandStorySection } from "./brand-story-section";
+export { JournalPreviewSection } from "./journal-preview-section";
+export { NewsletterSection } from "./newsletter-section";

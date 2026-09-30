@@ -2,137 +2,509 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { STOREFRONT_NAV, BRAND } from "@/lib/constants";
-import { Search, ShoppingBag, User, Menu, X } from "lucide-react";
+import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Search,
+  ShoppingBag,
+  User,
+  Heart,
+  Menu,
+  X,
+  ChevronDown,
+  ArrowRight,
+  Phone,
+  Clock,
+  Compass,
+} from "lucide-react";
+import { BRAND, STOREFRONT_NAV, StorefrontNavItem } from "@/lib/constants";
 import { Container } from "@/components/ui/container";
+import { megaMenuVariants, LUXURY_EASE } from "@/lib/motion";
+import { Drawer } from "@/components/ui/drawer";
 
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = React.useState(false);
+  const [activeMegaMenu, setActiveMegaMenu] = React.useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [isCartOpen, setIsCartOpen] = React.useState(false);
+  const [mobileExpandedSection, setMobileExpandedSection] = React.useState<string | null>(null);
 
+  // Scroll listener for transparent-to-solid transition
   React.useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 25);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close menus on route change
+  React.useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setActiveMegaMenu(null);
+    setIsSearchOpen(false);
+  }, [pathname]);
+
+  const toggleMobileSection = (label: string) => {
+    setMobileExpandedSection((prev) => (prev === label ? null : label));
+  };
+
   return (
-    <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        isScrolled
-          ? "bg-obsidian/90 backdrop-blur-md border-b border-white/10 py-4 shadow-xl"
-          : "bg-obsidian/40 backdrop-blur-sm border-b border-white/5 py-6"
-      }`}
-    >
-      <Container size="wide">
-        <div className="flex items-center justify-between">
-          {/* Left: Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            {STOREFRONT_NAV.slice(0, 3).map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-[11px] font-sans font-medium tracking-luxury uppercase text-platinum-300 hover:text-gold-400 transition-colors duration-200"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 text-sand-50 hover:text-gold-400 transition-colors"
-            aria-label="Toggle Navigation"
-          >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-          </button>
-
-          {/* Center: Brand Identity Logo */}
-          <div className="text-center">
-            <Link href="/" className="inline-block group">
-              <span className="font-serif-luxury text-2xl sm:text-3xl font-light tracking-[0.25em] text-sand-50 group-hover:text-gold-300 transition-colors duration-300 block">
-                {BRAND.name}
-              </span>
-              <span className="text-[8px] font-sans tracking-[0.4em] uppercase text-platinum-500 block -mt-1 group-hover:text-gold-400/80 transition-colors">
-                Genève • Grasse
-              </span>
-            </Link>
-          </div>
-
-          {/* Right: Secondary Nav & Action Icons */}
-          <div className="flex items-center space-x-6 sm:space-x-7">
-            <nav className="hidden lg:flex items-center space-x-8">
-              {STOREFRONT_NAV.slice(3).map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-[11px] font-sans font-medium tracking-luxury uppercase text-platinum-300 hover:text-gold-400 transition-colors duration-200"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="flex items-center space-x-4 sm:space-x-5 text-platinum-300">
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500 ease-out ${
+          isScrolled
+            ? "bg-black/95 backdrop-blur-md border-b border-white/10 py-3.5 shadow-2xl"
+            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-transparent py-5"
+        }`}
+        onMouseLeave={() => setActiveMegaMenu(null)}
+      >
+        <Container size="wide">
+          <div className="flex items-center justify-between">
+            {/* Mobile Hamburger Button */}
+            <div className="flex items-center lg:hidden">
               <button
-                className="p-1.5 hover:text-gold-400 transition-colors cursor-pointer"
-                aria-label="Search Catalog"
+                type="button"
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="p-2 -ml-2 text-ivory hover:text-metallic transition-colors"
+                aria-label="Open Mobile Menu"
+              >
+                <Menu className="h-5 w-5" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="p-2 text-neutral-stone hover:text-ivory transition-colors"
+                aria-label="Search"
               >
                 <Search className="h-4 w-4" />
               </button>
+            </div>
 
+            {/* Desktop Left: Navigation Items */}
+            <nav className="hidden lg:flex items-center space-x-7">
+              {STOREFRONT_NAV.map((item) => (
+                <div
+                  key={item.label}
+                  className="relative py-2"
+                  onMouseEnter={() => {
+                    if (item.hasMegaMenu) setActiveMegaMenu(item.label);
+                    else setActiveMegaMenu(null);
+                  }}
+                >
+                  <Link
+                    href={item.href}
+                    className={`inline-flex items-center gap-1 text-[11px] font-sans font-medium uppercase tracking-editorial transition-colors duration-200 ${
+                      activeMegaMenu === item.label
+                        ? "text-metallic"
+                        : "text-ivory/85 hover:text-metallic"
+                    }`}
+                  >
+                    <span>{item.label}</span>
+                    {item.hasMegaMenu && (
+                      <ChevronDown
+                        className={`h-3 w-3 transition-transform duration-300 opacity-60 ${
+                          activeMegaMenu === item.label ? "rotate-180 text-metallic opacity-100" : ""
+                        }`}
+                      />
+                    )}
+                  </Link>
+
+                  {/* Active Link Indicator */}
+                  {pathname === item.href && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-metallic rounded-full" />
+                  )}
+                </div>
+              ))}
+            </nav>
+
+            {/* Center: Maison Brand Logo */}
+            <div className="text-center absolute left-1/2 -translate-x-1/2">
+              <Link href="/" className="inline-block group text-center select-none">
+                <span className="font-serif-luxury text-2xl sm:text-3xl font-light tracking-[0.28em] text-ivory group-hover:text-metallic transition-colors duration-300 block">
+                  {BRAND.name}
+                </span>
+                <span className="text-[7.5px] font-sans tracking-ultra uppercase text-neutral-stone group-hover:text-metallic/80 transition-colors block -mt-1">
+                  {BRAND.atelierLocation}
+                </span>
+              </Link>
+            </div>
+
+            {/* Right: Actions (Search, Account, Wishlist, Cart) */}
+            <div className="flex items-center space-x-3 sm:space-x-4 text-ivory">
+              {/* Desktop Search Button */}
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(true)}
+                className="hidden lg:flex items-center gap-2 p-2 text-neutral-stone hover:text-ivory transition-colors cursor-pointer"
+                aria-label="Search Catalog"
+              >
+                <Search className="h-4 w-4" />
+                <span className="text-[10px] font-sans uppercase tracking-editorial text-neutral-stone hover:text-ivory hidden xl:inline">
+                  Search
+                </span>
+              </button>
+
+              {/* Account Link */}
               <Link
                 href="/account"
-                className="p-1.5 hover:text-gold-400 transition-colors"
-                aria-label="Collector Account"
+                className="p-2 text-neutral-stone hover:text-ivory transition-colors"
+                aria-label="Patron Account"
               >
                 <User className="h-4 w-4" />
               </Link>
 
+              {/* Wishlist Link */}
               <Link
-                href="/cart"
-                className="relative p-1.5 hover:text-gold-400 transition-colors"
+                href="/wishlist"
+                className="hidden sm:block p-2 text-neutral-stone hover:text-ivory transition-colors relative"
+                aria-label="Saved Pieces"
+              >
+                <Heart className="h-4 w-4" />
+              </Link>
+
+              {/* Cart Drawer Trigger */}
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(true)}
+                className="p-2 text-neutral-stone hover:text-metallic transition-colors relative cursor-pointer"
                 aria-label="Shopping Bag"
               >
                 <ShoppingBag className="h-4 w-4" />
-                <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-gold-500 text-[9px] font-bold text-obsidian">
-                  0
+                <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-metallic text-[9px] font-mono font-bold text-black">
+                  2
                 </span>
+              </button>
+            </div>
+          </div>
+        </Container>
+
+        {/* ELEGANT DESKTOP MEGA MENUS */}
+        <AnimatePresence>
+          {activeMegaMenu && (
+            <motion.div
+              variants={megaMenuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="hidden lg:block absolute top-full left-0 right-0 w-full bg-charcoal-950/98 border-t border-b border-white/10 backdrop-blur-2xl shadow-2xl py-10"
+              onMouseEnter={() => {}}
+              onMouseLeave={() => setActiveMegaMenu(null)}
+            >
+              <Container size="wide">
+                {(() => {
+                  const activeItem = STOREFRONT_NAV.find((i) => i.label === activeMegaMenu);
+                  if (!activeItem?.megaMenu) return null;
+
+                  return (
+                    <div className="grid grid-cols-12 gap-8">
+                      {/* Left: Columns of links */}
+                      <div className="col-span-8 grid grid-cols-2 gap-8 pr-8 border-r border-white/5">
+                        {activeItem.megaMenu.columns.map((col, idx) => (
+                          <div key={idx} className="space-y-4">
+                            <h4 className="font-sans text-[10px] uppercase tracking-ultra font-semibold text-metallic">
+                              {col.title}
+                            </h4>
+                            <ul className="space-y-3">
+                              {col.items.map((sub, sIdx) => (
+                                <li key={sIdx}>
+                                  <Link
+                                    href={sub.href}
+                                    className="group/link block space-y-0.5"
+                                  >
+                                    <div className="font-serif-luxury text-base text-ivory/90 group-hover/link:text-metallic transition-colors">
+                                      {sub.label}
+                                    </div>
+                                    {sub.description && (
+                                      <p className="font-sans text-[11px] text-neutral-stone font-light leading-snug">
+                                        {sub.description}
+                                      </p>
+                                    )}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Right: Featured Piece Card */}
+                      <div className="col-span-4 pl-4">
+                        <Link
+                          href={activeItem.megaMenu.featured.href}
+                          className="group block relative aspect-[16/10] overflow-hidden rounded-xl bg-charcoal-900 border border-white/10 hover:border-metallic/50 transition-all duration-500"
+                        >
+                          <img
+                            src={activeItem.megaMenu.featured.imageUrl}
+                            alt={activeItem.megaMenu.featured.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-5 flex flex-col justify-end space-y-1">
+                            <span className="text-[9px] font-sans font-semibold uppercase tracking-ultra text-metallic">
+                              {activeItem.megaMenu.featured.tag}
+                            </span>
+                            <h5 className="font-serif-luxury text-lg text-ivory group-hover:text-metallic-light transition-colors">
+                              {activeItem.megaMenu.featured.title}
+                            </h5>
+                            <p className="text-[11px] text-neutral-stone font-light line-clamp-1">
+                              {activeItem.megaMenu.featured.subtitle}
+                            </p>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </Container>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
+
+      {/* DEDICATED PREMIUM MOBILE NAVIGATION DRAWER */}
+      <Drawer
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        side="left"
+        size="md"
+        title="Maison Navigation"
+        subtitle="Haute Horlogerie & Parfumerie d'Auteur"
+        footer={
+          <div className="space-y-3 text-xs text-neutral-stone">
+            <div className="flex items-center gap-2">
+              <Phone className="h-3.5 w-3.5 text-metallic" />
+              <span>Geneva Concierge: +41 22 819 9200</span>
+            </div>
+            <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px]">
+              <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-ivory">
+                Patron Sign In
               </Link>
+              <Link href="/concierge" onClick={() => setIsMobileMenuOpen(false)} className="text-metallic hover:underline">
+                Private Viewing
+              </Link>
+            </div>
+          </div>
+        }
+      >
+        <div className="space-y-4 pt-2">
+          {/* Quick Mobile Search Box */}
+          <div className="relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-stone" />
+            <input
+              type="text"
+              placeholder="Search timepieces, extraits, collections..."
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setIsMobileMenuOpen(false);
+                  setIsSearchOpen(true);
+                }
+              }}
+              className="w-full h-11 pl-10 pr-4 rounded-xl bg-charcoal-900 border border-white/10 text-xs text-ivory placeholder:text-neutral-stone focus:outline-none focus:border-metallic"
+            />
+          </div>
+
+          {/* Navigation Accordion Links */}
+          <div className="divide-y divide-white/5 pt-2">
+            {STOREFRONT_NAV.map((item) => (
+              <div key={item.label} className="py-2.5">
+                {item.hasMegaMenu ? (
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => toggleMobileSection(item.label)}
+                      className="w-full flex items-center justify-between text-left py-1 text-base font-serif-luxury font-light text-ivory hover:text-metallic transition-colors"
+                    >
+                      <span>{item.label}</span>
+                      <ChevronDown
+                        className={`h-4 w-4 text-neutral-stone transition-transform duration-300 ${
+                          mobileExpandedSection === item.label ? "rotate-180 text-metallic" : ""
+                        }`}
+                      />
+                    </button>
+
+                    {mobileExpandedSection === item.label && item.megaMenu && (
+                      <div className="pl-3 pt-2 pb-2 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                        {item.megaMenu.columns.map((col, cIdx) => (
+                          <div key={cIdx} className="space-y-1.5">
+                            <span className="text-[10px] font-sans font-semibold uppercase tracking-ultra text-metallic">
+                              {col.title}
+                            </span>
+                            <ul className="space-y-2 pl-2">
+                              {col.items.map((sub, sIdx) => (
+                                <li key={sIdx}>
+                                  <Link
+                                    href={sub.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block text-xs text-neutral-stone hover:text-ivory py-0.5"
+                                  >
+                                    {sub.label}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block py-1 text-base font-serif-luxury font-light text-ivory hover:text-metallic transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </Drawer>
+
+      {/* SEARCH OVERLAY MODAL */}
+      <AnimatePresence>
+        {isSearchOpen && (
+          <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsSearchOpen(false)}
+              className="fixed inset-0 bg-black/85 backdrop-blur-xl"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -16, scale: 0.98 }}
+              transition={{ duration: 0.4, ease: LUXURY_EASE }}
+              className="relative z-10 w-full max-w-2xl bg-charcoal-950 border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6"
+            >
+              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                <div className="flex items-center gap-3 flex-1">
+                  <Search className="h-5 w-5 text-metallic" />
+                  <input
+                    type="text"
+                    placeholder="Search timepieces, olfactive extraits, complications..."
+                    autoFocus
+                    className="w-full bg-transparent text-lg font-serif-luxury text-ivory placeholder:text-neutral-stone focus:outline-none"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setIsSearchOpen(false)}
+                  className="p-1.5 text-neutral-stone hover:text-ivory transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Quick Search Suggestions */}
+              <div className="space-y-3">
+                <span className="text-[10px] font-sans font-semibold uppercase tracking-ultra text-metallic">
+                  Popular Atelier Inquiries
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Chronographe Squelette",
+                    "Tourbillon Celestial",
+                    "Céleste Oud Extrait",
+                    "18K Rose Gold",
+                    "Grade 5 Titanium",
+                    "Discovery Coffret",
+                  ].map((tag) => (
+                    <button
+                      key={tag}
+                      onClick={() => setIsSearchOpen(false)}
+                      className="px-3 py-1.5 rounded-full text-xs font-sans bg-charcoal-900 border border-white/10 text-ivory/80 hover:text-metallic hover:border-metallic/40 transition-colors"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* SHOPPING BAG SLIDE-OUT DRAWER */}
+      <Drawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        side="right"
+        size="md"
+        title="Your Atelier Bag"
+        subtitle="2 Reserved Pieces"
+        footer={
+          <div className="space-y-4">
+            <div className="flex justify-between items-center text-sm font-sans">
+              <span className="text-neutral-stone">Estimated Subtotal</span>
+              <span className="font-mono text-metallic font-semibold text-base">$66,500 USD</span>
+            </div>
+            <p className="text-[11px] text-neutral-slate font-light leading-snug">
+              Complimentary armored delivery by Ferrari Secure Armored Logistics with fully insured transit.
+            </p>
+            <div className="flex flex-col gap-2 pt-1">
+              <Link
+                href="/checkout"
+                onClick={() => setIsCartOpen(false)}
+                className="w-full h-12 bg-metallic text-black hover:bg-metallic-light rounded-none text-xs font-semibold uppercase tracking-editorial transition-colors flex items-center justify-center gap-2"
+              >
+                <span>Proceed to Allocation</span>
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                href="/cart"
+                onClick={() => setIsCartOpen(false)}
+                className="w-full text-center text-xs text-neutral-stone hover:text-ivory py-2 transition-colors uppercase tracking-editorial"
+              >
+                View Full Cart
+              </Link>
+            </div>
+          </div>
+        }
+      >
+        <div className="space-y-4 divide-y divide-white/5">
+          {/* Sample Item 1 */}
+          <div className="pt-2 flex gap-4 text-xs">
+            <img
+              src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=300&q=85"
+              alt="Chronographe Squelette"
+              className="w-20 h-24 object-cover bg-charcoal-900 border border-white/5 rounded"
+            />
+            <div className="flex-1 space-y-1">
+              <span className="text-[9px] uppercase tracking-ultra text-metallic font-mono">
+                REF. VA-920-TI
+              </span>
+              <h5 className="font-serif-luxury text-base text-ivory">Chronographe Squelette</h5>
+              <p className="text-neutral-stone text-[11px]">Grade 5 Titanium • 41mm</p>
+              <div className="text-metallic font-mono pt-1">$48,000 USD</div>
+            </div>
+          </div>
+
+          {/* Sample Item 2 */}
+          <div className="pt-4 flex gap-4 text-xs">
+            <img
+              src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=300&q=85"
+              alt="Céleste Oud Pure Parfum"
+              className="w-20 h-24 object-cover bg-charcoal-900 border border-white/5 rounded"
+            />
+            <div className="flex-1 space-y-1">
+              <span className="text-[9px] uppercase tracking-ultra text-metallic font-mono">
+                EXTRAIT 35%
+              </span>
+              <h5 className="font-serif-luxury text-base text-ivory">Céleste Oud Pure Parfum</h5>
+              <p className="text-neutral-stone text-[11px]">100ml Flacon • Grasse Oak</p>
+              <div className="text-metallic font-mono pt-1">$18,500 USD</div>
             </div>
           </div>
         </div>
-
-        {/* Mobile Navigation Drawer */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden border-t border-white/10 mt-4 pt-4 pb-6 space-y-4">
-            <div className="flex flex-col space-y-3">
-              {STOREFRONT_NAV.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-xs font-sans font-medium tracking-luxury uppercase text-platinum-200 hover:text-gold-400 py-1 transition-colors"
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="border-t border-white/5 pt-4 flex items-center justify-between text-xs text-platinum-400">
-              <Link href="/concierge" onClick={() => setIsMobileMenuOpen(false)}>
-                Concierge Desk
-              </Link>
-              <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
-                Atelier Admin
-              </Link>
-            </div>
-          </div>
-        )}
-      </Container>
-    </header>
+      </Drawer>
+    </>
   );
 }

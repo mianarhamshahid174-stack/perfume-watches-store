@@ -193,7 +193,7 @@ export function FilterDrawer({
               <div className="flex items-center gap-2.5">
                 <SlidersHorizontal className="h-4 w-4 text-gold-400" />
                 <h3 className="font-serif-luxury text-xl font-light text-sand-50">
-                  Curate Selection
+                  Filter Products
                 </h3>
               </div>
               <button
@@ -221,7 +221,7 @@ export function FilterDrawer({
                     className="h-4 w-4 rounded bg-neutral-900 border border-neutral-700 text-gold-500 focus:ring-gold-500 focus:ring-offset-black"
                   />
                   <span className="text-xs text-sand-100 font-light">
-                    Immediate Atelier Dispatch (In Stock)
+                    In Stock Only
                   </span>
                 </label>
               </div>
@@ -230,7 +230,7 @@ export function FilterDrawer({
               {(mode === "watches" || mode === "all") && options.collections && options.collections.length > 0 && (
                 <div className="pt-6">
                   <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                    Repertoire / Collection
+                    Collection
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {options.collections.map((col) => {
@@ -257,7 +257,7 @@ export function FilterDrawer({
               {/* 3. Price Filter */}
               <div className="pt-6">
                 <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                  Acquisition Range (USD)
+                  Price Range (USD)
                 </span>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
@@ -294,7 +294,7 @@ export function FilterDrawer({
                   {options.movements && options.movements.length > 0 && (
                     <div className="pt-6">
                       <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                        Calibre Movement
+                        Movement Type
                       </span>
                       <div className="space-y-2">
                         {options.movements.map((mov) => {
@@ -333,7 +333,7 @@ export function FilterDrawer({
                               key={mat}
                               type="button"
                               onClick={() => setCaseMaterial(active ? "" : mat)}
-                              className={`text-xs px-3 py-1.5 border transition-all ${
+                              className={`text-xs px-3.5 py-1.5 border transition-all ${
                                 active
                                   ? "bg-gold-400 text-black border-gold-400 font-medium"
                                   : "bg-neutral-900/60 text-sand-200 border-white/10 hover:border-gold-500/40"
@@ -351,7 +351,7 @@ export function FilterDrawer({
                   {options.dialColors && options.dialColors.length > 0 && (
                     <div className="pt-6">
                       <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                        Dial Aesthetic
+                        Dial Color
                       </span>
                       <div className="flex flex-wrap gap-2">
                         {options.dialColors.map((dial) => {
@@ -361,7 +361,7 @@ export function FilterDrawer({
                               key={dial}
                               type="button"
                               onClick={() => setDialColor(active ? "" : dial)}
-                              className={`text-xs px-3 py-1.5 border transition-all ${
+                              className={`text-xs px-3.5 py-1.5 border transition-all ${
                                 active
                                   ? "bg-gold-400 text-black border-gold-400 font-medium"
                                   : "bg-neutral-900/60 text-sand-200 border-white/10 hover:border-gold-500/40"
@@ -379,7 +379,7 @@ export function FilterDrawer({
                   {options.straps && options.straps.length > 0 && (
                     <div className="pt-6">
                       <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                        Strap & Bracelet
+                        Strap Material
                       </span>
                       <div className="space-y-1.5">
                         {options.straps.map((s) => {
@@ -413,7 +413,7 @@ export function FilterDrawer({
                   {options.fragranceFamilies && options.fragranceFamilies.length > 0 && (
                     <div className="pt-6">
                       <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                        Olfactive Family
+                        Fragrance Family
                       </span>
                       <div className="space-y-1.5">
                         {options.fragranceFamilies.map((fam) => {
@@ -442,7 +442,7 @@ export function FilterDrawer({
                   {options.genders && options.genders.length > 0 && (
                     <div className="pt-6">
                       <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                        Expression / Gender
+                        Gender
                       </span>
                       <div className="flex flex-wrap gap-2">
                         {options.genders.map((g) => {
@@ -485,7 +485,7 @@ export function FilterDrawer({
                 onClick={handleApply}
                 className="flex-1 py-3 px-6 bg-sand-50 hover:bg-gold-300 text-black text-xs font-medium uppercase tracking-[0.2em] transition-all text-center"
               >
-                Apply Criteria
+                Apply Filters
               </button>
             </div>
           </motion.div>

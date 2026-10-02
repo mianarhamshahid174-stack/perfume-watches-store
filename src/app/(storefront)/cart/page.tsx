@@ -96,15 +96,15 @@ export default function CartPage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">
-                Haute Horlogerie & Parfumerie d'Auteur
+                Luxury Watches & Fine Fragrances
               </span>
               <h1 className="font-serif-luxury text-3xl sm:text-4xl lg:text-5xl font-light text-sand-50 tracking-wide">
-                Your Atelier Bag
+                Your Shopping Bag
               </h1>
             </div>
             <div className="text-right">
               <span className="text-xs font-mono text-neutral-400">
-                {itemCount} {itemCount === 1 ? "Creation" : "Creations"} Reserved
+                {itemCount} {itemCount === 1 ? "Item" : "Items"}
               </span>
             </div>
           </div>
@@ -116,10 +116,10 @@ export default function CartPage() {
             <ShoppingBag className="w-16 h-16 text-neutral-600 mx-auto stroke-[1.2]" />
             <div className="space-y-2">
               <h2 className="font-serif-luxury text-2xl text-sand-100">
-                Your Selection is Currently Empty
+                Your Shopping Bag is Empty
               </h2>
               <p className="text-sm text-neutral-400 font-light max-w-md mx-auto leading-relaxed">
-                You have not yet reserved any timepieces or extraits de parfum. Each piece is crafted in limited Geneva series and reserved upon order.
+                You have not added any watches or fragrances to your bag yet. Explore our original collections to find your perfect piece.
               </p>
             </div>
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -127,13 +127,13 @@ export default function CartPage() {
                 href="/watches"
                 className="w-full sm:w-auto px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-[0.2em] transition-colors"
               >
-                Explore Timepieces
+                Shop Watches
               </Link>
               <Link
                 href="/fragrances"
                 className="w-full sm:w-auto px-8 py-3.5 border border-white/20 hover:border-gold-400 text-sand-100 text-xs font-semibold uppercase tracking-[0.2em] transition-colors"
               >
-                Discover Parfums
+                Shop Fragrances
               </Link>
             </div>
           </div>
@@ -174,7 +174,7 @@ export default function CartPage() {
                             </h3>
                             {item.variantTitle && (
                               <p className="text-xs text-neutral-400 mt-0.5">
-                                Specification: {item.variantTitle}
+                                Variant: {item.variantTitle}
                               </p>
                             )}
                           </div>
@@ -245,34 +245,34 @@ export default function CartPage() {
                 })}
               </div>
 
-              {/* Bottom Actions: Clear bag & Concierge Note */}
+              {/* Bottom Actions: Clear bag & Continue Shopping */}
               <div className="flex justify-between items-center pt-2">
                 <button
                   type="button"
                   onClick={clearCart}
                   className="text-xs text-neutral-500 hover:text-rose-400 uppercase tracking-wider font-mono transition-colors"
                 >
-                  Empty Bag
+                  Clear Bag
                 </button>
                 <Link
                   href="/watches"
                   className="text-xs text-neutral-400 hover:text-gold-300 uppercase tracking-widest font-mono transition-colors"
                 >
-                  + Add Another Creation
+                  + Continue Shopping
                 </Link>
               </div>
 
-              {/* Maison Gifting & Delivery Highlights */}
+              {/* Delivery Highlights */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-6 border-t border-white/10">
                 <div className="p-4 bg-neutral-950/60 border border-white/5 space-y-2">
                   <div className="flex items-center gap-2 text-gold-400">
                     <Truck className="w-4 h-4" />
                     <span className="text-xs font-semibold uppercase tracking-wider">
-                      Armored Transit
+                      Free Insured Shipping
                     </span>
                   </div>
                   <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                    Complimentary high-security armored delivery throughout Pakistan including Karachi, Lahore, and Islamabad.
+                    Fast and fully insured delivery across Pakistan including Karachi, Lahore, and Islamabad.
                   </p>
                 </div>
 
@@ -280,11 +280,11 @@ export default function CartPage() {
                   <div className="flex items-center gap-2 text-gold-400">
                     <ShieldCheck className="w-4 h-4" />
                     <span className="text-xs font-semibold uppercase tracking-wider">
-                      Geneva Warranty
+                      5-Year Warranty
                     </span>
                   </div>
                   <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                    Every timepiece arrives with an individual numbered certificate of origin and a 5-year international warranty.
+                    Every timepiece arrives with an authentic certificate and a 5-year international warranty.
                   </p>
                 </div>
 
@@ -292,11 +292,11 @@ export default function CartPage() {
                   <div className="flex items-center gap-2 text-gold-400">
                     <RotateCcw className="w-4 h-4" />
                     <span className="text-xs font-semibold uppercase tracking-wider">
-                      Atelier Exchange
+                      30-Day Returns
                     </span>
                   </div>
                   <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                    14-day return privilege with complimentary white-glove pickup in original presentation state.
+                    Hassle-free 30-day returns with free doorstep pickup in original packaging.
                   </p>
                 </div>
               </div>
@@ -306,13 +306,13 @@ export default function CartPage() {
             <div className="lg:col-span-4 sticky top-28 space-y-6">
               <div className="bg-neutral-950 border border-white/10 p-6 sm:p-8 space-y-6 rounded-sm">
                 <h2 className="font-serif-luxury text-xl text-sand-50 border-b border-white/10 pb-4">
-                  Allocation Summary
+                  Order Summary
                 </h2>
 
                 {/* Coupon Code Section */}
                 <div className="space-y-2">
                   <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                    Privilege Code
+                    Discount Code
                   </span>
                   {appliedCoupon ? (
                     <div className="flex items-center justify-between p-3 bg-gold-950/20 border border-gold-500/30 rounded-sm">
@@ -323,7 +323,7 @@ export default function CartPage() {
                             {appliedCoupon.code}
                           </span>
                           <span className="text-[10px] text-neutral-400">
-                            Privilege applied: {appliedCoupon.formattedDiscountPKR}
+                            Discount applied: {appliedCoupon.formattedDiscountPKR}
                           </span>
                         </div>
                       </div>
@@ -382,20 +382,20 @@ export default function CartPage() {
                   <div className="flex justify-between items-center text-neutral-400">
                     <span className="flex items-center gap-1.5">
                       <Truck className="w-3.5 h-3.5 text-gold-400" />
-                      <span>Armored Transit (Pakistan)</span>
+                      <span>Insured Delivery (Pakistan)</span>
                     </span>
                     <span className="text-emerald-400 font-mono text-[11px]">
-                      Complimentary
+                      Free
                     </span>
                   </div>
 
                   <div className="flex justify-between items-baseline pt-4 border-t border-white/10">
                     <div>
                       <span className="font-serif-luxury text-base text-sand-50 block">
-                        Total Due
+                        Total
                       </span>
                       <span className="text-[10px] font-mono text-neutral-500">
-                        Inclusive of all bespoke duties
+                        All taxes included
                       </span>
                     </div>
                     <div className="text-right">
@@ -421,21 +421,21 @@ export default function CartPage() {
 
                   <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-neutral-400">
                     <Lock className="w-3 h-3 text-gold-400" />
-                    <span>Cash on Delivery & Secure Wire available in Pakistan</span>
+                    <span>Cash on Delivery & Bank Transfer available in Pakistan</span>
                   </div>
                 </div>
               </div>
 
-              {/* Concierge Assistance Card */}
+              {/* Customer Support Card */}
               <div className="p-5 bg-neutral-950/40 border border-white/5 space-y-2 text-center">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block">
-                  Maison Concierge
+                  Customer Support
                 </span>
                 <p className="text-xs text-neutral-400 font-light">
-                  Need assistance with your allocation or bespoke engraving?
+                  Need help with your order or have questions?
                 </p>
                 <div className="pt-1 font-mono text-xs text-sand-200">
-                  concierge@velora.com | +92 (021) 111-VELORA
+                  support@velora.com | +92 (021) 111-VELORA
                 </div>
               </div>
             </div>

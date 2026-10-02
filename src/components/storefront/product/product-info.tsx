@@ -254,10 +254,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
               {addedAnimation ? (
                 <>
                   <Check className="w-4 h-4 text-obsidian stroke-[2.5]" />
-                  <span>Reserved to Atelier Bag</span>
+                  <span>Added to Bag</span>
                 </>
               ) : (
-                <span>Add to Atelier Bag</span>
+                <span>Add to Bag</span>
               )}
             </button>
           ) : (
@@ -267,7 +267,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
               className="flex-1 h-13 bg-neutral-800 hover:bg-neutral-700 text-sand-100 font-medium text-xs font-sans uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-2 cursor-pointer border border-white/10"
             >
               <MessageSquare className="w-4 h-4 text-gold-400" />
-              <span>Inquire for Next Edition</span>
+              <span>Notify When Available</span>
             </button>
           )}
 
@@ -280,7 +280,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 ? "border-gold-400 bg-gold-950/20 text-gold-400"
                 : "border-white/15 hover:border-gold-400/50 text-neutral-400 hover:text-gold-300 bg-neutral-900/60"
             }`}
-            title={isWishlisted ? "Remove from Vault Wishlist" : "Save to Vault Wishlist"}
+            title={isWishlisted ? "Remove from Wishlist" : "Save to Wishlist"}
             aria-label="Toggle Wishlist"
           >
             <Heart className={`w-5 h-5 ${isWishlisted ? "fill-gold-400" : ""}`} />
@@ -294,7 +294,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
             onClick={handleBuyNow}
             className="w-full h-12 border border-white/20 hover:border-gold-400/80 bg-neutral-950 hover:bg-white/5 text-sand-100 text-xs font-sans uppercase tracking-[0.2em] transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer group"
           >
-            <span>Instant Acquisition & Armored Delivery</span>
+            <span>Buy Now</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         )}
@@ -306,20 +306,20 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <div className="bg-neutral-950 border border-white/20 p-6 sm:p-8 max-w-md w-full space-y-5 relative">
             <div className="space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-widest text-gold-400">
-                Atelier Allocation Waitlist
+                Product Waitlist
               </span>
               <h3 className="font-serif-luxury text-2xl text-sand-50">
-                Reserve Reference {product.sku}
+                Notify Me: {product.name}
               </h3>
               <p className="text-xs text-platinum-300 font-light leading-relaxed">
-                The current numbered edition of {product.name} is fully allocated. Enter your details to receive private notification when the next assembly run begins in Geneva.
+                This item is currently out of stock. Enter your email address to receive an email notification as soon as it becomes available.
               </p>
             </div>
 
             {inquirySent ? (
               <div className="p-4 bg-emerald-950/30 border border-emerald-500/30 text-emerald-200 text-xs flex items-center gap-3">
                 <Check className="w-5 h-5 text-emerald-400 shrink-0" />
-                <span>Your reservation inquiry has been registered with our Geneva concierge.</span>
+                <span>Thank you. We will notify you when this item is back in stock.</span>
               </div>
             ) : (
               <form
@@ -332,7 +332,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 <input
                   type="email"
                   required
-                  placeholder="Enter your private email..."
+                  placeholder="Enter your email address..."
                   value={inquiryEmail}
                   onChange={(e) => setInquiryEmail(e.target.value)}
                   className="w-full h-11 bg-neutral-900 border border-white/15 px-3 text-xs text-sand-100 placeholder:text-neutral-500 focus:outline-none focus:border-gold-400"
@@ -342,7 +342,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                     type="submit"
                     className="flex-1 h-11 bg-gold-500 hover:bg-gold-400 text-obsidian font-semibold text-xs uppercase tracking-widest transition-colors cursor-pointer"
                   >
-                    Submit Reservation
+                    Notify Me
                   </button>
                   <button
                     type="button"
@@ -367,10 +367,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <Truck className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <h6 className="text-[11px] font-sans font-medium text-sand-100 uppercase tracking-wider">
-              Armored Transit
+              Free Insured Delivery
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Fully insured armored handover by Ferrari Logistics.
+              Dispatched with signature and full tracking.
             </p>
           </div>
         </div>
@@ -382,7 +382,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
               5-Year Warranty
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Comprehensive Geneva manufacture guarantee.
+              Covers all mechanical and craftsmanship defects.
             </p>
           </div>
         </div>
@@ -391,10 +391,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <RotateCcw className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <h6 className="text-[11px] font-sans font-medium text-sand-100 uppercase tracking-wider">
-              14-Day Vault Return
+              30-Day Returns
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Complimentary return in original sealed vault box.
+              Complimentary returns in original packaging.
             </p>
           </div>
         </div>

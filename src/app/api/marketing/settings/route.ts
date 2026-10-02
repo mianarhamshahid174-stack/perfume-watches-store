@@ -6,25 +6,25 @@ export const dynamic = "force-dynamic";
 export const DEFAULT_MARKETING_CONFIG = {
   announcementBar: {
     enabled: true,
-    text: "Complimentary Armored Courier Delivery & 5-Year Global Manufacture Warranty on all Allocations.",
-    badge: "VIP COMPLIMENTARY",
-    linkText: "View Policies",
-    linkUrl: "/account",
+    text: "Complimentary insured worldwide shipping and 5-year warranty on all orders.",
+    badge: "Free Shipping",
+    linkText: "Learn More",
+    linkUrl: "/shipping",
     theme: "gold" as const, // "gold" | "black" | "charcoal"
   },
   homepagePromotions: {
     enabled: true,
-    headline: "PRIVATE SALON INVITATION",
-    subheadline: "Use code VELORA10 at checkout for an exclusive 10% introductory collector allocation.",
+    headline: "Welcome to VELORA",
+    subheadline: "Use code VELORA10 at checkout to enjoy 10% off your first order.",
     promoCode: "VELORA10",
-    discountText: "10% VIP Concession",
-    ctaText: "Discover Masterpieces",
+    discountText: "10% Off Your Order",
+    ctaText: "Explore Watches",
     ctaLink: "/watches",
   },
   featuredProducts: [
-    "cmur3om6h000leq5o0bf1cmg8", // velora-signature-01
-    "cmur3omii000seq5o6z126mny", // velora-chrono-astral-i
-    "cmur3on1i0012eq5ope5kjp4r", // velora-noir-chronometre
+    "velora-signature-01",
+    "velora-signature-02",
+    "velora-noir-01",
   ],
   featuredCollections: [
     "signature",
@@ -33,21 +33,21 @@ export const DEFAULT_MARKETING_CONFIG = {
   ],
   newsletter: {
     enabled: true,
-    title: "Receive Private Salon Invitations & Masterpiece Allocations",
-    subtitle: "Join the private circle of collectors for confidential previews of numbered timepieces, rare extraction releases, and invitation-only viewings.",
-    incentiveText: "Privilege code granted upon admission",
-    disclaimer: "Discretion guaranteed. No spam. You may withdraw at any time.",
+    title: "Join the VELORA Newsletter",
+    subtitle: "Subscribe to receive updates on new watch releases, fragrance arrivals, and private events.",
+    incentiveText: "Enjoy 10% off your first order",
+    disclaimer: "We respect your privacy. You can unsubscribe at any time.",
   },
   popup: {
     enabled: true,
     delaySeconds: 5,
-    title: "WELCOME TO MAISON VELORA",
-    subtitle: "Enjoy private collector privileges, confidential allocations, and a 10% concession on your inaugural acquisition.",
-    badge: "PRIVATE CIRCLE ALLOCATION",
+    title: "Welcome to VELORA",
+    subtitle: "Subscribe to our newsletter and enjoy 10% off your first watch or fragrance order.",
+    badge: "Welcome Gift",
     couponCode: "VELORA10",
-    discountText: "10% PRIVILEGE",
-    imageUrl: "/images/velora-signature-01.jpg",
-    ctaText: "CLAIM COLLECTOR ALLOCATION",
+    discountText: "10% Off",
+    imageUrl: "/images/products/watches/velora-signature-01/front.jpg",
+    ctaText: "Claim 10% Off",
   },
   socialLinks: {
     instagram: "https://instagram.com/velorawatches",

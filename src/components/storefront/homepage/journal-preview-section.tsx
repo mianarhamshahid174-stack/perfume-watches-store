@@ -35,9 +35,8 @@ export function JournalPreviewSection({
 }: JournalPreviewSectionProps) {
   const headline = title || "THE JOURNAL";
   const desc =
-    subtitle ||
-    "Chronicles of horological innovation, artisanal techniques, and material discoveries.";
-  const ctaLabel = content?.ctaText || "VIEW ALL ARTICLES";
+    subtitle || "Stories on design, craft, and the art of living well.";
+  const ctaLabel = content?.ctaText || "View All Articles";
   const ctaLink = content?.ctaLink || "/journal";
 
   const displayPosts = posts.slice(0, 3);

@@ -75,7 +75,7 @@ export function Header() {
       >
         <AnnouncementBar />
         <Container size="wide" className={isScrolled ? "py-3.5" : "py-5"}>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between relative">
             {/* Mobile Hamburger Button */}
             <div className="flex items-center lg:hidden">
               <button
@@ -98,7 +98,7 @@ export function Header() {
             </div>
 
             {/* Desktop Left: Navigation Items */}
-            <nav className="hidden lg:flex items-center space-x-7">
+            <nav className="hidden lg:flex items-center space-x-3.5 xl:space-x-5 2xl:space-x-6 pr-4">
               {STOREFRONT_NAV.map((item) => (
                 <div
                   key={item.label}
@@ -110,7 +110,7 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
-                    className={`inline-flex items-center gap-1 text-[11px] font-sans font-medium uppercase tracking-editorial transition-colors duration-200 ${
+                    className={`inline-flex items-center gap-1 text-[10.5px] xl:text-[11px] font-sans font-medium uppercase tracking-editorial transition-colors duration-200 ${
                       activeMegaMenu === item.label
                         ? "text-metallic"
                         : "text-ivory/85 hover:text-metallic"
@@ -134,13 +134,13 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Center: Maison Brand Logo */}
-            <div className="text-center absolute left-1/2 -translate-x-1/2">
+            {/* Center: Maison Brand Logo (shifted slightly right to give ample breathing room from left nav buttons) */}
+            <div className="text-center absolute left-1/2 -translate-x-1/2 ml-3 sm:ml-4 lg:ml-10 xl:ml-12 pointer-events-auto">
               <Link href="/" className="inline-block group text-center select-none">
-                <span className="font-serif-luxury text-2xl sm:text-3xl font-light tracking-[0.28em] text-ivory group-hover:text-metallic transition-colors duration-300 block">
+                <span className="font-serif-luxury text-2xl sm:text-3xl font-light tracking-[0.28em] pl-[0.28em] text-ivory group-hover:text-metallic transition-colors duration-300 block">
                   {BRAND.name}
                 </span>
-                <span className="text-[7.5px] font-sans tracking-ultra uppercase text-neutral-stone group-hover:text-metallic/80 transition-colors block -mt-1">
+                <span className="text-[7.5px] font-sans tracking-[0.26em] uppercase text-neutral-stone group-hover:text-metallic/80 transition-colors block -mt-1 pl-[0.26em]">
                   {BRAND.atelierLocation}
                 </span>
               </Link>

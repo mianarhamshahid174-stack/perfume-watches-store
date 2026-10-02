@@ -19,25 +19,25 @@ export function ProductMacroDetails({ product }: ProductMacroDetailsProps) {
       subtitle: "Galvanic Finish & Dimensional Indexes",
       description:
         product.dialColor
-          ? `${product.dialColor} with circular satin-finished outer minute track, hand-applied faceted markers, and sunken subsidiary seconds register.`
-          : "Opaline dial featuring circular satin-finished minute track, diamond-cut faceted hour markers, and hand-applied feuille geometry.",
-      imageUrl: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=85",
+          ? `${product.dialColor} with a fine minute track and hand-applied hour markers.`
+          : "Warm opaline dial with hand-applied gold hour markers and a fine minute track.",
+      imageUrl: "/images/products/watches/velora-signature-01/dial-macro.jpg",
     },
     {
       part: "hands",
       title: "The Hands",
-      subtitle: "Diamond-Faceted Chamfering",
+      subtitle: "Hand-Finished Chamfering",
       description:
-        "Flame-tempered blued steel hands with 45° mirror-polished chamfers, gliding friction-free across the dial surface with microscopic precision.",
-      imageUrl: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=85",
+        "Heat-tempered blued steel leaf hands, mirror-beveled by hand to reflect ambient light with precision.",
+      imageUrl: "/images/products/watches/velora-signature-01/front.jpg",
     },
     {
       part: "crown",
       title: "The Fluted Crown",
       subtitle: "Dual-Gasket Ergonomics",
       description:
-        "Tactile knurled winding crown sealed with dual internal gasket o-rings for pressure resistance, set with a hand-polished natural black onyx cabochon.",
-      imageUrl: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
+        "Knurled winding crown sealed with dual internal gaskets for water resistance and smooth tactile winding.",
+      imageUrl: "/images/products/watches/velora-signature-01/crown-macro.jpg",
     },
     {
       part: "case",
@@ -45,9 +45,9 @@ export function ProductMacroDetails({ product }: ProductMacroDetailsProps) {
       subtitle: "Vertical Satin & Mirror Anglage",
       description:
         product.caseMaterial
-          ? `Micro-machined from solid ${product.caseMaterial}, displaying vertical satin-brushed case flanks juxtaposed against mirror-polished bevelled lugs.`
-          : "Sculpted 316L stainless steel case with vertical brushed flanks juxtaposed against high-gloss mirror-polished bevelled lugs.",
-      imageUrl: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=85",
+          ? `Crafted from solid ${product.caseMaterial}, with vertical brushed flanks and mirror-polished chamfers.`
+          : "Surgical 904L stainless steel case with vertical brushed flanks and mirror-polished chamfers.",
+      imageUrl: "/images/products/watches/velora-signature-01/case-macro.jpg",
     },
     {
       part: "strap",
@@ -55,19 +55,19 @@ export function ProductMacroDetails({ product }: ProductMacroDetailsProps) {
       subtitle: "Artisanal Saddle Stitching",
       description:
         product.strapMaterial
-          ? `Hand-selected ${product.strapMaterial} assembled with tone-on-tone French beeswax saddle stitching and supple anti-allergenic calf lining.`
-          : "Hand-selected full-grain French alligator assembled with tone-on-tone beeswax saddle stitching and supple anti-allergenic calf lining.",
-      imageUrl: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=1200&q=85",
+          ? `Hand-selected ${product.strapMaterial} with durable French saddle stitching and soft calfskin lining.`
+          : "Hand-selected French calfskin leather with durable saddle stitching and soft lining.",
+      imageUrl: "/images/products/watches/velora-signature-01/strap-clasp.jpg",
     },
     {
       part: "clasp",
-      title: "The Deployant Clasp",
+      title: "The Clasp",
       subtitle: "Micro-Adjustable Deployant",
       description:
         product.clasp
-          ? `${product.clasp} with twin safety pushers and laser-engraved VELORA Geneva atelier coat of arms.`
-          : "Triple-blade folding deployant buckle with spring-loaded dual pushers and laser-engraved VELORA Geneva atelier coat of arms.",
-      imageUrl: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=1200&q=85",
+          ? `${product.clasp} with dual safety push-buttons for comfortable and secure wear.`
+          : "Solid stainless steel folding deployant clasp with dual safety push-buttons for comfortable wear.",
+      imageUrl: "/images/products/watches/velora-signature-01/strap-clasp.jpg",
     },
   ];
 
@@ -85,13 +85,13 @@ export function ProductMacroDetails({ product }: ProductMacroDetailsProps) {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-14">
           <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400">
-            Micron Precision
+            Craftsmanship Up Close
           </span>
           <h2 className="font-serif-luxury text-3xl sm:text-4xl lg:text-5xl text-sand-50 font-light tracking-tight">
             THE DETAILS
           </h2>
           <p className="text-xs sm:text-sm text-platinum-400 font-light leading-relaxed">
-            Excellence lives in the unseen. Explore the microscopic finishes, hand-bevelled facets, and tactile textures that define the atelier's handiwork.
+            Every detail is considered. Explore the hand-finished surfaces, beveled angles, and clean textures that define each creation.
           </p>
         </div>
 

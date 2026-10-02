@@ -94,7 +94,7 @@ export default async function StorefrontHomePage() {
   }));
 
   // Collections: Fetch real collections (SIGNATURE, NOIR, CLASSIC, etc.)
-  const collections = await prisma.collection.findMany({
+  const rawCollections = await prisma.collection.findMany({
     where: { isActive: true },
     include: {
       products: {
@@ -107,6 +107,23 @@ export default async function StorefrontHomePage() {
     },
     orderBy: { createdAt: "asc" },
   });
+
+  const collections = rawCollections.map((col) => ({
+    ...col,
+    products: col.products.map((cp) => ({
+      ...cp,
+      product: {
+        ...cp.product,
+        price: Number(cp.product.price),
+        compareAtPrice: cp.product.compareAtPrice ? Number(cp.product.compareAtPrice) : null,
+        cost: cp.product.cost ? Number(cp.product.cost) : null,
+        createdAt: cp.product.createdAt.toISOString(),
+        updatedAt: cp.product.updatedAt.toISOString(),
+      },
+    })),
+    createdAt: col.createdAt.toISOString(),
+    updatedAt: col.updatedAt.toISOString(),
+  }));
 
   // Journal: Fetch latest 3 published articles
   const journalPosts = await prisma.journalPost.findMany({

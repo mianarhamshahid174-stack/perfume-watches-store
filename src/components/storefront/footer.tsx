@@ -52,13 +52,13 @@ export function Footer() {
           <div className="pb-16 mb-16 border-b border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-6 space-y-2">
               <span className="text-[10px] font-sans font-semibold uppercase tracking-ultra text-metallic">
-                {newsletter.incentiveText || "Private Patron Inquiries"}
+                {newsletter.incentiveText || "Stay Connected"}
               </span>
               <h3 className="font-serif-luxury text-2xl sm:text-3xl font-light text-ivory">
-                {newsletter.title}
+                {newsletter.title || "Join the VELORA Newsletter"}
               </h3>
               <p className="text-xs text-neutral-stone font-light leading-relaxed max-w-lg">
-                {newsletter.subtitle}
+                {newsletter.subtitle || "Be the first to hear about new timepieces, fragrance releases, and private events."}
               </p>
             </div>
 
@@ -69,7 +69,7 @@ export function Footer() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter collector email address..."
+                    placeholder="Enter your email address..."
                     required
                     className="flex-1 h-12 px-4 rounded-none bg-charcoal-900 border border-white/15 text-xs text-ivory placeholder:text-neutral-stone focus:outline-none focus:border-metallic"
                   />
@@ -85,14 +85,14 @@ export function Footer() {
                       </>
                     ) : (
                       <>
-                        <span>Join Circle</span>
+                        <span>Subscribe</span>
                         <ArrowRight className="h-3.5 w-3.5" />
                       </>
                     )}
                   </button>
                 </div>
                 <p className="text-[10px] text-neutral-slate font-light">
-                  {newsletter.disclaimer || "Discretion guaranteed. No spam. You may withdraw at any time."}
+                  {newsletter.disclaimer || "We respect your privacy. You can unsubscribe at any time."}
                 </p>
               </form>
             </div>
@@ -113,13 +113,13 @@ export function Footer() {
             </Link>
 
             <p className="text-xs text-neutral-stone font-light leading-relaxed max-w-sm pt-2">
-              Precision born in solitude. Handcrafted mechanical calibers and 35% pure parfum extraits compounded without concession between our Geneva horological ateliers and Grasse botanical laboratory.
+              Original luxury timepieces and artisanal perfumes, crafted with refined materials in Geneva and Grasse.
             </p>
 
             {/* Social Links controlled live via CMS */}
             <div className="pt-3 space-y-2">
               <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-500 block">
-                Official Salons
+                Follow Us
               </span>
               <div className="flex items-center gap-3 text-neutral-stone">
                 {socials.instagram && (
@@ -229,15 +229,15 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-6">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-metallic" />
-              <span>Armored Courier Delivery</span>
+              <span>Free Insured Shipping</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-metallic" />
-              <span>5-Year Manufacture Warranty</span>
+              <span>5-Year International Warranty</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-metallic" />
-              <span>Geneva Hallmarked Metallurgy</span>
+              <span>100% Original Products</span>
             </div>
           </div>
 

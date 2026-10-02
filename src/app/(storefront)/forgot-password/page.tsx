@@ -52,20 +52,20 @@ export default function ForgotPasswordPage() {
         <div className="max-w-md mx-auto border border-white/10 bg-noir-900/80 p-8 sm:p-10 shadow-2xl backdrop-blur-xl space-y-6">
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono tracking-ultra uppercase text-gold-400">
-              Security Recovery
+              Account Recovery
             </span>
             <h1 className="font-serif-luxury text-3xl font-light text-sand-50 tracking-wide">
-              Reset Passphrase
+              Forgot Password
             </h1>
             <p className="text-xs text-platinum-400 font-light">
-              Enter the email associated with your atelier account to receive reset instructions.
+              Enter your email address to receive password reset instructions.
             </p>
           </div>
 
           {message && (
             <Toast
               type="info"
-              title="Instructions Generated"
+              title="Reset Link Sent"
               message={message}
             />
           )}
@@ -95,12 +95,12 @@ export default function ForgotPasswordPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <Input
-              label="Registered Email"
+              label="Email Address"
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="collector@domain.com"
+              placeholder="yourname@example.com"
               disabled={isLoading}
             />
 
@@ -111,7 +111,7 @@ export default function ForgotPasswordPage() {
               className="w-full"
               isLoading={isLoading}
             >
-              Generate Reset Token
+              Send Reset Link
             </Button>
           </form>
 
@@ -121,7 +121,7 @@ export default function ForgotPasswordPage() {
               className="inline-flex items-center text-xs text-platinum-400 hover:text-gold-400 transition-colors"
             >
               <ArrowLeft className="mr-1.5 h-3.5 w-3.5" />
-              Return to Login
+              Back to Login
             </Link>
           </div>
         </div>

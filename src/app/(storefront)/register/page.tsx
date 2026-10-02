@@ -45,7 +45,7 @@ export default function RegisterPage() {
         throw new Error(data.error || "Registration could not be completed.");
       }
 
-      setToastMessage("Account registered. Welcoming to private salon...");
+      setToastMessage("Account created successfully. Redirecting...");
       setTimeout(() => {
         router.push("/account");
         router.refresh();
@@ -63,13 +63,13 @@ export default function RegisterPage() {
         <div className="max-w-md mx-auto border border-white/10 bg-noir-900/80 p-8 sm:p-10 shadow-2xl backdrop-blur-xl space-y-8">
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono tracking-ultra uppercase text-gold-400">
-              Maison Registration
+              Create Account
             </span>
             <h1 className="font-serif-luxury text-3xl font-light text-sand-50 tracking-wide">
-              Collector Privileges
+              Join {BRAND.name}
             </h1>
             <p className="text-xs text-platinum-400 font-light">
-              Register for exclusive allocation priority, private salon visits, and provenance certificates.
+              Create your account to track orders, save your wishlist, and enjoy a faster checkout.
             </p>
           </div>
 
@@ -91,7 +91,7 @@ export default function RegisterPage() {
                 required
                 value={formData.firstName}
                 onChange={handleChange}
-                placeholder="Arthur"
+                placeholder="e.g. Tariq"
                 disabled={isLoading}
               />
               <Input
@@ -100,7 +100,7 @@ export default function RegisterPage() {
                 required
                 value={formData.lastName}
                 onChange={handleChange}
-                placeholder="Pendleton"
+                placeholder="e.g. Mansoor"
                 disabled={isLoading}
               />
             </div>
@@ -112,22 +112,22 @@ export default function RegisterPage() {
               required
               value={formData.email}
               onChange={handleChange}
-              placeholder="collector@domain.com"
+              placeholder="yourname@example.com"
               disabled={isLoading}
             />
 
             <Input
-              label="Direct Telephone (Optional)"
+              label="Phone Number (Optional)"
               name="phone"
               type="tel"
               value={formData.phone}
               onChange={handleChange}
-              placeholder="+44 20 7946 0000"
+              placeholder="+92 300 1234567"
               disabled={isLoading}
             />
 
             <Input
-              label="Passphrase (Min. 8 characters)"
+              label="Password (Min. 8 characters)"
               name="password"
               type="password"
               required
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                 className="w-full"
                 isLoading={isLoading}
               >
-                Create Collector Account
+                Create Account
               </Button>
             </div>
           </form>

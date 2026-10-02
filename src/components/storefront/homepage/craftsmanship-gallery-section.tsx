@@ -26,55 +26,50 @@ const DEFAULT_DETAILS: CraftsmanshipDetail[] = [
   {
     key: "dial",
     title: "The Dial",
-    category: "OPALINE FINISHING",
+    category: "OPALINE FINISH",
     description:
-      "Opaline surface treated with hand-applied faceted markers and micro-grooved track.",
-    imageUrl: "/images/velora-signature-01.jpg",
+      "Warm opaline dial with hand-applied gold hour markers and a fine minute track.",
+    imageUrl: "/images/products/watches/velora-signature-01/dial-macro.jpg",
   },
   {
     key: "hands",
     title: "The Hands",
-    category: "FACETED POLISHING",
+    category: "BLUED STEEL",
     description:
-      "Diamond-cut dauphine hands, mirror-beveled at 45° to catch fleeting ambient light.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=800&q=85",
+      "Heat-tempered blued steel leaf hands, beveled by hand to reflect natural light.",
+    imageUrl: "/images/products/watches/velora-signature-01/front.jpg",
   },
   {
     key: "crown",
     title: "The Crown",
-    category: "FLUTED KNURLING",
+    category: "TACTILE KNURLING",
     description:
-      "Double-fluted knurled crown with laser-engraved Maison monogram and dual gasket sealing.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=85",
+      "Knurled winding crown with dual internal gaskets for smooth, water-resistant operation.",
+    imageUrl: "/images/products/watches/velora-signature-01/crown-macro.jpg",
   },
   {
     key: "case",
     title: "The Case",
-    category: "316L ARCHITECTURE",
+    category: "904L STEEL",
     description:
-      "Surgically forged 316L stainless steel with alternating brushed flanks and mirror-polished bezel.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85",
+      "Surgical 904L stainless steel case with brushed sides and mirror-polished chamfers.",
+    imageUrl: "/images/products/watches/velora-signature-01/case-macro.jpg",
   },
   {
     key: "strap",
     title: "The Strap",
-    category: "HORWEEN LEATHER",
+    category: "SADDLE-STITCHED LEATHER",
     description:
-      "Hand-stitched Horween Noir alligator leather with hypoallergenic vegetal calfskin lining.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&w=800&q=85",
+      "Hand-stitched French calfskin leather with durable wax-thread saddle stitching.",
+    imageUrl: "/images/products/watches/velora-signature-01/strap-clasp.jpg",
   },
   {
     key: "clasp",
     title: "The Clasp",
-    category: "DEPLOYANT MECHANISM",
+    category: "DEPLOYANT BUCKLE",
     description:
-      "Solid stainless steel butterfly deployant mechanism with dual micro-sprung safety release triggers.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=800&q=85",
+      "Solid stainless steel folding deployant clasp with a secure quick-release trigger.",
+    imageUrl: "/images/products/watches/velora-signature-01/strap-clasp.jpg",
   },
 ];
 

@@ -2,19 +2,19 @@ import prisma from "../src/lib/prisma";
 
 const HOMEPAGE_SECTIONS = [
   {
-    name: "Hero Cinematic Showcase",
+    name: "Hero Showcase",
     sectionKey: "hero_main",
     title: "TIME, REFINED.",
     subtitle: "Contemporary timepieces created for moments that matter.",
     sortOrder: 1,
     isActive: true,
     content: {
-      badge: "Maison Velora Ateliers Geneva",
+      badge: "Swiss Craftsmanship",
       ctaText: "DISCOVER THE COLLECTION",
       ctaLink: "/collections/signature",
       secondaryCtaText: "EXPLORE WATCHES",
       secondaryCtaLink: "/watches",
-      bgImageUrl: "/images/velora-hero-editorial.jpg",
+      bgImageUrl: "/images/products/watches/velora-signature-01/editorial.jpg",
       videoUrl: "",
     },
   },
@@ -22,154 +22,154 @@ const HOMEPAGE_SECTIONS = [
     name: "Featured Signature Watch",
     sectionKey: "featured_watch",
     title: "THE SIGNATURE",
-    subtitle: "A monolithic titanium case sheltering our caliber 1842 tourbillon with 72-hour reserve.",
+    subtitle: "Clean geometric proportions, surgical 904L steel case, and in-house automatic movement.",
     sortOrder: 2,
     isActive: true,
     content: {
       productSlug: "velora-signature-01",
       ctaText: "DISCOVER THE WATCH",
       ctaLink: "/product/velora-signature-01",
-      badge: "Geneva Seal Caliber",
-      bgImageUrl: "/images/velora-signature-01.jpg",
+      badge: "Featured Timepiece",
+      bgImageUrl: "/images/products/watches/velora-signature-01/front.jpg",
     },
   },
   {
     name: "Collection Narrative Story",
     sectionKey: "collection_story",
     title: "DESIGNED BEYOND THE MOMENT.",
-    subtitle: "Every line, bevel, and reflection is crafted in silent dialogue between human mastery and eternal materials.",
+    subtitle: "Every watch and fragrance is shaped by a quiet dedication to craft, balance, and pure materials.",
     sortOrder: 3,
     isActive: true,
     content: {
-      bgImageUrl: "/images/velora-hero-editorial.jpg",
-      ctaText: "OUR ATELIER HERITAGE",
+      bgImageUrl: "/images/products/watches/velora-signature-01/editorial.jpg",
+      ctaText: "READ OUR STORY",
       ctaLink: "/journal",
     },
   },
   {
     name: "Collections Editorial Grid",
     sectionKey: "collections_grid",
-    title: "ATELIER EDITIONS",
-    subtitle: "Explore our limited architectural timepieces and haute parfumerie collections.",
+    title: "THE COLLECTIONS",
+    subtitle: "Explore our original timepieces and fine fragrance collections.",
     sortOrder: 4,
     isActive: true,
     content: {
       collectionSlugs: ["signature", "noir", "classic"],
-      ctaText: "EXPLORE ALL EDITIONS",
+      ctaText: "EXPLORE COLLECTIONS",
       ctaLink: "/collections",
     },
   },
   {
     name: "Time and Scent Split Showcase",
     sectionKey: "watch_fragrance_split",
-    title: "TIME & ESSENCE",
-    subtitle: "Two distinct expressions of singular luxury: Haute Horlogerie & High Perfumery.",
+    title: "TWO ARTS, ONE PHILOSOPHY",
+    subtitle: "Precision Swiss watchmaking and French high perfumery created to complement one another.",
     sortOrder: 5,
     isActive: true,
     content: {
-      watchTitle: "HAUTE HORLOGERIE",
-      watchSubtitle: "Micro-mechanical sculpture and Geneva precision.",
+      watchTitle: "TIMEPIECES",
+      watchSubtitle: "Original automatic and manual-wind watches crafted in Geneva.",
       watchLink: "/watches",
-      watchImage: "/images/velora-signature-01.jpg",
-      fragranceTitle: "PARFUMS D'EXCEPTION",
-      fragranceSubtitle: "Aged extraits distilled from rare botanicals in Grasse.",
+      watchImage: "/images/products/watches/velora-signature-01/editorial.jpg",
+      fragranceTitle: "FRAGRANCES",
+      fragranceSubtitle: "Pure extraits de parfum formulated with rare botanical essences in Grasse.",
       fragranceLink: "/fragrances",
-      fragranceImage: "/images/fragrance-editorial.jpg",
+      fragranceImage: "/images/products/fragrances/velora-noir-extrait/editorial.jpg",
     },
   },
   {
-    name: "Signature Product Macro Section",
+    name: "Signature Product Section",
     sectionKey: "signature_product",
     title: "VELORA SIGNATURE 01",
-    subtitle: "Hand-finished internal beveling with titanium crown and sapphire display back.",
+    subtitle: "Hand-finished blued steel hands, opaline ivory dial, and sapphire display back.",
     sortOrder: 6,
     isActive: true,
     content: {
       productSlug: "velora-signature-01",
-      ctaText: "INSPECT TECHNICAL DOSSIER",
+      ctaText: "DISCOVER THE WATCH",
       ctaLink: "/product/velora-signature-01",
     },
   },
   {
-    name: "Craftsmanship & Atelier Gallery",
+    name: "Craftsmanship Gallery",
     sectionKey: "craftsmanship_gallery",
-    title: "THE ART OF THE HAND",
-    subtitle: "Over two hundred hours of hand-finishing per individual timepiece.",
+    title: "MADE WITH CARE",
+    subtitle: "Every detail is considered, from hand-beveled edges to custom deployant clasps.",
     sortOrder: 7,
     isActive: true,
     content: {
       pillars: [
-        { title: "Anglage & Polishing", description: "Beveled bridges mirror-polished with gentian wood paste." },
-        { title: "Grand Feu Enameling", description: "Enamel dials fired at 800°C in small kiln batches." },
-        { title: "Grasse Distillation", description: "Steam extraction preserving delicate floral volatile essences." },
+        { title: "Precision Finishing", description: "Beveled edges and brushed surfaces finished by hand." },
+        { title: "Sapphire Crystal", description: "Scratch-resistant double-domed sapphire with anti-reflective coating." },
+        { title: "Grasse Extraction", description: "Pure botanical essences distilled for maximum longevity." },
       ],
     },
   },
   {
     name: "High Perfumery Editorial",
     sectionKey: "fragrance_editorial",
-    title: "EXTRAITS D'AUTEUR",
-    subtitle: "Sensory compositions created without temporal constraint or compromise.",
+    title: "HIGH PERFUMERY",
+    subtitle: "Formulated with rare botanical oils at high concentrations for remarkable longevity.",
     sortOrder: 8,
     isActive: true,
     content: {
-      ctaText: "DISCOVER THE PARFUMS",
+      ctaText: "EXPLORE FRAGRANCES",
       ctaLink: "/fragrances",
-      bgImageUrl: "/images/fragrance-editorial.jpg",
+      bgImageUrl: "/images/products/fragrances/velora-noir-extrait/editorial.jpg",
     },
   },
   {
-    name: "Gifting & Bespoke Packaging",
+    name: "Gifting & Packaging",
     sectionKey: "gifting_packaging",
-    title: "THE MAISON PRESENTATION",
-    subtitle: "Arrives in solid lacquer timber cases sealed with tamper-evident security holographic locks.",
+    title: "LUXURY PACKAGING",
+    subtitle: "Each order arrives in our signature gift box, crafted from fine materials and prepared by hand.",
     sortOrder: 9,
     isActive: true,
     content: {
-      bgImageUrl: "/images/velora-packaging.jpg",
-      badge: "Complimentary Armored Delivery",
+      bgImageUrl: "/images/products/watches/velora-signature-01/packaging.jpg",
+      badge: "Complimentary Insured Delivery",
     },
   },
   {
-    name: "Maison Brand Legacy",
+    name: "Brand Story",
     sectionKey: "brand_story",
-    title: "BORN IN GENEVA",
-    subtitle: "An independent atelier dedicated to contemporary collectors who value rarity over ubiquity.",
+    title: "OUR HERITAGE",
+    subtitle: "An independent luxury brand dedicated to refined design, pure materials, and lasting craftsmanship.",
     sortOrder: 10,
     isActive: true,
     content: {
-      ctaText: "READ OUR CHRONICLES",
+      ctaText: "READ OUR STORY",
       ctaLink: "/journal",
     },
   },
   {
-    name: "Journal Chronicles Preview",
+    name: "Journal Preview",
     sectionKey: "journal_preview",
-    title: "THE CHRONICLES",
-    subtitle: "Insights from our horologists, master perfumers, and private viewings.",
+    title: "THE JOURNAL",
+    subtitle: "Stories on design, craft, and the art of living well.",
     sortOrder: 11,
     isActive: true,
     content: {
-      viewAllText: "VIEW ALL CHRONICLES",
+      viewAllText: "VIEW ALL ARTICLES",
       viewAllLink: "/journal",
     },
   },
   {
-    name: "Private Salon Newsletter Invitation",
+    name: "Newsletter Invitation",
     sectionKey: "newsletter_section",
-    title: "THE PRIVATE SALON",
-    subtitle: "Receive invitation-only announcements for novelties, limited allocations, and bespoke commissions.",
+    title: "STAY CONNECTED",
+    subtitle: "Be the first to hear about new timepiece releases, fragrance arrivals, and private events.",
     sortOrder: 12,
     isActive: true,
     content: {
-      buttonText: "REQUEST PRIVILEGES",
-      privacyNotice: "We honor your discretion. No promotional frequency.",
+      buttonText: "SUBSCRIBE",
+      privacyNotice: "We respect your privacy. You can unsubscribe at any time.",
     },
   },
 ];
 
 async function main() {
-  console.log("Seeding all 12 CMS homepage sections...");
+  console.log("Seeding all 12 CMS homepage sections with natural English...");
 
   for (const sec of HOMEPAGE_SECTIONS) {
     await prisma.homepageSection.upsert({
@@ -194,12 +194,12 @@ async function main() {
   }
 
   const count = await prisma.homepageSection.count();
-  console.log(`✓ Successfully seeded/updated ${count} homepage sections in PostgreSQL!`);
+  console.log(`✓ Successfully updated ${count} homepage sections with natural English!`);
 }
 
 main()
   .catch((e) => {
-    console.error("Homepage sections seed failed:", e);
+    console.error("Homepage sections update failed:", e);
     process.exit(1);
   })
   .finally(async () => {

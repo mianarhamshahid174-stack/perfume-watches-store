@@ -45,19 +45,19 @@ export function SignatureProductSection({
   const ctaLabel = content?.ctaText || "DISCOVER";
   const ctaLink =
     content?.ctaLink ||
-    (product ? `/products/${product.slug}` : "/products/velora-signature-01");
+    (product ? `/product/${product.slug}` : "/product/velora-signature-01");
 
-  // Specs strictly required by prompt: Automatic movement, Sapphire crystal, Stainless steel
+  // Specs: Automatic movement, Sapphire crystal, Stainless steel
   const specs = content?.features || [
-    "Automatic movement",
-    "Sapphire crystal",
-    "Stainless steel",
+    "In-house automatic movement",
+    "Scratch-proof sapphire crystal",
+    "Surgical 904L stainless steel",
   ];
 
   const watchImage =
     content?.imageUrl ||
     product?.images?.[0]?.url ||
-    "/images/velora-signature-01.jpg";
+    "/images/products/watches/velora-signature-01/front.jpg";
 
   const formattedPrice = product?.price
     ? new Intl.NumberFormat("en-US", {

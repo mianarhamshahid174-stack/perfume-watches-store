@@ -22,15 +22,14 @@ export function FragranceEditorialSection({
   subtitle,
   content,
 }: FragranceEditorialSectionProps) {
-  const headline = title || "A SCENT THAT BECOMES YOUR SIGNATURE.";
+  const headline = title || "A Fragrance That Becomes Your Signature.";
   const description =
     subtitle ||
-    "Compounded in small batches in Grasse, France. Formulated with wild orris butter, aged Cambodian agarwood, and rare ambers macerated for six months in private oak casks.";
-  const ctaLabel = content?.ctaText || "DISCOVER HIGH PERFUMERY";
+    "Crafted in small batches in Grasse, France. Formulated with rare botanical absolutes and aged oils for exceptional depth and longevity.";
+  const ctaLabel = content?.ctaText || "Explore Fragrances";
   const ctaLink = content?.ctaLink || "/fragrances";
   const bgImage =
-    content?.bgImageUrl ||
-    "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=2000&q=85";
+    content?.bgImageUrl || "/images/products/fragrances/velora-noir-extrait/editorial.jpg";
 
   return (
     <section className="relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black py-28 border-b border-white/5">

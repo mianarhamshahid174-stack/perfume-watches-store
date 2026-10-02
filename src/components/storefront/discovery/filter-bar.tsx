@@ -86,7 +86,7 @@ export function FilterBar({
     activeChips.push({ key: min ? "minPrice" : "maxPrice", label });
   }
   if (searchParams.get("movement")) {
-    activeChips.push({ key: "movement", label: `Calibre: ${searchParams.get("movement")}` });
+    activeChips.push({ key: "movement", label: `Movement: ${searchParams.get("movement")}` });
   }
   if (searchParams.get("caseMaterial")) {
     activeChips.push({ key: "caseMaterial", label: `Case: ${searchParams.get("caseMaterial")}` });
@@ -120,7 +120,7 @@ export function FilterBar({
               className="inline-flex items-center gap-2.5 px-4 py-2.5 bg-neutral-900/80 hover:bg-neutral-800 border border-white/15 text-sand-100 hover:text-gold-300 text-xs font-mono uppercase tracking-[0.2em] transition-all"
             >
               <SlidersHorizontal className="h-3.5 w-3.5 text-gold-400" />
-              <span>Filter & Curate</span>
+              <span>Filter Products</span>
               {activeCount > 0 && (
                 <span className="h-5 w-5 rounded-full bg-gold-400 text-black text-[10px] font-bold flex items-center justify-center font-mono ml-1">
                   {activeCount}
@@ -129,7 +129,7 @@ export function FilterBar({
             </button>
 
             <span className="text-xs font-mono text-neutral-400 hidden sm:inline">
-              {totalCount} {totalCount === 1 ? "Creation" : "Creations Available"}
+              {totalCount} {totalCount === 1 ? "Product" : "Products"}
             </span>
           </div>
 
@@ -174,8 +174,8 @@ export function FilterBar({
                   onChange={(e) => handleSortChange(e.target.value)}
                   className="h-10 pl-3 pr-8 bg-neutral-950 border border-white/15 text-sand-100 text-xs font-mono tracking-wide focus:outline-none focus:border-gold-500 appearance-none cursor-pointer"
                 >
-                  <option value="featured">Featured / Curated</option>
-                  <option value="newest">Newest Additions</option>
+                  <option value="featured">Featured</option>
+                  <option value="newest">Newest</option>
                   <option value="price-asc">Price: Low to High</option>
                   <option value="price-desc">Price: High to Low</option>
                   <option value="best-selling">Best Selling</option>

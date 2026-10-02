@@ -119,7 +119,7 @@ export default function CheckoutPage() {
 
     if (step === 1) {
       if (!contact.email.includes("@")) {
-        setErrorMessage("Please provide a valid patron email address.");
+        setErrorMessage("Please provide a valid email address.");
         return false;
       }
       if (!contact.firstName.trim() || !contact.lastName.trim()) {
@@ -135,7 +135,7 @@ export default function CheckoutPage() {
 
     if (step === 2) {
       if (!shippingAddress.street1.trim()) {
-        setErrorMessage("Please enter your street address / residence in Pakistan.");
+        setErrorMessage("Please enter your street address in Pakistan.");
         return false;
       }
       if (!shippingAddress.city.trim()) {
@@ -192,7 +192,7 @@ export default function CheckoutPage() {
       const data = await res.json();
 
       if (!res.ok || !data.success) {
-        throw new Error(data.error || "Unable to complete allocation. Please verify your details.");
+        throw new Error(data.error || "Unable to complete order. Please verify your details.");
       }
 
       // Clear local bag
@@ -212,16 +212,16 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-black text-white pt-32 pb-20">
         <Container size="narrow">
           <div className="text-center py-20 bg-neutral-950 border border-white/10 p-8 space-y-6">
-            <h1 className="font-serif-luxury text-3xl text-sand-50">No Creations in Bag</h1>
+            <h1 className="font-serif-luxury text-3xl text-sand-50">Your Bag is Empty</h1>
             <p className="text-sm text-neutral-400 font-light">
-              Your atelier bag is currently empty. Please select a timepiece or fragrance to proceed with allocation.
+              Your shopping bag is currently empty. Please select a watch or fragrance to proceed to checkout.
             </p>
             <div className="pt-4">
               <Link
                 href="/watches"
                 className="px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-[0.2em] transition-colors"
               >
-                Explore Collection
+                Browse Watches
               </Link>
             </div>
           </div>
@@ -246,15 +246,15 @@ export default function CheckoutPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-1">
-                Geneva Atelier • Pakistan Market Allocation
+                VELORA • Pakistan Delivery
               </span>
               <h1 className="font-serif-luxury text-2xl sm:text-3xl lg:text-4xl text-sand-50 font-light">
-                Maison Checkout
+                Checkout
               </h1>
             </div>
             <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
               <Lock className="w-3.5 h-3.5 text-gold-400" />
-              <span>256-Bit Encrypted Concierge Tunnel</span>
+              <span>256-Bit SSL Secure Checkout</span>
             </div>
           </div>
 
@@ -317,10 +317,10 @@ export default function CheckoutPage() {
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-4">
                   <h2 className="font-serif-luxury text-xl text-sand-50">
-                    Step 1 of 5: Patron Contact Information
+                    Step 1 of 5: Contact Information
                   </h2>
                   <p className="text-xs text-neutral-400 font-light mt-1">
-                    Your allocation credentials and insured transit updates will be dispatched here.
+                    Your order confirmation and tracking updates will be sent to this email.
                   </p>
                 </div>
 
@@ -332,7 +332,7 @@ export default function CheckoutPage() {
                     <input
                       type="email"
                       required
-                      placeholder="patron@velora.com"
+                      placeholder="yourname@example.com"
                       value={contact.email}
                       onChange={(e) => setContact({ ...contact, email: e.target.value })}
                       className="w-full h-11 bg-neutral-900 border border-white/10 px-4 text-sm text-sand-50 placeholder:text-neutral-600 focus:outline-none focus:border-gold-400"
@@ -370,7 +370,7 @@ export default function CheckoutPage() {
 
                   <div>
                     <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
-                      Mobile Telephone (Pakistan) *
+                      Phone Number (Pakistan) *
                     </label>
                     <input
                       type="tel"
@@ -380,7 +380,7 @@ export default function CheckoutPage() {
                       className="w-full h-11 bg-neutral-900 border border-white/10 px-4 text-sm text-sand-50 placeholder:text-neutral-600 focus:outline-none focus:border-gold-400"
                     />
                     <p className="text-[10px] text-neutral-500 mt-1">
-                      Required for courier coordination and armored handoff verification.
+                      Required for courier delivery updates and order verification.
                     </p>
                   </div>
 
@@ -396,7 +396,7 @@ export default function CheckoutPage() {
                         className="w-4 h-4 rounded border-white/20 bg-neutral-900 text-gold-500 focus:ring-0"
                       />
                       <span className="text-xs text-neutral-300">
-                        Create a Maison Patron account to track order progress and access private viewings
+                        Create an account to track your orders and save details for future visits
                       </span>
                     </label>
 
@@ -438,7 +438,7 @@ export default function CheckoutPage() {
                     Step 2 of 5: Delivery Address in Pakistan
                   </h2>
                   <p className="text-xs text-neutral-400 font-light mt-1">
-                    White-glove armored transit direct from our bonded Swiss facility to your residence.
+                    Free, fully insured delivery directly to your doorstep in Pakistan.
                   </p>
                 </div>
 
@@ -485,12 +485,12 @@ export default function CheckoutPage() {
 
                   <div>
                     <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
-                      Street Address & Sector / Phase *
+                      Street Address & Area / Phase *
                     </label>
                     <input
                       type="text"
                       required
-                      placeholder="e.g. Bungalow 42-B, Khyaban-e-Hafiz, Phase 6, DHA"
+                      placeholder="e.g. House 42-B, Street 5, Phase 6, DHA"
                       value={shippingAddress.street1}
                       onChange={(e) =>
                         setShippingAddress({ ...shippingAddress, street1: e.target.value })
@@ -532,11 +532,11 @@ export default function CheckoutPage() {
 
                   <div>
                     <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
-                      Special Delivery Instructions / Gate Security Code (Optional)
+                      Delivery Instructions / Landmark (Optional)
                     </label>
                     <textarea
                       rows={2}
-                      placeholder="Provide any estate entrance instructions or private security gate protocols..."
+                      placeholder="Any instructions for the courier, gate pass, or nearby landmarks..."
                       value={orderNotes}
                       onChange={(e) => setOrderNotes(e.target.value)}
                       className="w-full bg-neutral-900 border border-white/10 p-3 text-xs text-sand-50 placeholder:text-neutral-600 focus:outline-none focus:border-gold-400"
@@ -571,10 +571,10 @@ export default function CheckoutPage() {
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-4">
                   <h2 className="font-serif-luxury text-xl text-sand-50">
-                    Step 3 of 5: Secure Transit Selection
+                    Step 3 of 5: Delivery Method
                   </h2>
                   <p className="text-xs text-neutral-400 font-light mt-1">
-                    Select your preferred transit protocol across Pakistan.
+                    Choose how you would like your order delivered across Pakistan.
                   </p>
                 </div>
 
@@ -599,10 +599,10 @@ export default function CheckoutPage() {
                         />
                         <div className="space-y-1">
                           <span className="font-serif-luxury text-base text-sand-50 block">
-                            Maison Armored Courier (Pakistan)
+                            Standard Insured Delivery (Pakistan)
                           </span>
                           <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                            Complimentary high-security armored delivery via Ferrari Secure Logistics / TCS Hazir. Full transit insurance included.
+                            Free, fully insured courier delivery with direct parcel tracking.
                           </p>
                           <span className="text-[10px] font-mono text-gold-400 block pt-1">
                             Estimated Delivery: 3 to 5 Business Days
@@ -610,7 +610,7 @@ export default function CheckoutPage() {
                         </div>
                       </div>
                       <div className="text-right font-mono text-emerald-400 text-sm font-semibold">
-                        Complimentary
+                        Free
                       </div>
                     </div>
                   </label>
@@ -635,10 +635,10 @@ export default function CheckoutPage() {
                         />
                         <div className="space-y-1">
                           <span className="font-serif-luxury text-base text-sand-50 block">
-                            VIP Dedicated Air Courier Dispatch
+                            Express Priority Air Delivery
                           </span>
                           <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                            Direct flight priority dispatch with personal concierge handoff and verification of presentation box seals upon delivery.
+                            Fast priority air delivery with expedited dispatch and direct delivery handoff.
                           </p>
                           <span className="text-[10px] font-mono text-gold-400 block pt-1">
                             Estimated Delivery: 24 to 48 Hours
@@ -684,10 +684,10 @@ export default function CheckoutPage() {
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-4">
                   <h2 className="font-serif-luxury text-xl text-sand-50">
-                    Step 4 of 5: Payment Protocol
+                    Step 4 of 5: Payment Method
                   </h2>
                   <p className="text-xs text-neutral-400 font-light mt-1">
-                    Select your settlement instrument for Pakistan.
+                    Choose how you would like to pay for your order in Pakistan.
                   </p>
                 </div>
 
@@ -720,16 +720,16 @@ export default function CheckoutPage() {
                           </span>
                         </div>
                         <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                          Pay in cash or bank manager&apos;s cheque directly upon physical delivery and inspection of the sealed packaging at your address.
+                          Pay in cash directly upon physical delivery and inspection of the sealed packaging at your address.
                         </p>
                         <p className="text-[10px] font-mono text-gold-300/80 pt-1">
-                          No advance payment required. Order confirmation call will be placed prior to dispatch.
+                          No advance payment needed. We will call you to confirm before dispatch.
                         </p>
                       </div>
                     </div>
                   </label>
 
-                  {/* Option 2: Concierge Bank Wire (Meezan Bank IBAN) */}
+                  {/* Option 2: Bank Wire (Meezan Bank IBAN) */}
                   <label
                     onClick={() => setPaymentMethod("bank_transfer")}
                     className={`block p-5 border cursor-pointer transition-all ${
@@ -750,16 +750,16 @@ export default function CheckoutPage() {
                         <div className="flex items-center gap-2">
                           <Building className="w-4 h-4 text-gold-400" />
                           <span className="font-serif-luxury text-base text-sand-50">
-                            Maison Concierge Bank Wire (IBAN Transfer)
+                            Bank Transfer (Direct IBAN)
                           </span>
                         </div>
                         <p className="text-xs text-neutral-400 font-light leading-relaxed">
-                          Direct online interbank transfer to Maison Velora Pakistan corporate custody account at Meezan Bank Limited.
+                          Transfer directly from your banking app or ATM to our corporate Meezan Bank account.
                         </p>
                         {paymentMethod === "bank_transfer" && (
                           <div className="mt-3 p-3 bg-neutral-950 border border-white/10 space-y-1 text-xs font-mono">
                             <div className="text-gold-400 font-semibold">Meezan Bank Limited (Pakistan)</div>
-                            <div className="text-neutral-300">Account: Maison Velora Private Ltd</div>
+                            <div className="text-neutral-300">Account: VELORA Private Ltd</div>
                             <div className="text-sand-100 font-mono">IBAN: PK42MEZN0001090102938475</div>
                           </div>
                         )}
@@ -767,7 +767,7 @@ export default function CheckoutPage() {
                     </div>
                   </label>
 
-                  {/* Option 3: Configurable Online Payment (Stripe / Bank Gateway) */}
+                  {/* Option 3: Configurable Online Payment (Card / Gateway) */}
                   <label
                     onClick={() => setPaymentMethod("online")}
                     className={`block p-5 border cursor-pointer transition-all ${
@@ -796,7 +796,7 @@ export default function CheckoutPage() {
                         </p>
                         {paymentMethod === "online" && (
                           <div className="mt-2 p-2.5 bg-neutral-900 border border-white/10 text-[11px] text-neutral-400">
-                            Note: If live gateway credentials are in sandbox/development mode, our payment abstraction will prompt you to select COD or Concierge Wire for seamless order processing.
+                            Note: For instant processing in Pakistan, Cash on Delivery (COD) and Direct Bank Transfer are fully supported.
                           </div>
                         )}
                       </div>
@@ -831,10 +831,10 @@ export default function CheckoutPage() {
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-4">
                   <h2 className="font-serif-luxury text-xl text-sand-50">
-                    Step 5 of 5: Review & Confirm Allocation
+                    Step 5 of 5: Review & Place Order
                   </h2>
                   <p className="text-xs text-neutral-400 font-light mt-1">
-                    Please inspect your order summary before committing your reservation.
+                    Please review your order details before confirming.
                   </p>
                 </div>
 
@@ -844,7 +844,7 @@ export default function CheckoutPage() {
                   <div className="p-4 bg-neutral-900/60 border border-white/10 space-y-1">
                     <div className="flex justify-between items-center">
                       <span className="font-mono uppercase text-[10px] tracking-wider text-gold-400 font-semibold">
-                        Patron Contact
+                        Contact Information
                       </span>
                       <button
                         type="button"
@@ -865,7 +865,7 @@ export default function CheckoutPage() {
                   <div className="p-4 bg-neutral-900/60 border border-white/10 space-y-1">
                     <div className="flex justify-between items-center">
                       <span className="font-mono uppercase text-[10px] tracking-wider text-gold-400 font-semibold">
-                        Delivery Destination
+                        Shipping Address
                       </span>
                       <button
                         type="button"
@@ -884,7 +884,7 @@ export default function CheckoutPage() {
                     </div>
                     {orderNotes && (
                       <div className="text-gold-400/80 text-[11px] pt-1">
-                        Gate instructions: {orderNotes}
+                        Delivery instructions: {orderNotes}
                       </div>
                     )}
                   </div>
@@ -893,50 +893,50 @@ export default function CheckoutPage() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-4 bg-neutral-900/60 border border-white/10 space-y-1">
                       <span className="font-mono uppercase text-[10px] tracking-wider text-gold-400 font-semibold block">
-                        Transit Protocol
+                        Delivery Method
                       </span>
                       <div className="text-sand-100 font-medium">
                         {deliveryMethod === "standard"
-                          ? "Armored Courier (Pakistan)"
-                          : "VIP Dedicated Air Courier"}
+                          ? "Standard Insured Delivery"
+                          : "Express Air Delivery"}
                       </div>
                       <div className="text-neutral-400 text-[11px]">
                         {deliveryMethod === "standard"
-                          ? "Complimentary (3-5 Days)"
-                          : "24-48h Priority Flight Dispatch"}
+                          ? "Free (3-5 Business Days)"
+                          : "24-48 Hours Express Dispatch"}
                       </div>
                     </div>
 
                     <div className="p-4 bg-neutral-900/60 border border-white/10 space-y-1">
                       <span className="font-mono uppercase text-[10px] tracking-wider text-gold-400 font-semibold block">
-                        Payment Selection
+                        Payment Method
                       </span>
                       <div className="text-sand-100 font-medium">
                         {paymentMethod === "cod"
                           ? "Cash on Delivery (COD)"
                           : paymentMethod === "bank_transfer"
-                          ? "Meezan Bank Wire"
+                          ? "Bank Transfer (Meezan Bank)"
                           : "Credit / Debit Card"}
                       </div>
                       <div className="text-neutral-400 text-[11px]">
                         {paymentMethod === "cod"
-                          ? "Settlement on physical handoff"
+                          ? "Pay upon physical delivery"
                           : paymentMethod === "bank_transfer"
                           ? "Direct IBAN deposit"
-                          : "Gateway checkout"}
+                          : "Online card payment"}
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Terms of Allocation */}
+                {/* Terms of Order */}
                 <div className="p-4 bg-neutral-950 border border-gold-500/20 text-xs text-neutral-400 space-y-2">
                   <div className="flex items-center gap-2 text-gold-300 font-mono text-[11px] uppercase tracking-wider">
                     <ShieldCheck className="w-4 h-4 text-gold-400" />
-                    <span>Maison Guarantee & COD Terms</span>
+                    <span>Order & Delivery Terms</span>
                   </div>
                   <p className="leading-relaxed text-[11px]">
-                    By placing this order, you confirm reservation of the handcrafted pieces listed. For Cash on Delivery orders, a representative will contact your phone number to coordinate security clearances and courier arrival.
+                    By placing this order, you confirm your purchase of the items listed above. For Cash on Delivery orders, our team will call your phone number to confirm your address before dispatch.
                   </p>
                 </div>
 
@@ -958,10 +958,10 @@ export default function CheckoutPage() {
                     className="px-8 h-14 bg-gold-500 hover:bg-gold-400 disabled:opacity-50 text-obsidian font-semibold text-xs uppercase tracking-[0.25em] transition-all flex items-center gap-3 shadow-[0_4px_25px_rgba(212,175,55,0.3)]"
                   >
                     {submitting ? (
-                      <span>Reserving Creation...</span>
+                      <span>Placing Order...</span>
                     ) : (
                       <>
-                        <span>Complete Reservation</span>
+                        <span>Place Order</span>
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
@@ -975,7 +975,7 @@ export default function CheckoutPage() {
           <div className="lg:col-span-5 sticky top-28 space-y-6">
             <div className="bg-neutral-950 border border-white/10 p-6 space-y-6 rounded-sm">
               <h2 className="font-serif-luxury text-lg text-sand-50 border-b border-white/10 pb-3">
-                Reserved Pieces ({items.length})
+                Order Items ({items.length})
               </h2>
 
               {/* Items List */}
@@ -1021,7 +1021,7 @@ export default function CheckoutPage() {
               {/* Coupon Code Section */}
               <div className="border-t border-white/10 pt-4 space-y-2">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400">
-                  Privilege Code
+                  Discount Code
                 </span>
                 {appliedCoupon ? (
                   <div className="flex items-center justify-between p-2.5 bg-gold-950/20 border border-gold-500/30 rounded-sm">
@@ -1078,7 +1078,7 @@ export default function CheckoutPage() {
                   <div className="flex justify-between items-center text-gold-400">
                     <span className="flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
-                      <span>Privilege Discount</span>
+                      <span>Discount</span>
                     </span>
                     <span className="font-mono">
                       -{appliedCoupon.formattedDiscountPKR}
@@ -1087,10 +1087,10 @@ export default function CheckoutPage() {
                 )}
 
                 <div className="flex justify-between items-center text-neutral-400">
-                  <span>Transit (Pakistan)</span>
+                  <span>Shipping (Pakistan)</span>
                   <span className="font-mono text-sand-100">
                     {shippingPKR === 0 ? (
-                      <span className="text-emerald-400">Complimentary</span>
+                      <span className="text-emerald-400">Free</span>
                     ) : (
                       formatPKR(shippingPKR)
                     )}
@@ -1100,7 +1100,7 @@ export default function CheckoutPage() {
                 <div className="flex justify-between items-baseline pt-4 border-t border-white/10">
                   <div>
                     <span className="font-serif-luxury text-base text-sand-50 block">
-                      Total Due
+                      Total
                     </span>
                     <span className="text-[9px] font-mono text-neutral-500">
                       Currency: PKR (₨)
@@ -1121,13 +1121,13 @@ export default function CheckoutPage() {
             {/* Assistance card */}
             <div className="p-4 bg-neutral-950/60 border border-white/5 space-y-2 text-center text-xs">
               <span className="text-[10px] font-mono uppercase tracking-wider text-gold-400 block">
-                Direct Atelier Help
+                Need Help?
               </span>
               <p className="text-neutral-400 font-light text-[11px]">
-                Have questions before completing allocation? Call our Geneva Concierge:
+                Have questions before completing your order? Contact our support team:
               </p>
               <div className="font-mono text-sand-200 text-xs">
-                +92 (021) 111-VELORA / concierge@velora.com
+                +92 (021) 111-VELORA / support@velora.com
               </div>
             </div>
           </div>

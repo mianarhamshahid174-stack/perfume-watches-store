@@ -30,19 +30,18 @@ export function WatchFragranceSplitSection({
   const timeTitle = content?.timeTitle || "TIME";
   const timeSub =
     content?.timeSubtitle ||
-    "Proprietary mechanical calibers assembled by master horologists in Geneva.";
-  const timeHref = content?.timeLink || "/collections/signature";
+    "Mechanical timepieces assembled with precision by master watchmakers in Geneva.";
+  const timeHref = content?.timeLink || "/watches";
   const timeImage =
-    content?.timeImageUrl || "/images/velora-hero-editorial.jpg";
+    content?.timeImageUrl || "/images/products/watches/velora-signature-01/editorial.jpg";
 
   const scentTitle = content?.scentTitle || "SCENT";
   const scentSub =
     content?.scentSubtitle ||
-    "35% pure parfum extraits matured in Grasse oak vats.";
-  const scentHref = content?.scentLink || "/collections/nocturne-prive";
+    "Pure extraits de parfum formulated with rare botanical essences in Grasse.";
+  const scentHref = content?.scentLink || "/fragrances";
   const scentImage =
-    content?.scentImageUrl ||
-    "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1600&q=85";
+    content?.scentImageUrl || "/images/products/fragrances/velora-noir-extrait/editorial.jpg";
 
   return (
     <section className="relative w-full min-h-[80vh] grid grid-cols-1 md:grid-cols-2 border-b border-white/5 overflow-hidden bg-black">

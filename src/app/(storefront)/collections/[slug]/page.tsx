@@ -30,9 +30,9 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   const col = await prisma.collection.findUnique({ where: { slug } });
   if (!col) return { title: "Collection Not Found | VELORA" };
 
-  const title = col.seoTitle || `${col.name} Collection | VELORA Haute Horlogerie`;
+  const title = col.seoTitle || `${col.name} Collection | VELORA`;
   const description =
-    col.seoDescription || col.description || `Discover the ${col.name} repertoire of fine luxury creations.`;
+    col.seoDescription || col.description || `Discover the ${col.name} collection at VELORA.`;
   const canonicalUrl = col.canonicalUrl || `https://velora-ateliers.com/collections/${col.slug}`;
   const ogImageUrl =
     col.ogImage || col.heroImage || col.bannerUrl || "https://velora-ateliers.com/images/velora-hero-editorial.jpg";
@@ -116,11 +116,11 @@ export default async function CollectionDetailPage({
       {/* Editorial Header */}
       <EditorialHeader
         title={collection.name}
-        subtitle="Maison Edition Repertoire"
-        description={collection.description || "Finite, numbered timepieces and sensory masterworks engineered without concession."}
+        subtitle="Curated Collection"
+        description={collection.description || "Original luxury designs crafted with exceptional precision and detail."}
         imageUrl={headerImage}
         productCount={products.length}
-        badge="Official Repertoire"
+        badge="Collection"
         breadcrumbs={[
           { label: "Collections", href: "/collections" },
           { label: collection.name },

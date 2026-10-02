@@ -45,7 +45,7 @@ export function StickyAddToCart({ product, selectedVariant }: StickyAddToCartPro
   const primaryImage =
     product.images?.find((img) => img.isPrimary)?.url ||
     product.images?.[0]?.url ||
-    "/images/velora-signature-01.jpg";
+    "/images/products/watches/velora-signature-01/front.jpg";
 
   if (!isVisible) return null;
 
@@ -89,7 +89,7 @@ export function StickyAddToCart({ product, selectedVariant }: StickyAddToCartPro
           ) : isAdded ? (
             <span className="flex items-center gap-1.5">
               <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-              <span>Reserved</span>
+              <span>Added</span>
             </span>
           ) : (
             "Add to Bag"

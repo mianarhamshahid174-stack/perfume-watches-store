@@ -29,7 +29,7 @@ export default function ResetPasswordPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      setError("Passphrases do not match.");
+      setError("Passwords do not match.");
       return;
     }
 
@@ -66,18 +66,18 @@ export default function ResetPasswordPage() {
         <div className="max-w-md mx-auto border border-white/10 bg-noir-900/80 p-8 sm:p-10 shadow-2xl backdrop-blur-xl space-y-6">
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono tracking-ultra uppercase text-gold-400">
-              Security Protocol
+              Account Security
             </span>
             <h1 className="font-serif-luxury text-3xl font-light text-sand-50 tracking-wide">
-              Establish New Passphrase
+              Set New Password
             </h1>
             <p className="text-xs text-platinum-400 font-light">
-              Enter your reset verification token and choose a secure new passphrase.
+              Enter your reset verification token and choose a secure new password.
             </p>
           </div>
 
           {toastMessage && (
-            <Toast type="success" title="Passphrase Updated" message={toastMessage} />
+            <Toast type="success" title="Password Updated" message={toastMessage} />
           )}
 
           {error && (
@@ -92,12 +92,12 @@ export default function ResetPasswordPage() {
               required
               value={token}
               onChange={(e) => setToken(e.target.value)}
-              placeholder="Paste token or open from email"
+              placeholder="Paste token or open link from email"
               disabled={isLoading}
             />
 
             <Input
-              label="New Passphrase (Min. 8 characters)"
+              label="New Password (Min. 8 characters)"
               type="password"
               required
               value={newPassword}
@@ -107,7 +107,7 @@ export default function ResetPasswordPage() {
             />
 
             <Input
-              label="Confirm New Passphrase"
+              label="Confirm New Password"
               type="password"
               required
               value={confirmPassword}
@@ -123,7 +123,7 @@ export default function ResetPasswordPage() {
               className="w-full mt-2"
               isLoading={isLoading}
             >
-              Update Passphrase
+              Update Password
             </Button>
           </form>
 
@@ -132,7 +132,7 @@ export default function ResetPasswordPage() {
               href="/login"
               className="text-xs text-platinum-400 hover:text-gold-400 transition-colors"
             >
-              Return to Login
+              Back to Login
             </Link>
           </div>
         </div>

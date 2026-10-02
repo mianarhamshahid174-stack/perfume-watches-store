@@ -27,15 +27,15 @@ export default function WishlistPage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-2">
-                Curated Private Archive
+                Saved Items
               </span>
               <h1 className="font-serif-luxury text-3xl sm:text-4xl lg:text-5xl font-light text-sand-50 tracking-wide">
-                Your Curated Wishlist
+                Your Wishlist
               </h1>
             </div>
             <div className="flex items-center gap-4">
               <span className="text-xs font-mono text-neutral-400">
-                {items.length} {items.length === 1 ? "Piece" : "Pieces"} Curated
+                {items.length} {items.length === 1 ? "Item" : "Items"} Saved
               </span>
               {items.length > 0 && (
                 <button
@@ -55,10 +55,10 @@ export default function WishlistPage() {
             <Heart className="w-16 h-16 text-neutral-600 mx-auto stroke-[1.2]" />
             <div className="space-y-2">
               <h2 className="font-serif-luxury text-2xl text-sand-100">
-                Your Salon Archive is Empty
+                Your Wishlist is Empty
               </h2>
               <p className="text-sm text-neutral-400 font-light max-w-md mx-auto leading-relaxed">
-                You have not yet marked any timepieces or parfums for reservation. Browse our ateliers and select the heart icon to preserve creations here.
+                You haven&apos;t saved any watches or fragrances yet. Browse our collection and click the heart icon on any item to save it here.
               </p>
             </div>
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -66,13 +66,13 @@ export default function WishlistPage() {
                 href="/watches"
                 className="w-full sm:w-auto px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-[0.2em] transition-colors"
               >
-                Discover Timepieces
+                Explore Watches
               </Link>
               <Link
                 href="/fragrances"
                 className="w-full sm:w-auto px-8 py-3.5 border border-white/20 hover:border-gold-400 text-sand-100 text-xs font-semibold uppercase tracking-[0.2em] transition-colors"
               >
-                Discover Parfums
+                Explore Fragrances
               </Link>
             </div>
           </div>
@@ -130,13 +130,13 @@ export default function WishlistPage() {
                         className="flex-1 h-11 bg-gold-500 hover:bg-gold-400 text-obsidian font-semibold text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4" />
-                        <span>Move to Bag</span>
+                        <span>Add to Bag</span>
                       </button>
 
                       <Link
                         href={`/product/${item.slug || item.productId}`}
                         className="px-4 h-11 border border-white/20 hover:border-white/40 flex items-center justify-center text-neutral-300 hover:text-white transition-colors"
-                        title="View Creation Details"
+                        title="View Product"
                       >
                         <ExternalLink className="w-4 h-4" />
                       </Link>

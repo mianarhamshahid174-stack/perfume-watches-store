@@ -8,15 +8,15 @@ import { ArrowUpRight, ArrowRight } from "lucide-react";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "The Collections | VELORA Haute Horlogerie & High Perfumery",
+  title: "Collections | VELORA",
   description:
-    "Explore the distinct design repertoires of Maison VELORA: Signature, Noir, Classic, Celestial, and Nocturne Privé.",
+    "Explore the distinct design collections of VELORA: Signature, Noir, Classic, Celestial, and Nocturne Privé.",
   alternates: {
     canonical: "https://velora-ateliers.com/collections",
   },
   openGraph: {
-    title: "The Collections | VELORA Haute Horlogerie",
-    description: "Explore the distinct design repertoires of Maison VELORA.",
+    title: "Collections | VELORA",
+    description: "Explore the distinct design collections of VELORA.",
     images: [{ url: "/images/velora-hero-editorial.jpg" }],
   },
 };
@@ -58,11 +58,11 @@ export default async function CollectionsIndexPage() {
       {/* Editorial Header */}
       <EditorialHeader
         title="The Collections"
-        subtitle="Architectural Repertoires"
-        description="Each collection represents an unyielding inquiry into form, complication, and material sovereignty. From the sculptural purity of the Signature line to the shadows of Noir and the eternal depth of Classic horology."
+        subtitle="Signature Product Lines"
+        description="Discover our distinct collections of watches and fragrances. From modern minimalist silhouettes to timeless classic designs, each collection embodies precision craftsmanship and enduring luxury."
         imageUrl="/images/velora-hero-editorial.jpg"
         productCount={totalProducts}
-        badge="Maison Archives"
+        badge="Collections"
         breadcrumbs={[{ label: "Collections" }]}
       />
 
@@ -102,7 +102,7 @@ export default async function CollectionsIndexPage() {
                   {/* Count Pill */}
                   <div className="absolute top-6 right-6 z-10">
                     <span className="text-[10px] font-mono tracking-widest text-sand-200 uppercase bg-black/70 backdrop-blur-md px-3 py-1 border border-white/10">
-                      {col.products.length} {col.products.length === 1 ? "Piece" : "Pieces"}
+                      {col.products.length} {col.products.length === 1 ? "Product" : "Products"}
                     </span>
                   </div>
                 </Link>
@@ -129,7 +129,7 @@ export default async function CollectionsIndexPage() {
                       href={`/collections/${col.slug}`}
                       className="inline-flex items-center text-xs font-mono uppercase tracking-[0.22em] text-sand-100 group-hover:text-gold-300 transition-colors"
                     >
-                      <span>Discover Repertoire</span>
+                      <span>Explore Collection</span>
                       <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
 

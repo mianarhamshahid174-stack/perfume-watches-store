@@ -33,8 +33,8 @@ export function HeroSection({ title, subtitle, content }: HeroSectionProps) {
   const primaryLink = content?.ctaLink || "/collections/signature";
   const secondaryCta = content?.secondaryCtaText || "EXPLORE WATCHES";
   const secondaryLink = content?.secondaryCtaLink || "/watches";
-  const badge = content?.badge || "Maison Velora Ateliers Geneva";
-  const bgImage = content?.bgImageUrl || "/images/velora-hero-editorial.jpg";
+  const badge = content?.badge || "Swiss Craftsmanship";
+  const bgImage = content?.bgImageUrl || "/images/products/watches/velora-signature-01/editorial.jpg";
 
   const handleScrollDown = () => {
     window.scrollTo({

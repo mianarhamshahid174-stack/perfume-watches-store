@@ -125,7 +125,7 @@ export default function OrderConfirmationPage() {
         <div className="text-center space-y-4">
           <div className="w-12 h-12 border-2 border-gold-400 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-gold-300">
-            Retrieving Geneva Allocation Certificate...
+            Loading order details...
           </p>
         </div>
       </div>
@@ -137,14 +137,14 @@ export default function OrderConfirmationPage() {
       <div className="min-h-screen bg-black text-white pt-36 pb-24">
         <Container size="narrow">
           <div className="p-8 bg-neutral-950 border border-white/10 text-center space-y-4">
-            <h1 className="font-serif-luxury text-2xl text-sand-50">Allocation Notice</h1>
-            <p className="text-xs text-neutral-400">{error || "Allocation record could not be found."}</p>
+            <h1 className="font-serif-luxury text-2xl text-sand-50">Order Notice</h1>
+            <p className="text-xs text-neutral-400">{error || "Order record could not be found."}</p>
             <div className="pt-4">
               <Link
                 href="/watches"
                 className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-wider inline-block"
               >
-                Return to Collections
+                Return to Store
               </Link>
             </div>
           </div>
@@ -164,20 +164,20 @@ export default function OrderConfirmationPage() {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-gold-950/40 border border-gold-500/30 rounded-full text-gold-300 text-[10px] font-mono uppercase tracking-widest">
                 <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
-                <span>Allocation Reserved & Confirmed</span>
+                <span>Order Confirmed</span>
               </div>
               <h1 className="font-serif-luxury text-3xl sm:text-4xl lg:text-5xl font-light text-sand-50">
-                Thank You for Your Acquisition
+                Thank You for Your Order
               </h1>
               <p className="text-xs sm:text-sm text-neutral-400 font-light max-w-2xl leading-relaxed">
-                Your order has been recorded in the Velora master ledger. Our Geneva horological team and Pakistan concierge have commenced preparation for secure armored delivery.
+                Your order has been successfully placed. We have begun preparing your items for delivery across Pakistan.
               </p>
             </div>
 
             {/* Order Number Badge */}
             <div className="p-5 bg-neutral-900/90 border border-white/10 shrink-0 space-y-2">
               <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-400 block">
-                Acquisition Reference
+                Order Number
               </span>
               <div className="flex items-center gap-3">
                 <span className="font-mono text-xl sm:text-2xl text-gold-300 font-semibold tracking-wider">
@@ -208,10 +208,10 @@ export default function OrderConfirmationPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 mb-6 gap-2">
             <div>
               <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block">
-                Acquisition Timeline
+                Order Timeline
               </span>
               <h2 className="font-serif-luxury text-xl text-sand-50">
-                Armored Transit Protocol (Pakistan)
+                Delivery Status (Pakistan)
               </h2>
             </div>
             <div className="flex items-center gap-2">
@@ -261,7 +261,7 @@ export default function OrderConfirmationPage() {
           <div className="lg:col-span-7 space-y-6">
             <div className="bg-neutral-950 border border-white/10 p-6 sm:p-8 space-y-6 rounded-sm">
               <h3 className="font-serif-luxury text-xl text-sand-50 border-b border-white/10 pb-4">
-                Reserved Creations ({order.items.length})
+                Order Items ({order.items.length})
               </h3>
 
               <div className="divide-y divide-white/10">
@@ -315,7 +315,7 @@ export default function OrderConfirmationPage() {
 
                 {order.pricing.formattedDiscountPKR && (
                   <div className="flex justify-between items-center text-gold-400">
-                    <span>Privilege Discount</span>
+                    <span>Discount</span>
                     <span className="font-mono">
                       -{order.pricing.formattedDiscountPKR}
                     </span>
@@ -323,7 +323,7 @@ export default function OrderConfirmationPage() {
                 )}
 
                 <div className="flex justify-between items-center text-neutral-400">
-                  <span>Armored Transit (Pakistan)</span>
+                  <span>Shipping (Pakistan)</span>
                   <span className="font-mono text-emerald-400">
                     {order.pricing.formattedShippingPKR}
                   </span>
@@ -332,7 +332,7 @@ export default function OrderConfirmationPage() {
                 <div className="flex justify-between items-baseline pt-4 border-t border-white/10">
                   <div>
                     <span className="font-serif-luxury text-base text-sand-50 block">
-                      Total Allocated
+                      Total
                     </span>
                     <span className="text-[10px] font-mono text-neutral-500">
                       Settlement in Pakistani Rupees (PKR)
@@ -350,15 +350,15 @@ export default function OrderConfirmationPage() {
               </div>
             </div>
 
-            {/* Concierge Assurance Seal */}
+            {/* Warranty Seal */}
             <div className="p-5 bg-neutral-950/60 border border-white/5 flex items-start gap-4">
               <ShieldCheck className="w-6 h-6 text-gold-400 shrink-0 mt-0.5" />
               <div className="space-y-1 text-xs">
                 <span className="font-serif-luxury text-sand-100 text-sm block">
-                  Maison Authenticity & 5-Year Geneva Warranty
+                  100% Authentic & 5-Year Warranty
                 </span>
                 <p className="text-neutral-400 font-light leading-relaxed">
-                  Your piece will arrive in a solid lacquer presentation box with individual engraved certificate number, signed inspection dossier, and tamper-evident security holographic bands.
+                  Your piece includes our luxury presentation box, numbered authenticity certificate, and full 5-year international warranty.
                 </p>
               </div>
             </div>
@@ -371,7 +371,7 @@ export default function OrderConfirmationPage() {
               <div className="flex items-center gap-2 text-gold-400 border-b border-white/10 pb-3">
                 <MapPin className="w-4 h-4" />
                 <h3 className="font-serif-luxury text-base text-sand-50">
-                  Delivery Destination
+                  Shipping Address
                 </h3>
               </div>
 
@@ -393,10 +393,10 @@ export default function OrderConfirmationPage() {
                 )}
               </div>
 
-              {/* Armored Tracking */}
+              {/* Courier Tracking */}
               <div className="pt-3 border-t border-white/5 space-y-1.5">
                 <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
-                  Armored Courier Tracking
+                  Tracking Number
                 </span>
                 <div className="flex items-center justify-between p-2.5 bg-neutral-900 border border-white/10 rounded-sm">
                   <div className="font-mono text-xs text-gold-300 font-semibold truncate mr-2">
@@ -412,17 +412,17 @@ export default function OrderConfirmationPage() {
                   </button>
                 </div>
                 <span className="text-[10px] text-neutral-500 font-mono block">
-                  Carrier: Ferrari Secure Armored Logistics (Pakistan)
+                  Carrier: Express Courier Logistics (Pakistan)
                 </span>
               </div>
             </div>
 
-            {/* Safe Payment Information (NO SENSITIVE DATA REVEALED!) */}
+            {/* Payment Details */}
             <div className="bg-neutral-950 border border-white/10 p-6 space-y-4 rounded-sm">
               <div className="flex items-center gap-2 text-gold-400 border-b border-white/10 pb-3">
                 <Banknote className="w-4 h-4" />
                 <h3 className="font-serif-luxury text-base text-sand-50">
-                  Payment Protocol
+                  Payment Details
                 </h3>
               </div>
 
@@ -435,14 +435,14 @@ export default function OrderConfirmationPage() {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-400">Settlement Status:</span>
+                  <span className="text-neutral-400">Payment Status:</span>
                   <span className="px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider bg-emerald-950 text-emerald-300 border border-emerald-500/20 rounded-full">
                     {order.payment.status}
                   </span>
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-neutral-400">Amount Due / Settled:</span>
+                  <span className="text-neutral-400">Total Amount:</span>
                   <span className="font-mono text-gold-300 font-medium text-sm">
                     {order.payment.amountPKR}
                   </span>
@@ -453,7 +453,7 @@ export default function OrderConfirmationPage() {
                     <span className="text-gold-300 font-semibold block mb-0.5">
                       Cash on Delivery Notice:
                     </span>
-                    Please prepare exact cash or a manager&apos;s pay order for <strong>{order.payment.amountPKR}</strong>. Settlement occurs only after you visually inspect the intact tamper hologram on the presentation case.
+                    Please keep <strong>{order.payment.amountPKR}</strong> ready upon delivery. You can inspect the parcel before paying the courier.
                   </div>
                 )}
 
@@ -478,7 +478,7 @@ export default function OrderConfirmationPage() {
                 href="/watches"
                 className="w-full h-12 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-[0.2em] transition-colors flex items-center justify-center gap-2"
               >
-                <span>Continue Exploring Timepieces</span>
+                <span>Continue Shopping</span>
               </Link>
             </div>
           </div>

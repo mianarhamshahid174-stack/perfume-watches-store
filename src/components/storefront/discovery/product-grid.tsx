@@ -27,10 +27,10 @@ export function ProductGrid({
         </div>
         <div className="space-y-2">
           <h3 className="font-serif-luxury text-2xl font-light text-sand-50">
-            No Repertoire Matches Found
+            No Products Found
           </h3>
           <p className="text-xs text-platinum-400 font-light leading-relaxed">
-            No creations match the selected combination of horological criteria. Consider clearing active filters to view all available pieces.
+            No products match your current filters. Try adjusting or clearing your filters to see more items.
           </p>
         </div>
         {onResetFilters && (

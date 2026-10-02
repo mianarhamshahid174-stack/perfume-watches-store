@@ -22,7 +22,7 @@ export function EditorialHeader({
   description,
   imageUrl,
   productCount,
-  badge = "Maison Collection",
+  badge = "Collection",
   breadcrumbs = [],
 }: EditorialHeaderProps) {
   return (
@@ -48,7 +48,7 @@ export function EditorialHeader({
         {breadcrumbs.length > 0 && (
           <nav className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.25em] text-neutral-500 mb-6">
             <Link href="/" className="hover:text-gold-300 transition-colors">
-              Atelier
+              Home
             </Link>
             {breadcrumbs.map((b, i) => (
               <React.Fragment key={i}>
@@ -77,7 +77,7 @@ export function EditorialHeader({
 
             {productCount !== undefined && (
               <span className="text-[11px] font-mono text-neutral-400 tracking-wider">
-                {productCount} {productCount === 1 ? "Creation" : "Creations Available"}
+                {productCount} {productCount === 1 ? "Product" : "Products Available"}
               </span>
             )}
           </div>

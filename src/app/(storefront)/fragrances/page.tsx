@@ -11,18 +11,18 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const cat = await prisma.category.findUnique({ where: { slug: "haute-parfumerie" } });
   return {
-    title: cat?.seoTitle || "High Perfumery Extraits | VELORA Laboratories Grasse",
+    title: cat?.seoTitle || "Luxury Fragrances | VELORA",
     description:
       cat?.seoDescription ||
-      "Ultra-concentrated extraits de parfum aged in French oak vats. Wild Cambodian agarwood, Florentine orris butter, and rare ambergris.",
+      "Discover luxury perfumes and extraits crafted with pure oils, rich woody notes, and long-lasting sillage.",
     alternates: {
       canonical: cat?.canonicalUrl || "https://velora-ateliers.com/fragrances",
     },
     openGraph: {
-      title: cat?.seoTitle || "High Perfumery Extraits | VELORA",
+      title: cat?.seoTitle || "Luxury Fragrances | VELORA",
       description:
         cat?.seoDescription ||
-        "Ultra-concentrated extraits de parfum aged in French oak vats.",
+        "Discover luxury perfumes and extraits crafted with pure oils, rich woody notes, and long-lasting sillage.",
       images: [{ url: cat?.ogImage || "/images/velora-hero-editorial.jpg" }],
     },
   };
@@ -63,12 +63,12 @@ export default async function FragrancesPage({ searchParams }: FragrancesPagePro
     <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
       {/* Editorial Header */}
       <EditorialHeader
-        title="High Perfumery"
-        subtitle="The Olfactive Sanctuary"
-        description="Compounded in small batches in Grasse, France. Formulated with wild orris butter, aged Cambodian agarwood, May rose absolutes, and rare ambers macerated for six months in seasoned oak casks."
+        title="Luxury Fragrances"
+        subtitle="Artisanal Perfumes & Extraits"
+        description="Handcrafted in small batches using pure essential oils, rare woods, and floral absolutes. Each fragrance is carefully aged for depth, balance, and all-day longevity."
         imageUrl="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=2000&q=85"
         productCount={products.length}
-        badge="Laboratories Grasse"
+        badge="Fragrances"
         breadcrumbs={[{ label: "Fragrances" }]}
       />
 

@@ -31,14 +31,14 @@ export async function generateMetadata({ searchParams }: SearchPageProps): Promi
   const { q } = await searchParams;
   if (!q) {
     return {
-      title: "Search Atelier Archives | VELORA",
-      description: "Search our archive of fine mechanical timepieces and high perfumery extraits.",
+      title: "Search | VELORA",
+      description: "Search our collection of luxury watches and fine fragrances.",
     };
   }
 
   return {
-    title: `Search: "${q}" | VELORA Haute Horlogerie`,
-    description: `Discovered creations matching "${q}" in the VELORA atelier archive.`,
+    title: `Search: "${q}" | VELORA`,
+    description: `Search results for "${q}" at VELORA.`,
   };
 }
 
@@ -72,15 +72,15 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
     <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
       {/* Editorial Header */}
       <EditorialHeader
-        title={query ? `Inquiry: "${query}"` : "Search Repertoire"}
-        subtitle={query ? "Atelier Archive Search Results" : "Explore Complications & Extraits"}
+        title={query ? `Search: "${query}"` : "Search Products"}
+        subtitle={query ? "Search Results" : "Explore Watches & Fragrances"}
         description={
           query
-            ? `Displaying creations matching "${query}" across reference names, movement calibers, materials, olfactive notes, and collections.`
-            : "Search by caliber reference, case metallurgy, complications, or raw olfactive absolutes."
+            ? `Showing results for "${query}" across watches, fragrances, and collections.`
+            : "Search by product name, collection, materials, movement, or fragrance notes."
         }
         productCount={query ? products.length : undefined}
-        badge="Database Search"
+        badge="Search"
         breadcrumbs={[{ label: "Search" }]}
       />
 
@@ -105,17 +105,17 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <div className="py-16 text-center space-y-8 max-w-lg mx-auto">
             <div className="space-y-3">
               <h3 className="font-serif-luxury text-3xl font-light text-sand-50">
-                No Results for "{query}"
+                No Results for &quot;{query}&quot;
               </h3>
               <p className="text-xs sm:text-sm text-platinum-400 font-light leading-relaxed">
-                We could not find any timepiece reference, olfactive extrait, or collection matching your inquiry. Please try broader terms or select from popular atelier inquiries below.
+                We couldn&apos;t find any products matching your search. Try different keywords or browse our popular searches below.
               </p>
             </div>
 
             {/* Popular Searches Suggestions */}
             <div className="space-y-3 pt-4 border-t border-white/10">
               <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block">
-                Popular Inquiries
+                Popular Searches
               </span>
               <div className="flex flex-wrap justify-center gap-2">
                 {POPULAR_SEARCHES.map((term) => (
@@ -152,20 +152,20 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           <div className="py-16 text-center space-y-10 max-w-2xl mx-auto">
             <div className="space-y-3">
               <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400">
-                Precision Discovery
+                Search Catalog
               </span>
               <h3 className="font-serif-luxury text-3xl font-light text-sand-50">
-                Explore The Velora Repertoire
+                Explore The VELORA Collection
               </h3>
               <p className="text-xs sm:text-sm text-platinum-400 font-light leading-relaxed max-w-md mx-auto">
-                Begin typing in the inquiry field above or explore curated terms, collections, and flagship complications.
+                Type in the search bar above or explore popular searches, collections, and featured items below.
               </p>
             </div>
 
             {/* Popular Searches */}
             <div className="space-y-4">
               <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 block">
-                Recommended Inquiries
+                Popular Searches
               </span>
               <div className="flex flex-wrap justify-center gap-2.5">
                 {POPULAR_SEARCHES.map((term) => (

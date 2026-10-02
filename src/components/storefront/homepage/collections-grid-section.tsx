@@ -34,7 +34,7 @@ export function CollectionsGridSection({
 }: CollectionsGridSectionProps) {
   const headline = title || "THE COLLECTIONS";
   const sub =
-    subtitle || "Three singular expressions of form, complication, and material sovereignty.";
+    subtitle || "Three distinctive expressions of design, proportion, and craftsmanship.";
 
   // Filter or prioritize the 3 required collections: SIGNATURE, NOIR, CLASSIC
   const targetSlugs = content?.collectionSlugs || ["signature", "noir", "classic"];
@@ -49,9 +49,9 @@ export function CollectionsGridSection({
 
   // Default fallback images if collection bannerUrl is not set
   const fallbackImages: Record<string, string> = {
-    signature: "/images/velora-hero-editorial.jpg",
-    noir: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=85",
-    classic: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
+    signature: "/images/products/watches/velora-signature-01/editorial.jpg",
+    noir: "/images/products/watches/velora-noir-01/editorial.jpg",
+    classic: "/images/products/watches/velora-classic-01/editorial.jpg",
   };
 
   return (

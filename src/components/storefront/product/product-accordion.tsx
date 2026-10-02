@@ -146,15 +146,15 @@ export function ProductAccordion({ product }: ProductAccordionProps) {
     },
     {
       id: "movement",
-      title: isWatch ? "MOVEMENT" : "OLFACTORY ARCHITECTURE",
+      title: isWatch ? "MOVEMENT" : "FRAGRANCE PROFILE",
       content: isWatch ? (
         <div className="space-y-4 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <div className="flex items-center gap-2 text-gold-400 font-mono text-xs uppercase tracking-wider">
             <Compass className="w-4 h-4" />
-            <span>{product.movement || "In-House Swiss Calibre"}</span>
+            <span>{product.movement || "In-House Swiss Movement"}</span>
           </div>
           <p>
-            Regulated across five positions and three temperatures in our Geneva ateliers. Components are adorned with hand-applied Côtes de Genève stripes, circular graining (perlage), and diamond-beveled bridges.
+            Adjusted in five positions for chronometric precision. Decorated with fine Geneva stripes, circular graining, and hand-beveled bridges.
           </p>
           {product.powerReserve && (
             <div className="flex items-center gap-4 text-xs pt-1">
@@ -168,10 +168,10 @@ export function ProductAccordion({ product }: ProductAccordionProps) {
       ) : (
         <div className="space-y-3 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <div className="text-gold-400 font-mono text-xs uppercase tracking-wider">
-            Family: {product.olfactiveFamily || "High Perfumery Extrait"}
+            Fragrance Family: {product.olfactiveFamily || "Extrait de Parfum"}
           </div>
           <p>
-            Formulated in Grasse over an uninterrupted 180-day cold maturation cycle. The formula combines rare natural raw absolutes, sustainable sandalwood, and aged ambergris to produce a lingering sillage of remarkable longevity.
+            Formulated in Grasse with high concentrations of natural botanical absolutes, rare woods, and pure oils for long-lasting sillage.
           </p>
         </div>
       ),
@@ -182,12 +182,12 @@ export function ProductAccordion({ product }: ProductAccordionProps) {
       content: (
         <div className="space-y-3 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <p>
-            Every VELORA creation is dispatched in a climate-controlled, tamper-evident armored vault case. Delivery is coordinated by Ferrari Secure Armored Logistics with GPS tracking and white-glove personal handover.
+            Each order is shipped in our signature VELORA presentation box with complimentary insured express delivery and online tracking.
           </p>
           <ul className="list-disc list-inside space-y-1 text-xs text-neutral-400">
-            <li>Complimentary insured worldwide transit on all orders.</li>
-            <li>Direct adult signature and photo identification required upon delivery.</li>
-            <li>Delivery timeline: 2–4 business days within Europe & North America; 3–5 days worldwide.</li>
+            <li>Free insured shipping on all orders.</li>
+            <li>Signature required upon delivery for peace of mind.</li>
+            <li>Estimated delivery: 2–4 business days.</li>
           </ul>
         </div>
       ),
@@ -198,10 +198,10 @@ export function ProductAccordion({ product }: ProductAccordionProps) {
       content: (
         <div className="space-y-3 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <p>
-            We offer a 14-day complimentary vault return policy from the moment of physical receipt. Timepieces and extraits must remain unworn, with all tamper-evident seals, stickers, and certificate papers intact.
+            We offer complimentary 30-day returns and exchanges on all unworn items in their original packaging.
           </p>
           <p className="text-xs text-neutral-400">
-            To arrange a collection, contact our Private Concierge. An armored courier will be scheduled at your residence or private office at your convenience.
+            To request a return, contact our customer service team or start a return from your account. We will provide a prepaid insured return shipping label.
           </p>
         </div>
       ),
@@ -212,10 +212,10 @@ export function ProductAccordion({ product }: ProductAccordionProps) {
       content: (
         <div className="space-y-3 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <p>
-            Your acquisition is accompanied by the VELORA 5-Year International Atelier Guarantee, recorded in our Geneva registry.
+            Every VELORA timepiece comes with our 5-Year International Warranty covering all manufacturing and mechanical defects.
           </p>
           <p className="text-xs text-neutral-400">
-            This covers any manufacturing or mechanical deviation, complimentary pressure testing, ultrasonic case hygiene, and one complimentary comprehensive movement service during the warranty tenure.
+            Our warranty includes complimentary water-resistance testing, case inspection, and complete mechanical support through our authorized service centers.
           </p>
         </div>
       ),

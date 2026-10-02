@@ -104,7 +104,7 @@ export function ProductCard({
       ? product.collections[0].collection.name
       : typeof product.category === "string"
       ? product.category
-      : product.category?.name || "Maison Archive");
+      : product.category?.name || "Collection");
 
   const priceValue = typeof product.price === "string" ? parseFloat(product.price) : product.price;
 
@@ -149,11 +149,11 @@ export function ProductCard({
           <div>
             {isOutOfStock ? (
               <span className="px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] bg-neutral-900/90 text-neutral-400 border border-white/10 pointer-events-auto">
-                Allocation Only
+                Out of Stock
               </span>
             ) : product.featured ? (
               <span className="px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] bg-black/80 backdrop-blur-md text-gold-300 border border-gold-500/30 pointer-events-auto">
-                Flagship
+                Featured
               </span>
             ) : null}
           </div>
@@ -177,7 +177,7 @@ export function ProductCard({
         <div className="absolute bottom-3 left-3 right-3 z-10 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-none">
           <div className="w-full py-2 bg-black/85 backdrop-blur-md border border-white/15 text-sand-100 text-[10px] font-mono uppercase tracking-[0.2em] text-center flex items-center justify-center gap-1.5 shadow-xl">
             <Eye className="h-3 w-3 text-gold-400" />
-            <span>Discover Reference</span>
+            <span>View Details</span>
           </div>
         </div>
       </div>

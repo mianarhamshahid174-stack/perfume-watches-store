@@ -42,14 +42,14 @@ export function FeaturedWatchSection({
   const headline = title || "THE SIGNATURE";
   const editorialText =
     subtitle ||
-    "An uncompromising study in mechanical balance. Forged in surgical 316L stainless steel with hand-beveled sapphire crystal, driven by our in-house automatic caliber VA-100.";
+    "A study in clean design and mechanical balance. Crafted in surgical 904L stainless steel with a scratch-resistant sapphire crystal and our in-house automatic movement.";
   const ctaLabel = content?.ctaText || "DISCOVER THE WATCH";
   const productHref =
-    content?.ctaLink || (product ? `/products/${product.slug}` : "/products/velora-signature-01");
-  const tagline = content?.tagline || "Flagship Horology • Edition No. 01";
+    content?.ctaLink || (product ? `/product/${product.slug}` : "/product/velora-signature-01");
+  const tagline = content?.tagline || "Featured Timepiece";
 
   const heroImage =
-    product?.images?.[0]?.url || "/images/velora-signature-01.jpg";
+    product?.images?.[0]?.url || "/images/products/watches/velora-signature-01/front.jpg";
 
   const formattedPrice = product?.price
     ? new Intl.NumberFormat("en-US", {

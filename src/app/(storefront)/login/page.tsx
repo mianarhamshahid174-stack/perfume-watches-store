@@ -39,7 +39,7 @@ export default function LoginPage() {
         throw new Error(data.error || "Authentication failed");
       }
 
-      setToastMessage("Session authenticated. Redirecting to private salon...");
+      setToastMessage("Signed in successfully. Redirecting...");
       setTimeout(() => {
         router.push(callbackUrl);
         router.refresh();
@@ -63,18 +63,18 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center space-y-2">
             <span className="text-[10px] font-mono tracking-ultra uppercase text-gold-400">
-              Private Client Portal
+              Account Login
             </span>
             <h1 className="font-serif-luxury text-3xl font-light text-sand-50 tracking-wide">
-              Maison {BRAND.name}
+              {BRAND.name}
             </h1>
             <p className="text-xs text-platinum-400 font-light">
-              Enter your credentials to access your private salon allocations and orders.
+              Sign in to manage your orders, wishlist, and profile details.
             </p>
           </div>
 
           {toastMessage && (
-            <Toast type="success" title="Access Granted" message={toastMessage} />
+            <Toast type="success" title="Welcome Back" message={toastMessage} />
           )}
 
           {error && (
@@ -91,13 +91,13 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="collector@kensington-vaults.com"
+              placeholder="user@example.com"
               disabled={isLoading}
             />
 
             <div className="space-y-1">
               <Input
-                label="Passphrase"
+                label="Password"
                 type="password"
                 required
                 value={password}
@@ -110,7 +110,7 @@ export default function LoginPage() {
                   href="/forgot-password"
                   className="text-[11px] text-platinum-400 hover:text-gold-400 transition-colors"
                 >
-                  Forgot passphrase?
+                  Forgot password?
                 </Link>
               </div>
             </div>
@@ -122,14 +122,14 @@ export default function LoginPage() {
               className="w-full"
               isLoading={isLoading}
             >
-              Sign In to Atelier
+              Sign In
             </Button>
           </form>
 
           {/* Demo Collector Quick Fill */}
           <div className="pt-2 border-t border-white/5 space-y-2">
             <p className="text-[10px] font-mono text-platinum-500 uppercase tracking-wider text-center">
-              Quick Test Credentials
+              Quick Test Account
             </p>
             <div className="flex flex-col gap-2">
               <button
@@ -142,7 +142,7 @@ export default function LoginPage() {
                 }
                 className="text-[11px] font-mono py-1.5 px-3 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 text-platinum-300 rounded text-left transition-colors flex items-center justify-between"
               >
-                <span>VIP Collector (Arthur Pendleton)</span>
+                <span>Demo Customer (Arthur Pendleton)</span>
                 <KeyRound className="h-3 w-3 text-gold-400" />
               </button>
             </div>
@@ -150,12 +150,12 @@ export default function LoginPage() {
 
           {/* Footer note */}
           <div className="text-center pt-2 text-xs text-platinum-400 font-light">
-            New to Maison {BRAND.name}?{" "}
+            Don't have an account yet?{" "}
             <Link
               href="/register"
               className="text-gold-400 hover:underline font-medium"
             >
-              Register for Privileges
+              Create Account
             </Link>
           </div>
         </div>

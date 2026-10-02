@@ -11,18 +11,18 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata(): Promise<Metadata> {
   const cat = await prisma.category.findUnique({ where: { slug: "haute-horlogerie" } });
   return {
-    title: cat?.seoTitle || "Haute Horlogerie Timepieces | VELORA Ateliers Geneva",
+    title: cat?.seoTitle || "Luxury Watches | VELORA",
     description:
       cat?.seoDescription ||
-      "Explore precision-engineered mechanical complications, flying tourbillons, and chronometers crafted in finite, numbered editions.",
+      "Explore precision mechanical watches crafted with in-house movements, sapphire crystal, and premium materials.",
     alternates: {
       canonical: cat?.canonicalUrl || "https://velora-ateliers.com/watches",
     },
     openGraph: {
-      title: cat?.seoTitle || "Haute Horlogerie Timepieces | VELORA",
+      title: cat?.seoTitle || "Luxury Watches | VELORA",
       description:
         cat?.seoDescription ||
-        "Explore precision-engineered mechanical complications crafted in finite, numbered editions.",
+        "Explore precision mechanical watches crafted with in-house movements, sapphire crystal, and premium materials.",
       images: [{ url: cat?.ogImage || "/images/velora-hero-editorial.jpg" }],
     },
   };
@@ -69,13 +69,13 @@ export default async function WatchesPage({ searchParams }: WatchesPageProps) {
     <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
       {/* Editorial Header */}
       <EditorialHeader
-        title="Haute Horlogerie"
-        subtitle="Precision Born in Solitude"
-        description="Hand-finished architectural complications and numbered editions engineered by master watchmakers in Geneva. Featuring in-house mechanical calibers, Grand Feu enamel dials, and Grade 5 titanium."
+        title="Luxury Watches"
+        subtitle="Precision Mechanical Craftsmanship"
+        description="Hand-finished luxury watches with precision automatic movements, sapphire crystal, and premium materials. Built for collectors who value modern elegance and enduring reliability."
         imageUrl="/images/velora-hero-editorial.jpg"
         productCount={products.length}
-        badge="Ateliers Geneva"
-        breadcrumbs={[{ label: "Timepieces" }]}
+        badge="Watches"
+        breadcrumbs={[{ label: "Watches" }]}
       />
 
       {/* Main Catalog Section */}

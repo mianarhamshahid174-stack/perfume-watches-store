@@ -171,7 +171,7 @@ export function SearchExperience({
               setIsOpen(true);
             }}
             onFocus={() => setIsOpen(true)}
-            placeholder="Search by reference, movement, collection, notes..."
+            placeholder="Search watches, fragrances, collections..."
             autoFocus={autoFocus}
             className="w-full bg-transparent py-3.5 pr-10 text-xs sm:text-sm text-sand-50 placeholder:text-neutral-500 focus:outline-none font-sans"
           />
@@ -221,7 +221,7 @@ export function SearchExperience({
               <div className="p-8 text-center space-y-3">
                 <span className="inline-block h-6 w-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
                 <p className="text-xs font-mono text-neutral-400 tracking-wider">
-                  Searching Atelier Archives...
+                  Searching products...
                 </p>
               </div>
             )}
@@ -231,7 +231,7 @@ export function SearchExperience({
               <div className="p-6 text-center space-y-3 bg-rose-950/20 border-b border-rose-500/20">
                 <AlertCircle className="h-5 w-5 text-rose-400 mx-auto" />
                 <p className="text-xs text-rose-300 font-light">
-                  Unable to complete database search. Please check connection and retry.
+                  Unable to complete search. Please check your connection and try again.
                 </p>
                 <button
                   type="button"
@@ -249,10 +249,10 @@ export function SearchExperience({
               <div className="p-8 text-center space-y-4">
                 <div className="space-y-1">
                   <h4 className="font-serif-luxury text-lg text-sand-50">
-                    No Matching Creational References
+                    No Results Found
                   </h4>
                   <p className="text-xs text-neutral-400 font-light max-w-sm mx-auto">
-                    We could not find any timepiece, fragrance, or collection matching "{query}".
+                    We couldn&apos;t find any watches, fragrances, or collections matching &quot;{query}&quot;.
                   </p>
                 </div>
 
@@ -283,7 +283,7 @@ export function SearchExperience({
                 {results.collections.length > 0 && (
                   <div className="p-4 sm:p-5">
                     <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block mb-3">
-                      Matching Repertoires
+                      Matching Collections
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       {results.collections.map((col) => (
@@ -304,7 +304,7 @@ export function SearchExperience({
                             </span>
                           </div>
                           <span className="text-[10px] font-mono text-neutral-500">
-                            {col.productCount} {col.productCount === 1 ? "Piece" : "Pieces"}
+                            {col.productCount} {col.productCount === 1 ? "Product" : "Products"}
                           </span>
                         </Link>
                       ))}
@@ -316,7 +316,7 @@ export function SearchExperience({
                 {results.products.length > 0 && (
                   <div className="p-4 sm:p-5">
                     <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block mb-3">
-                      Matching Creations
+                      Matching Products
                     </span>
                     <div className="space-y-2">
                       {results.products.map((p) => (
@@ -382,7 +382,7 @@ export function SearchExperience({
                     <div className="flex items-center justify-between">
                       <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 flex items-center gap-1.5">
                         <Clock className="h-3 w-3 text-gold-400" />
-                        <span>Recent Inquiries</span>
+                        <span>Recent Searches</span>
                       </span>
                       <button
                         type="button"
@@ -413,7 +413,7 @@ export function SearchExperience({
                 <div className="space-y-3">
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 flex items-center gap-1.5">
                     <Sparkles className="h-3 w-3" />
-                    <span>Popular Inquiries</span>
+                    <span>Popular Searches</span>
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {POPULAR_SEARCHES.map((term) => (

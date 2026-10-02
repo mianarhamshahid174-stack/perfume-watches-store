@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { formatCurrency } from "@/lib/utils";
-import { Heart, ShoppingBag, Eye } from "lucide-react";
+import { motion } from "framer-motion";
+import { Heart, Eye, ShoppingBag } from "lucide-react";
 
 export interface ProductCardData {
   id?: string;
@@ -12,166 +12,207 @@ export interface ProductCardData {
   sku?: string;
   price: number | string;
   compareAtPrice?: number | string | null;
-  category?: { name: string } | string | null;
+  category?: { name: string; slug?: string } | string | null;
+  collections?: Array<{ collection: { name: string; slug: string } }> | null;
   collectionName?: string | null;
   specs?: string | null;
-  images?: Array<{ url: string; altText?: string | null; isPrimary?: boolean }>;
+  images?: Array<{ url: string; altText?: string | null; isPrimary?: boolean; sortOrder?: number }>;
   imageUrl?: string;
   secondaryImageUrl?: string;
   featured?: boolean;
+  inventory?: { quantity: number; reserved?: number } | null;
 }
 
 export interface ProductCardProps {
   product: ProductCardData;
   className?: string;
+  priority?: boolean;
   onQuickView?: (product: ProductCardData) => void;
   onAddToBag?: (product: ProductCardData) => void;
 }
 
 export function ProductCard({
   product,
-  className,
+  className = "",
+  priority = false,
   onQuickView,
   onAddToBag,
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = React.useState(false);
   const [isHovered, setIsHovered] = React.useState(false);
 
-  // Extract images
+  // Load wishlist state from localStorage
+  React.useEffect(() => {
+    if (typeof window !== "undefined" && product.id) {
+      try {
+        const saved = localStorage.getItem("velora_wishlist");
+        if (saved) {
+          const ids = JSON.parse(saved);
+          if (Array.isArray(ids) && ids.includes(product.id)) {
+            setIsWishlisted(true);
+          }
+        }
+      } catch {
+        // ignore
+      }
+    }
+  }, [product.id]);
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const nextState = !isWishlisted;
+    setIsWishlisted(nextState);
+
+    if (typeof window !== "undefined" && product.id) {
+      try {
+        const saved = localStorage.getItem("velora_wishlist");
+        let ids: string[] = saved ? JSON.parse(saved) : [];
+        if (nextState) {
+          if (!ids.includes(product.id)) ids.push(product.id);
+        } else {
+          ids = ids.filter((id) => id !== product.id);
+        }
+        localStorage.setItem("velora_wishlist", JSON.stringify(ids));
+      } catch {
+        // ignore
+      }
+    }
+  };
+
+  // Primary & Secondary Hover Images
+  const sortedImages = product.images
+    ? [...product.images].sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+    : [];
+
   const primaryImg =
     product.imageUrl ||
-    product.images?.find((img) => img.isPrimary)?.url ||
-    product.images?.[0]?.url ||
+    sortedImages.find((img) => img.isPrimary)?.url ||
+    sortedImages[0]?.url ||
     "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=85";
 
   const secondaryImg =
     product.secondaryImageUrl ||
-    (product.images && product.images.length > 1 ? product.images[1].url : null);
+    (sortedImages.length > 1
+      ? sortedImages.find((img) => img.url !== primaryImg)?.url || sortedImages[1].url
+      : null);
 
-  const categoryTitle =
-    typeof product.category === "string"
+  // Collection name
+  const collectionLabel =
+    product.collectionName ||
+    (product.collections && product.collections.length > 0
+      ? product.collections[0].collection.name
+      : typeof product.category === "string"
       ? product.category
-      : product.category?.name || product.collectionName || "Haute Horlogerie";
+      : product.category?.name || "Maison Archive");
 
   const priceValue = typeof product.price === "string" ? parseFloat(product.price) : product.price;
 
+  const isOutOfStock = product.inventory && product.inventory.quantity <= 0;
+
   return (
     <div
-      className={`group relative flex flex-col ${className || ""}`}
+      className={`group relative flex flex-col bg-transparent ${className}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Media Container */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-charcoal-950 border border-white/5 transition-all duration-500 group-hover:border-metallic/35">
-        <Link href={`/products/${product.slug}`} className="block w-full h-full">
-          {/* Primary Image */}
+      {/* 1. Media Container with Smooth Image Transition & Subtle Zoom */}
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-950 border border-white/10 transition-all duration-700 ease-out group-hover:border-gold-500/40 group-hover:shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+        <Link href={`/product/${product.slug}`} className="block w-full h-full relative overflow-hidden">
+          {/* Primary Image with Subtle Zoom */}
           <img
             src={primaryImg}
             alt={product.name}
-            className={`w-full h-full object-cover object-center transition-all duration-700 ease-out group-hover:scale-105 ${
-              secondaryImg && isHovered ? "opacity-0" : "opacity-100"
-            }`}
+            loading={priority ? "eager" : "lazy"}
+            className={`w-full h-full object-cover object-center transition-all duration-700 ease-out ${
+              isHovered ? "scale-108" : "scale-100"
+            } ${secondaryImg && isHovered ? "opacity-0" : "opacity-100"}`}
           />
 
-          {/* Secondary Hover Image (if available) */}
+          {/* Secondary Hover Image (with smooth crossfade & matching subtle zoom) */}
           {secondaryImg && (
             <img
               src={secondaryImg}
-              alt={`${product.name} detail view`}
+              alt={`${product.name} alternate view`}
               className={`absolute inset-0 w-full h-full object-cover object-center transition-all duration-700 ease-out ${
-                isHovered ? "opacity-100 scale-105" : "opacity-0 scale-100"
+                isHovered ? "opacity-100 scale-108" : "opacity-0 scale-100"
               }`}
             />
           )}
 
-          {/* Vignette Overlay */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 opacity-70 group-hover:opacity-40 transition-opacity duration-300" />
+          {/* Vignette & Atmospheric Contrast Layer */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-500" />
         </Link>
 
         {/* Top Badges & Actions */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
-          {product.featured ? (
-            <span className="px-2.5 py-1 rounded-full text-[9px] font-sans font-semibold uppercase tracking-editorial bg-black/70 backdrop-blur-md text-metallic border border-metallic/30 pointer-events-auto">
-              Masterwork
-            </span>
-          ) : <span />}
+          <div>
+            {isOutOfStock ? (
+              <span className="px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] bg-neutral-900/90 text-neutral-400 border border-white/10 pointer-events-auto">
+                Allocation Only
+              </span>
+            ) : product.featured ? (
+              <span className="px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] bg-black/80 backdrop-blur-md text-gold-300 border border-gold-500/30 pointer-events-auto">
+                Flagship
+              </span>
+            ) : null}
+          </div>
 
           {/* Wishlist Button */}
           <button
             type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              setIsWishlisted(!isWishlisted);
-            }}
-            className="pointer-events-auto p-2 rounded-full bg-black/50 backdrop-blur-md text-ivory/80 hover:text-metallic hover:bg-black/80 transition-colors"
-            aria-label="Save to Wishlist"
+            onClick={toggleWishlist}
+            className="pointer-events-auto p-2.5 rounded-full bg-black/60 backdrop-blur-md text-sand-100 hover:text-gold-300 hover:bg-black/90 transition-all duration-300 border border-white/10 hover:border-gold-500/40"
+            aria-label={isWishlisted ? "Remove from Wishlist" : "Save to Wishlist"}
           >
             <Heart
-              className={`h-3.5 w-3.5 transition-colors ${
-                isWishlisted ? "fill-metallic text-metallic" : ""
+              className={`h-3.5 w-3.5 transition-transform duration-300 active:scale-125 ${
+                isWishlisted ? "fill-gold-400 text-gold-400" : "text-sand-100"
               }`}
             />
           </button>
         </div>
 
-        {/* Quick Action Overlay Bar */}
-        <div className="absolute bottom-3 left-3 right-3 z-10 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 flex items-center gap-2">
-          {onQuickView && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                onQuickView(product);
-              }}
-              className="flex-1 h-9 px-3 bg-black/80 backdrop-blur-md border border-white/20 text-ivory hover:text-metallic hover:border-metallic/60 text-[10px] font-sans font-medium uppercase tracking-editorial transition-colors flex items-center justify-center gap-1.5"
-            >
-              <Eye className="h-3 w-3" />
-              <span>Quick View</span>
-            </button>
-          )}
-
-          {onAddToBag && (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                onAddToBag(product);
-              }}
-              className="h-9 px-3 bg-metallic text-black hover:bg-metallic-light text-[10px] font-sans font-semibold uppercase tracking-editorial transition-colors flex items-center justify-center gap-1.5"
-            >
-              <ShoppingBag className="h-3 w-3" />
-              <span>Acquire</span>
-            </button>
-          )}
+        {/* Quick View Link Indicator */}
+        <div className="absolute bottom-3 left-3 right-3 z-10 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-none">
+          <div className="w-full py-2 bg-black/85 backdrop-blur-md border border-white/15 text-sand-100 text-[10px] font-mono uppercase tracking-[0.2em] text-center flex items-center justify-center gap-1.5 shadow-xl">
+            <Eye className="h-3 w-3 text-gold-400" />
+            <span>Discover Reference</span>
+          </div>
         </div>
       </div>
 
-      {/* Product Metadata */}
-      <div className="pt-3.5 space-y-1">
-        <div className="flex items-center justify-between text-[10px] font-sans uppercase tracking-editorial text-neutral-stone">
-          <span>{categoryTitle}</span>
-          {product.sku && <span className="font-mono text-[9px] text-neutral-slate">{product.sku}</span>}
+      {/* 2. Product Information Movement on Hover (Subtle smooth upward translate) */}
+      <div className="pt-4 space-y-1.5 transition-transform duration-500 ease-out group-hover:-translate-y-1">
+        {/* Collection Name */}
+        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em] text-gold-400/90">
+          <span>{collectionLabel}</span>
+          {product.sku && (
+            <span className="text-neutral-500 text-[9px] hidden sm:inline">{product.sku}</span>
+          )}
         </div>
 
-        <Link href={`/products/${product.slug}`} className="block group/title">
-          <h3 className="font-serif-luxury text-base sm:text-lg font-light text-ivory group-hover/title:text-metallic transition-colors line-clamp-1 leading-snug">
+        {/* Product Name */}
+        <Link href={`/product/${product.slug}`} className="block group/title">
+          <h3 className="font-serif-luxury text-base sm:text-lg font-light text-sand-50 group-hover/title:text-gold-300 transition-colors line-clamp-1 leading-snug">
             {product.name}
           </h3>
         </Link>
 
+        {/* Optional Specs */}
         {product.specs && (
-          <p className="text-[11px] font-sans text-neutral-stone/80 truncate font-light">
+          <p className="text-[11px] font-sans text-neutral-400 truncate font-light">
             {product.specs}
           </p>
         )}
 
-        <div className="flex items-center gap-2 pt-0.5">
-          <span className="font-sans text-xs sm:text-sm font-medium text-metallic font-mono">
+        {/* Price */}
+        <div className="flex items-baseline gap-2 pt-0.5">
+          <span className="font-mono text-xs sm:text-sm font-medium text-sand-100 tracking-wide">
             ${priceValue.toLocaleString()} USD
           </span>
           {product.compareAtPrice && (
-            <span className="text-[11px] font-mono text-neutral-slate line-through">
+            <span className="text-[10px] font-mono text-neutral-500 line-through">
               ${Number(product.compareAtPrice).toLocaleString()}
             </span>
           )}

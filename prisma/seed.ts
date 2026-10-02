@@ -505,6 +505,7 @@ async function main() {
       featured: true,
       concentration: "Extrait de Parfum (32%)",
       olfactiveFamily: "Smoky Amber & Resinous Woods",
+      gender: "Unisex",
       volumeMl: 100,
       collections: {
         create: [{ collectionId: colNocturne.id, displayOrder: 1 }],
@@ -516,6 +517,12 @@ async function main() {
             altText: "VELORA Nocturne Absolu Flacon",
             sortOrder: 1,
             isPrimary: true,
+          },
+          {
+            url: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Nocturne Absolu Atmospheric Detail",
+            sortOrder: 2,
+            isPrimary: false,
           },
         ],
       },
@@ -563,6 +570,7 @@ async function main() {
       featured: true,
       concentration: "Extrait de Parfum (28%)",
       olfactiveFamily: "Creamy Wood & Powdered Iris",
+      gender: "Unisex",
       volumeMl: 100,
       collections: {
         create: [{ collectionId: colNocturne.id, displayOrder: 2 }],
@@ -575,12 +583,150 @@ async function main() {
             sortOrder: 1,
             isPrimary: true,
           },
+          {
+            url: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Santal Royal Ingredients",
+            sortOrder: 2,
+            isPrimary: false,
+          },
         ],
       },
       inventory: {
         create: {
           quantity: 45,
           warehouseLocation: "Grasse Atelier Reserve",
+        },
+      },
+    },
+  });
+
+  // Product 6: VELORA Rose Éthérée Extrait
+  await prisma.product.create({
+    data: {
+      name: "VELORA Rose Éthérée Extrait",
+      slug: "velora-rose-etheree-extrait",
+      sku: "VEL-EXT-RSE-100",
+      shortDescription: "Centifolia rose absolute from Grasse, pink pepper, and crystalline white amber.",
+      description:
+        "Harvested at dawn before the morning mist evaporates. Rose Éthérée captures the luminous vitality of May rose enveloped in ambergris and precious orris.",
+      price: new Prisma.Decimal("460.00"),
+      cost: new Prisma.Decimal("90.00"),
+      categoryId: catParfumerie.id,
+      tags: ["May Rose", "Ambergris", "Feminine", "Grasse Floral"],
+      status: ProductStatus.PUBLISHED,
+      featured: false,
+      concentration: "Extrait de Parfum (30%)",
+      olfactiveFamily: "Floral Amber",
+      gender: "Feminine",
+      volumeMl: 100,
+      collections: {
+        create: [{ collectionId: colNocturne.id, displayOrder: 3 }],
+      },
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Rose Éthérée Flacon",
+            sortOrder: 1,
+            isPrimary: true,
+          },
+        ],
+      },
+      inventory: {
+        create: {
+          quantity: 28,
+          warehouseLocation: "Grasse Atelier Reserve",
+        },
+      },
+    },
+  });
+
+  // Product 7: VELORA Cuir Sauvage Extrait
+  await prisma.product.create({
+    data: {
+      name: "VELORA Cuir Sauvage Extrait",
+      slug: "velora-cuir-sauvage-extrait",
+      sku: "VEL-EXT-CUR-100",
+      shortDescription: "Tuscan saddle leather, smoked birch tar, black cardamom, and raw patchouli.",
+      description:
+        "An unapologetic study in equestrian nobility. Cuir Sauvage melds seasoned saddle hide with embers of cedarwood and dark resins.",
+      price: new Prisma.Decimal("480.00"),
+      cost: new Prisma.Decimal("95.00"),
+      categoryId: catParfumerie.id,
+      tags: ["Leather", "Smoky", "Masculine", "Birch Tar"],
+      status: ProductStatus.PUBLISHED,
+      featured: false,
+      concentration: "Extrait de Parfum (34%)",
+      olfactiveFamily: "Smoky Leather & Tobacco",
+      gender: "Masculine",
+      volumeMl: 100,
+      collections: {
+        create: [{ collectionId: colNocturne.id, displayOrder: 4 }],
+      },
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Cuir Sauvage Flacon",
+            sortOrder: 1,
+            isPrimary: true,
+          },
+        ],
+      },
+      inventory: {
+        create: {
+          quantity: 32,
+          warehouseLocation: "Grasse Atelier Reserve",
+        },
+      },
+    },
+  });
+
+  // Product 8: VELORA Classic Patrimony
+  await prisma.product.create({
+    data: {
+      name: "VELORA Classic Patrimony",
+      slug: "velora-classic-patrimony",
+      sku: "VEL-CLS-04",
+      shortDescription: "Ultra-thin automatic timepiece with opaline silver sunray dial in 316L stainless steel.",
+      description:
+        "The quintessential formal dress timepiece. Measuring just 7.8mm in thickness, the Classic Patrimony is powered by the micro-rotor automatic caliber VA-210.",
+      price: new Prisma.Decimal("14800.00"),
+      cost: new Prisma.Decimal("4800.00"),
+      categoryId: catHorlogerie.id,
+      tags: ["Classic", "Ultra-Thin", "Stainless Steel", "Dress Watch"],
+      status: ProductStatus.PUBLISHED,
+      featured: true,
+      movement: "Automatic Calibre VA-210",
+      powerReserve: "55 Hours",
+      caseMaterial: "316L Stainless Steel",
+      caseDiameter: "38.5 mm",
+      waterResistance: "30m / 3 ATM",
+      dialColor: "Silver Sunray",
+      strapMaterial: "Espresso French Calfskin",
+      collections: {
+        create: [{ collectionId: colClassic.id, displayOrder: 1 }],
+      },
+      images: {
+        create: [
+          {
+            url: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Classic Patrimony Front View",
+            sortOrder: 1,
+            isPrimary: true,
+          },
+          {
+            url: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
+            altText: "VELORA Classic Patrimony Profile View",
+            sortOrder: 2,
+            isPrimary: false,
+          },
+        ],
+      },
+      inventory: {
+        create: {
+          quantity: 6,
+          warehouseLocation: "Geneva Vault Alpha-1",
         },
       },
     },

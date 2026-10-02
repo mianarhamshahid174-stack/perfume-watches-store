@@ -1,5 +1,6 @@
 import { Header } from "@/components/storefront/header";
 import { Footer } from "@/components/storefront/footer";
+import { CartProvider } from "@/context/cart-context";
 
 export default function StorefrontLayout({
   children,
@@ -7,10 +8,12 @@ export default function StorefrontLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-obsidian text-sand-100 overflow-x-hidden selection:bg-gold-500 selection:text-black">
-      <Header />
-      <main className="flex-1">{children}</main>
-      <Footer />
-    </div>
+    <CartProvider>
+      <div className="min-h-screen flex flex-col bg-obsidian text-sand-100 overflow-x-hidden selection:bg-gold-500 selection:text-black">
+        <Header />
+        <main className="flex-1">{children}</main>
+        <Footer />
+      </div>
+    </CartProvider>
   );
 }

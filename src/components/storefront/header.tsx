@@ -21,6 +21,8 @@ import { BRAND, STOREFRONT_NAV, StorefrontNavItem } from "@/lib/constants";
 import { Container } from "@/components/ui/container";
 import { megaMenuVariants, LUXURY_EASE } from "@/lib/motion";
 import { Drawer } from "@/components/ui/drawer";
+import { SearchExperience } from "@/components/storefront/search-experience";
+import { useCart } from "@/context/cart-context";
 
 export function Header() {
   const pathname = usePathname();
@@ -28,7 +30,15 @@ export function Header() {
   const [activeMegaMenu, setActiveMegaMenu] = React.useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
-  const [isCartOpen, setIsCartOpen] = React.useState(false);
+  const {
+    items: cartItems,
+    itemCount,
+    subtotal,
+    isCartOpen,
+    openCart,
+    closeCart,
+    removeFromCart,
+  } = useCart();
   const [mobileExpandedSection, setMobileExpandedSection] = React.useState<string | null>(null);
 
   // Scroll listener for transparent-to-solid transition
@@ -169,14 +179,16 @@ export function Header() {
               {/* Cart Drawer Trigger */}
               <button
                 type="button"
-                onClick={() => setIsCartOpen(true)}
+                onClick={openCart}
                 className="p-2 text-neutral-stone hover:text-metallic transition-colors relative cursor-pointer"
                 aria-label="Shopping Bag"
               >
                 <ShoppingBag className="h-4 w-4" />
-                <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-metallic text-[9px] font-mono font-bold text-black">
-                  2
-                </span>
+                {itemCount > 0 && (
+                  <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-metallic text-[9px] font-mono font-bold text-black animate-scale-in">
+                    {itemCount}
+                  </span>
+                )}
               </button>
             </div>
           </div>
@@ -382,51 +394,26 @@ export function Header() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -16, scale: 0.98 }}
               transition={{ duration: 0.4, ease: LUXURY_EASE }}
-              className="relative z-10 w-full max-w-2xl bg-charcoal-950 border border-white/15 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6"
+              className="relative z-10 w-full max-w-2xl bg-neutral-950 border border-white/15 p-6 sm:p-8 shadow-2xl space-y-6"
             >
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <div className="flex items-center gap-3 flex-1">
-                  <Search className="h-5 w-5 text-metallic" />
-                  <input
-                    type="text"
-                    placeholder="Search timepieces, olfactive extraits, complications..."
-                    autoFocus
-                    className="w-full bg-transparent text-lg font-serif-luxury text-ivory placeholder:text-neutral-stone focus:outline-none"
-                  />
-                </div>
+                <span className="text-xs font-mono uppercase tracking-[0.25em] text-gold-400">
+                  Maison Archive Inquiry
+                </span>
                 <button
                   type="button"
                   onClick={() => setIsSearchOpen(false)}
-                  className="p-1.5 text-neutral-stone hover:text-ivory transition-colors"
+                  className="p-1.5 text-neutral-400 hover:text-white transition-colors"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
 
-              {/* Quick Search Suggestions */}
-              <div className="space-y-3">
-                <span className="text-[10px] font-sans font-semibold uppercase tracking-ultra text-metallic">
-                  Popular Atelier Inquiries
-                </span>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    "Chronographe Squelette",
-                    "Tourbillon Celestial",
-                    "Céleste Oud Extrait",
-                    "18K Rose Gold",
-                    "Grade 5 Titanium",
-                    "Discovery Coffret",
-                  ].map((tag) => (
-                    <button
-                      key={tag}
-                      onClick={() => setIsSearchOpen(false)}
-                      className="px-3 py-1.5 rounded-full text-xs font-sans bg-charcoal-900 border border-white/10 text-ivory/80 hover:text-metallic hover:border-metallic/40 transition-colors"
-                    >
-                      {tag}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              {/* Integrated Search Experience with Live DB Autocomplete */}
+              <SearchExperience
+                autoFocus
+                onSelectResult={() => setIsSearchOpen(false)}
+              />
             </motion.div>
           </div>
         )}
@@ -435,16 +422,18 @@ export function Header() {
       {/* SHOPPING BAG SLIDE-OUT DRAWER */}
       <Drawer
         isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
+        onClose={closeCart}
         side="right"
         size="md"
         title="Your Atelier Bag"
-        subtitle="2 Reserved Pieces"
+        subtitle={`${itemCount} Reserved ${itemCount === 1 ? "Piece" : "Pieces"}`}
         footer={
           <div className="space-y-4">
             <div className="flex justify-between items-center text-sm font-sans">
               <span className="text-neutral-stone">Estimated Subtotal</span>
-              <span className="font-mono text-metallic font-semibold text-base">$66,500 USD</span>
+              <span className="font-mono text-metallic font-semibold text-base">
+                ${subtotal.toLocaleString()} USD
+              </span>
             </div>
             <p className="text-[11px] text-neutral-slate font-light leading-snug">
               Complimentary armored delivery by Ferrari Secure Armored Logistics with fully insured transit.
@@ -452,58 +441,89 @@ export function Header() {
             <div className="flex flex-col gap-2 pt-1">
               <Link
                 href="/checkout"
-                onClick={() => setIsCartOpen(false)}
+                onClick={closeCart}
                 className="w-full h-12 bg-metallic text-black hover:bg-metallic-light rounded-none text-xs font-semibold uppercase tracking-editorial transition-colors flex items-center justify-center gap-2"
               >
                 <span>Proceed to Allocation</span>
                 <ArrowRight className="h-4 w-4" />
               </Link>
-              <Link
-                href="/cart"
-                onClick={() => setIsCartOpen(false)}
-                className="w-full text-center text-xs text-neutral-stone hover:text-ivory py-2 transition-colors uppercase tracking-editorial"
+              <button
+                type="button"
+                onClick={closeCart}
+                className="w-full text-center text-xs text-neutral-stone hover:text-ivory py-2 transition-colors uppercase tracking-editorial cursor-pointer"
               >
-                View Full Cart
-              </Link>
+                Continue Browsing
+              </button>
             </div>
           </div>
         }
       >
-        <div className="space-y-4 divide-y divide-white/5">
-          {/* Sample Item 1 */}
-          <div className="pt-2 flex gap-4 text-xs">
-            <img
-              src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=300&q=85"
-              alt="Chronographe Squelette"
-              className="w-20 h-24 object-cover bg-charcoal-900 border border-white/5 rounded"
-            />
-            <div className="flex-1 space-y-1">
-              <span className="text-[9px] uppercase tracking-ultra text-metallic font-mono">
-                REF. VA-920-TI
-              </span>
-              <h5 className="font-serif-luxury text-base text-ivory">Chronographe Squelette</h5>
-              <p className="text-neutral-stone text-[11px]">Grade 5 Titanium • 41mm</p>
-              <div className="text-metallic font-mono pt-1">$48,000 USD</div>
+        {cartItems.length === 0 ? (
+          <div className="py-20 text-center space-y-4">
+            <ShoppingBag className="w-10 h-10 text-neutral-stone/40 mx-auto stroke-[1.2]" />
+            <div className="space-y-1">
+              <h5 className="font-serif-luxury text-lg text-sand-100">Your Bag is Empty</h5>
+              <p className="text-xs text-platinum-400 font-light max-w-xs mx-auto">
+                No acquisitions have been selected yet. Explore our Haute Horlogerie or High Perfumery ateliers.
+              </p>
+            </div>
+            <div className="pt-2 flex justify-center gap-3">
+              <Link
+                href="/watches"
+                onClick={closeCart}
+                className="px-4 py-2 text-[10px] uppercase tracking-editorial border border-white/10 hover:border-gold-500/50 text-sand-200 transition-colors"
+              >
+                Watches
+              </Link>
+              <Link
+                href="/fragrances"
+                onClick={closeCart}
+                className="px-4 py-2 text-[10px] uppercase tracking-editorial border border-white/10 hover:border-gold-500/50 text-sand-200 transition-colors"
+              >
+                Fragrances
+              </Link>
             </div>
           </div>
-
-          {/* Sample Item 2 */}
-          <div className="pt-4 flex gap-4 text-xs">
-            <img
-              src="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=300&q=85"
-              alt="Céleste Oud Pure Parfum"
-              className="w-20 h-24 object-cover bg-charcoal-900 border border-white/5 rounded"
-            />
-            <div className="flex-1 space-y-1">
-              <span className="text-[9px] uppercase tracking-ultra text-metallic font-mono">
-                EXTRAIT 35%
-              </span>
-              <h5 className="font-serif-luxury text-base text-ivory">Céleste Oud Pure Parfum</h5>
-              <p className="text-neutral-stone text-[11px]">100ml Flacon • Grasse Oak</p>
-              <div className="text-metallic font-mono pt-1">$18,500 USD</div>
-            </div>
+        ) : (
+          <div className="space-y-4 divide-y divide-white/5">
+            {cartItems.map((item) => (
+              <div key={item.id} className="pt-3 flex gap-4 text-xs group">
+                <img
+                  src={item.imageUrl}
+                  alt={item.name}
+                  className="w-20 h-24 object-cover bg-charcoal-900 border border-white/5 rounded-none flex-shrink-0"
+                />
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[9px] uppercase tracking-ultra text-metallic font-mono truncate">
+                      REF. {item.sku}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => removeFromCart(item.id)}
+                      className="text-neutral-stone hover:text-rose-400 transition-colors p-1 -mr-1"
+                      aria-label="Remove item"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                  <h5 className="font-serif-luxury text-sm text-ivory truncate">{item.name}</h5>
+                  {item.variantTitle && (
+                    <p className="text-neutral-stone text-[11px] truncate">{item.variantTitle}</p>
+                  )}
+                  <div className="flex justify-between items-center pt-2">
+                    <span className="text-[11px] text-neutral-slate font-mono">
+                      Qty: {item.quantity}
+                    </span>
+                    <div className="text-metallic font-mono font-medium">
+                      ${(item.price * item.quantity).toLocaleString()} USD
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+        )}
       </Drawer>
     </>
   );

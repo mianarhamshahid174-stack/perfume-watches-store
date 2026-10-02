@@ -110,20 +110,21 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
     megaMenu: {
       columns: [
         {
-          title: "Curated Editions",
+          title: "Maison Repertoires",
           items: [
-            { label: "Grand Complications 2026", href: "/collections/grand-complications", description: "Limited numbered allocations" },
-            { label: "Grasse Reserve Parfums", href: "/collections/grasse-reserve", description: "Aged botanical extraits" },
-            { label: "Sovereign Rose Gold", href: "/collections/sovereign-rose-gold", description: "18K ethical gold complications" },
-            { label: "Titanium Monolith", href: "/collections/titanium-monolith", description: "Ultra-lightweight modern sports pieces" },
+            { label: "Signature Collection", href: "/collections/signature", description: "Archetype of modern restraint" },
+            { label: "Noir Repertoire", href: "/collections/noir", description: "DLC Titanium & shadowed ruthenium" },
+            { label: "Classic Complications", href: "/collections/classic", description: "Grand Feu enamel & heritage calibers" },
+            { label: "Celestial Complications", href: "/collections/celestial-complications", description: "Astronomical geometry & meteorite" },
           ],
         },
         {
-          title: "Maison Archive",
+          title: "Olfactive & Archive",
           items: [
-            { label: "Past Masterpieces", href: "/collections/archive", description: "Closed numbered series" },
-            { label: "Salon QP Special Releases", href: "/collections/salon-qp", description: "London and Geneva exhibition pieces" },
-            { label: "Certified Pre-Owned", href: "/collections/cpo", description: "Maison-inspected and guaranteed" },
+            { label: "Nocturne Privé Extraits", href: "/collections/nocturne-prive", description: "Evening & contemplative extraits" },
+            { label: "All Collections Directory", href: "/collections", description: "Explore full Maison archive" },
+            { label: "Haute Horlogerie Catalog", href: "/watches", description: "Complete timepieces repertoire" },
+            { label: "High Perfumery Catalog", href: "/fragrances", description: "All Grasse pure extraits" },
           ],
         },
       ],

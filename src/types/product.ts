@@ -5,14 +5,18 @@ export interface WatchSpecifications {
   powerReserve?: string | null;
   caseMaterial?: string | null;
   caseDiameter?: string | null;
+  caseThickness?: string | null;
+  crystal?: string | null;
   waterResistance?: string | null;
   dialColor?: string | null;
   strapMaterial?: string | null;
+  clasp?: string | null;
 }
 
 export interface FragranceSpecifications {
   concentration?: string | null;
   olfactiveFamily?: string | null;
+  gender?: string | null;
   volumeMl?: number | null;
 }
 
@@ -22,6 +26,22 @@ export interface ProductImageItem {
   altText?: string | null;
   sortOrder: number;
   isPrimary: boolean;
+}
+
+export interface ProductVideoItem {
+  id: string;
+  url: string;
+  title?: string | null;
+  posterUrl?: string | null;
+  sortOrder: number;
+}
+
+export interface MacroDetailItem {
+  part: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  imageUrl: string;
 }
 
 export interface ProductVariantItem {
@@ -49,7 +69,9 @@ export interface ProductItem extends WatchSpecifications, FragranceSpecification
   seoTitle?: string | null;
   seoDescription?: string | null;
   images: ProductImageItem[];
+  videos?: ProductVideoItem[];
   variants?: ProductVariantItem[];
+  macroDetails?: MacroDetailItem[];
   category?: {
     id: string;
     name: string;
@@ -60,6 +82,7 @@ export interface ProductItem extends WatchSpecifications, FragranceSpecification
       id: string;
       name: string;
       slug: string;
+      bannerUrl?: string | null;
     };
   }>;
   inventory?: {
@@ -77,7 +100,14 @@ export interface ProductFilterParams {
   search?: string;
   minPrice?: number;
   maxPrice?: number;
-  sortBy?: "featured" | "price-asc" | "price-desc" | "newest";
+  movement?: string;
+  strap?: string;
+  caseMaterial?: string;
+  dialColor?: string;
+  fragranceFamily?: string;
+  gender?: string;
+  availability?: "in_stock" | "all";
+  sortBy?: "featured" | "newest" | "price-asc" | "price-desc" | "best-selling";
   page?: number;
   limit?: number;
 }

@@ -70,8 +70,7 @@ export default async function StorefrontHomePage() {
         }));
 
   // 2. Fetch real database entities required by sections (no hardcoding!)
-  // Products: Fetch all published products with relations
-  const publishedProducts = await prisma.product.findMany({
+  const rawPublishedProducts = await prisma.product.findMany({
     where: { status: "PUBLISHED" },
     include: {
       images: { orderBy: { sortOrder: "asc" } },
@@ -79,6 +78,20 @@ export default async function StorefrontHomePage() {
       variants: true,
     },
   });
+
+  const publishedProducts = rawPublishedProducts.map((p) => ({
+    ...p,
+    price: Number(p.price),
+    compareAtPrice: p.compareAtPrice ? Number(p.compareAtPrice) : null,
+    cost: p.cost ? Number(p.cost) : null,
+    variants: p.variants.map((v) => ({
+      ...v,
+      price: Number(v.price),
+      attributes: v.attributes as Record<string, string> | null,
+    })),
+    createdAt: p.createdAt.toISOString(),
+    updatedAt: p.updatedAt.toISOString(),
+  }));
 
   // Collections: Fetch real collections (SIGNATURE, NOIR, CLASSIC, etc.)
   const collections = await prisma.collection.findMany({

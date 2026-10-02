@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { ImageReveal } from "@/components/ui/image-reveal";
 import { AnimatedText } from "@/components/ui/animated-text";
-import { ProductCard } from "@/components/ui/product-card";
+import { ProductCard, ProductCardData } from "@/components/ui/product-card";
 import { CollectionCard } from "@/components/ui/collection-card";
 import { Carousel } from "@/components/ui/carousel";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
@@ -285,8 +285,8 @@ export default function DesignSystemPage() {
                 <ProductCard
                   key={prod.id}
                   product={prod}
-                  onQuickView={(p) => setQuickViewProduct(p)}
-                  onAddToBag={(p) => {
+                  onQuickView={(p: ProductCardData) => setQuickViewProduct(p)}
+                  onAddToBag={(p: ProductCardData) => {
                     alert(`Added ${p.name} to your private atelier allocation.`);
                   }}
                 />
@@ -349,7 +349,7 @@ export default function DesignSystemPage() {
                 <ProductCard
                   key={`${prod.id}-${idx}`}
                   product={prod}
-                  onQuickView={(p) => setQuickViewProduct(p)}
+                  onQuickView={(p: ProductCardData) => setQuickViewProduct(p)}
                 />
               ))}
             </Carousel>

@@ -17,16 +17,16 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Maison Journal & Chronicles | VELORA Haute Horlogerie",
+  title: "Journal | VELORA",
   description:
-    "Curated essays and critical monographs on Geneva micromechanics, variable inertia balances, and high extraction perfumery.",
+    "Read stories and articles on fine mechanical watchmaking, perfumery, and craftsmanship from VELORA.",
   alternates: {
     canonical: "https://velora-ateliers.com/journal",
   },
   openGraph: {
-    title: "Maison Journal & Chronicles | VELORA",
+    title: "Journal | VELORA",
     description:
-      "Curated essays and critical monographs on Geneva micromechanics and rare olfactory compounding.",
+      "Read stories and articles on fine mechanical watchmaking and rare perfumery.",
     images: [{ url: "/images/velora-hero-editorial.jpg" }],
   },
 };
@@ -65,23 +65,23 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
   const remainingPosts = posts.slice(1);
 
   const categories = [
-    { id: "ALL", label: "All Chronicles" },
-    { id: "Horology", label: "Horology & Calibers" },
-    { id: "Perfumery", label: "High Perfumery" },
-    { id: "Atelier", label: "Savoir-Faire & Craft" },
-    { id: "Heritage", label: "Geneva Archives" },
+    { id: "ALL", label: "All Articles" },
+    { id: "Horology", label: "Watches & Movements" },
+    { id: "Perfumery", label: "Fragrances" },
+    { id: "Atelier", label: "Craftsmanship" },
+    { id: "Heritage", label: "Heritage" },
   ];
 
   // Blog / Collection Structured Data
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "VELORA Maison Journal",
-    description: "Curated essays on haute horlogerie and rare artisanal compounding.",
+    name: "VELORA Journal",
+    description: "Stories on fine watchmaking and artisanal fragrance creation.",
     url: "https://velora-ateliers.com/journal",
     publisher: {
       "@type": "Organization",
-      name: "VELORA Ateliers Geneva",
+      name: "VELORA",
       logo: {
         "@type": "ImageObject",
         url: "https://velora-ateliers.com/images/velora-hero-editorial.jpg",
@@ -101,8 +101,8 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
         <div className="mb-8">
           <Breadcrumbs
             items={[
-              { label: "Maison", href: "/" },
-              { label: "Journal & Chronicles" },
+              { label: "Home", href: "/" },
+              { label: "Journal" },
             ]}
           />
         </div>
@@ -111,13 +111,13 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
         <div className="border-b border-white/10 pb-12 mb-12">
           <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-ultra text-metallic mb-3">
             <BookOpen className="h-3.5 w-3.5" />
-            <span>Maison Velora Chronicles • Vol. IV</span>
+            <span>VELORA Journal</span>
           </div>
           <h1 className="font-serif-luxury text-4xl sm:text-5xl lg:text-6xl font-light text-ivory tracking-tight max-w-4xl">
-            The Journal of Time & Scent
+            Stories of Craftsmanship & Design
           </h1>
           <p className="text-sm sm:text-base text-neutral-stone font-light max-w-2xl mt-4 leading-relaxed">
-            Critical monographs on Geneva micromechanics, variable inertia balances, and high extraction perfumery. Published quarterly for collectors and connoisseurs.
+            Explore articles and behind-the-scenes insights into our watches, fragrances, and dedicated artisans.
           </p>
 
           {/* Category Filter Tabs */}
@@ -159,7 +159,7 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <span className="text-[10px] font-sans uppercase tracking-ultra px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-metallic border border-metallic/30">
-                    Lead Editorial
+                    Featured Article
                   </span>
                 </div>
               </div>
@@ -202,12 +202,12 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
                       {featuredPost.authorName ||
                         (featuredPost.author
                           ? `${featuredPost.author.firstName} ${featuredPost.author.lastName}`
-                          : "Maison Velora")}
+                          : "VELORA")}
                     </span>
                   </div>
 
                   <span className="inline-flex items-center gap-2 text-xs uppercase tracking-editorial font-semibold text-metallic group-hover:translate-x-1 transition-transform">
-                    <span>Read Chronicle</span>
+                    <span>Read Article</span>
                     <ArrowRight className="h-3.5 w-3.5" />
                   </span>
                 </div>
@@ -220,10 +220,10 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
         <div className="space-y-8">
           <div className="flex items-center justify-between border-b border-white/5 pb-4">
             <h3 className="font-serif-luxury text-2xl font-light text-ivory">
-              Archive of Selected Essays
+              All Articles
             </h3>
             <span className="text-xs font-mono text-neutral-stone">
-              {posts.length} {posts.length === 1 ? "Essay" : "Essays"}
+              {posts.length} {posts.length === 1 ? "Article" : "Articles"}
             </span>
           </div>
 
@@ -231,7 +231,7 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
             <div className="py-20 text-center border border-dashed border-white/10 rounded-2xl">
               <BookOpen className="h-10 w-10 text-neutral-stone mx-auto mb-3" />
               <p className="text-neutral-stone text-sm">
-                No essays found in this category. Check back soon for new releases.
+                No articles found in this category. Check back soon for new releases.
               </p>
             </div>
           ) : (
@@ -289,10 +289,10 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
 
                   <div className="p-6 pt-0 border-t border-white/5 flex items-center justify-between mt-4">
                     <span className="text-[11px] text-neutral-stone truncate max-w-[150px]">
-                      {post.authorName || "Maison Velora"}
+                      {post.authorName || "VELORA"}
                     </span>
                     <span className="text-xs font-semibold text-metallic flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
-                      Read <ArrowRight className="h-3 w-3" />
+                      Read Article <ArrowRight className="h-3 w-3" />
                     </span>
                   </div>
                 </Link>

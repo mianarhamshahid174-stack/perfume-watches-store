@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
   if (!post) {
     return {
-      title: "Story Not Found | VELORA Journal",
-      description: "The requested chronicle does not exist in the Maison archives.",
+      title: "Article Not Found | VELORA Journal",
+      description: "The requested article does not exist.",
     };
   }
 
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     post.seoDescription ||
     post.subtitle ||
     post.excerpt ||
-    `Read ${post.title} in the Maison Velora horological journal.`;
+    `Read ${post.title} in the VELORA journal.`;
   const canonicalUrl =
     post.canonicalUrl || `https://velora-ateliers.com/journal/${post.slug}`;
   const ogImageUrl =
@@ -146,7 +146,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
     post.authorName ||
     (post.author
       ? `${post.author.firstName} ${post.author.lastName}`
-      : "Maison Velora Editorial Board");
+      : "VELORA Editorial");
 
   // Format publication date
   const formattedDate = post.publishedAt
@@ -155,7 +155,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
         day: "numeric",
         year: "numeric",
       })
-    : "Chronicle Archive";
+    : "Archive";
 
   // Estimated reading time
   const wordCount = post.content ? post.content.split(/\s+/).length : 500;
@@ -176,7 +176,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
     },
     publisher: {
       "@type": "Organization",
-      name: "VELORA Ateliers Geneva",
+      name: "VELORA",
       logo: {
         "@type": "ImageObject",
         url: "https://velora-ateliers.com/images/velora-hero-editorial.jpg",
@@ -204,9 +204,9 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
       <Container size="wide" className="mb-8">
         <Breadcrumbs
           items={[
-            { label: "Maison", href: "/" },
+            { label: "Home", href: "/" },
             { label: "Journal", href: "/journal" },
-            { label: post.category || "Story", href: `/journal?category=${post.category}` },
+            { label: post.category || "Article", href: `/journal?category=${post.category}` },
             { label: post.title },
           ]}
         />
@@ -217,7 +217,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
         <div className="inline-flex items-center gap-2.5 px-3.5 py-1 rounded-full border border-metallic/30 bg-charcoal-900/60 backdrop-blur-md mb-6">
           <BookOpen className="h-3 w-3 text-metallic" />
           <span className="text-[10px] font-sans uppercase tracking-ultra text-metallic">
-            {post.category || "Horological Essay"}
+            {post.category || "Article"}
           </span>
         </div>
 
@@ -323,11 +323,11 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
           </div>
           <div className="space-y-2 text-center sm:text-left">
             <span className="text-[10px] font-sans uppercase tracking-ultra text-metallic">
-              Chronicle Author
+              Article Author
             </span>
             <h4 className="font-serif-luxury text-xl text-ivory">{authorDisplayName}</h4>
             <p className="text-xs text-neutral-stone font-light leading-relaxed">
-              Contributing historian and horological scholar for Maison Velora, examining mechanical calibers, tourbillon dynamics, and olfactory distillation in Switzerland and France.
+              Contributing writer for VELORA, exploring fine watchmaking, movement engineering, and artisanal fragrance creation.
             </p>
           </div>
         </div>
@@ -337,13 +337,13 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
           <div className="mt-24 pt-16 border-t border-white/10 space-y-8">
             <div className="text-center space-y-2">
               <span className="text-[10px] font-sans uppercase tracking-ultra text-metallic">
-                Horological Artifacts
+                Featured Products
               </span>
               <h3 className="font-serif-luxury text-2xl sm:text-3xl font-light text-ivory">
-                Masterpieces Featured in this Chronicle
+                Products Featured in this Article
               </h3>
               <p className="text-xs text-neutral-stone font-light max-w-md mx-auto">
-                Explore the creations engineered according to the principles discussed above.
+                Explore the original creations mentioned in this story.
               </p>
             </div>
 
@@ -367,7 +367,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                       </div>
                       <div className="space-y-1">
                         <span className="text-[9px] font-sans uppercase tracking-ultra text-neutral-slate">
-                          {prod.category?.name || "Complication"}
+                          {prod.category?.name || "Product"}
                         </span>
                         <h4 className="font-serif-luxury text-base sm:text-lg text-ivory group-hover:text-metallic transition-colors line-clamp-1">
                           {prod.name}
@@ -379,7 +379,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-neutral-stone">
-                      <span>View Specifications</span>
+                      <span>View Product</span>
                       <ArrowRight className="h-3.5 w-3.5 text-metallic group-hover:translate-x-1 transition-transform" />
                     </div>
                   </Link>
@@ -398,7 +398,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
             >
               <div className="flex items-center gap-2 text-[10px] font-sans uppercase tracking-ultra text-neutral-slate group-hover:text-metallic">
                 <ArrowLeft className="h-3 w-3" />
-                <span>Previous Chronicle</span>
+                <span>Previous Article</span>
               </div>
               <h5 className="font-serif-luxury text-base text-ivory line-clamp-1 group-hover:text-metallic">
                 {previousPost.title}
@@ -414,7 +414,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
               className="p-5 rounded-xl border border-white/5 bg-charcoal-950/30 hover:border-metallic/40 transition-colors group space-y-2 sm:text-right"
             >
               <div className="flex items-center sm:justify-end gap-2 text-[10px] font-sans uppercase tracking-ultra text-neutral-slate group-hover:text-metallic">
-                <span>Next Chronicle</span>
+                <span>Next Article</span>
                 <ArrowRight className="h-3 w-3" />
               </div>
               <h5 className="font-serif-luxury text-base text-ivory line-clamp-1 group-hover:text-metallic">

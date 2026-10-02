@@ -11,6 +11,14 @@ export const metadata: Metadata = {
   title: "The Collections | VELORA Haute Horlogerie & High Perfumery",
   description:
     "Explore the distinct design repertoires of Maison VELORA: Signature, Noir, Classic, Celestial, and Nocturne Privé.",
+  alternates: {
+    canonical: "https://velora-ateliers.com/collections",
+  },
+  openGraph: {
+    title: "The Collections | VELORA Haute Horlogerie",
+    description: "Explore the distinct design repertoires of Maison VELORA.",
+    images: [{ url: "/images/velora-hero-editorial.jpg" }],
+  },
 };
 
 export default async function CollectionsIndexPage() {

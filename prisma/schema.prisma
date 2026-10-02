@@ -158,13 +158,17 @@ model Category {
   name        String
   slug        String     @unique
   description String?    @db.Text
-  imageUrl    String?
-  parentId    String?
-  parent      Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
-  children    Category[] @relation("CategoryHierarchy")
-  products    Product[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  imageUrl       String?
+  parentId       String?
+  parent         Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children       Category[] @relation("CategoryHierarchy")
+  products       Product[]
+  seoTitle       String?
+  seoDescription String?
+  ogImage        String?
+  canonicalUrl   String?
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
 
   @@index([slug])
   @@index([parentId])
@@ -181,6 +185,8 @@ model Collection {
   isActive       Boolean             @default(true)
   seoTitle       String?
   seoDescription String?
+  ogImage        String?
+  canonicalUrl   String?
   products       ProductCollection[]
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
@@ -220,6 +226,8 @@ model Product {
   featured         Boolean             @default(false)
   seoTitle         String?
   seoDescription   String?
+  ogImage          String?
+  canonicalUrl     String?
 
   // Technical horological & fragrance specifications
   movement         String?
@@ -607,14 +615,21 @@ model JournalPost {
   slug          String     @unique
   excerpt       String?    @db.Text
   content       String     @db.Text
-  coverImageUrl String?
-  category      String?
-  authorId      String?
-  author        AdminUser? @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  isPublished   Boolean    @default(false)
-  publishedAt   DateTime?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
+  coverImageUrl     String?
+  category          String?
+  authorId          String?
+  author            AdminUser? @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  authorName        String?
+  subtitle          String?    @db.Text
+  seoTitle          String?
+  seoDescription    String?
+  ogImage           String?
+  canonicalUrl      String?
+  relatedProductIds String[]   @default([])
+  isPublished       Boolean    @default(false)
+  publishedAt       DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
 
   @@index([slug])
   @@index([isPublished])
@@ -644,9 +659,14 @@ model Media {
   sizeInBytes Int
   altText     String?
   folder      String   @default("products")
+  width       Int?
+  height      Int?
+  duration    Int?
+  metadata    Json?
   createdAt   DateTime @default(now())
 
   @@index([folder])
+  @@index([mimeType])
 }
 
 model SiteSetting {

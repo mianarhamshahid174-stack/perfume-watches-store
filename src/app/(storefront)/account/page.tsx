@@ -1,99 +1,156 @@
 "use client";
 
-import * as React from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { formatCurrency, formatDate } from "@/lib/utils";
+import { useWishlist } from "@/context/wishlist-context";
+import { useCart } from "@/context/cart-context";
+import { formatPKR, usdToPKR, PAKISTAN_PROVINCES, MAJOR_PAKISTAN_CITIES } from "@/lib/currency";
 import {
   User,
-  ShieldCheck,
   Package,
-  MapPin,
   Heart,
+  MapPin,
+  Settings,
   LogOut,
+  Clock,
+  ShieldCheck,
+  CheckCircle2,
+  Copy,
+  Check,
+  Truck,
+  Banknote,
   Sparkles,
+  ArrowRight,
+  ExternalLink,
+  Plus,
+  Trash2,
+  Lock,
+  ChevronRight,
+  X,
+  ShoppingBag,
 } from "lucide-react";
 
-interface AccountData {
+type AccountTab = "overview" | "orders" | "wishlist" | "addresses" | "profile" | "settings";
+
+interface OrderDetailModalData {
   id: string;
-  email: string;
-  role: string;
+  orderNumber: string;
+  status: string;
   createdAt: string;
-  profile: {
-    firstName?: string;
-    lastName?: string;
-    phone?: string;
-    preferredCurrency: string;
-    notes?: string;
-  } | null;
-  addresses: Array<{
+  trackingNumber?: string;
+  shippingAddress?: any;
+  notes?: string;
+  items: Array<{
     id: string;
-    type: string;
-    street1: string;
-    city: string;
-    state: string;
-    postalCode: string;
-    country: string;
-    isDefault: boolean;
+    productName: string;
+    productSku: string;
+    quantity: number;
+    unitPriceUSD: number;
+    unitPricePKR: number;
+    totalPriceUSD: number;
+    totalPricePKR: number;
+    variantTitle?: string;
+    imageUrl?: string;
   }>;
-  orders: Array<{
-    id: string;
-    orderNumber: string;
+  pricing: {
+    formattedTotalPKR: string;
+    formattedSubtotalPKR: string;
+    formattedDiscountPKR: string;
+    formattedShippingPKR: string;
+    totalUSD: number;
+  };
+  payment: {
+    method: string;
     status: string;
-    total: number | string;
-    trackingNumber?: string;
-    createdAt: string;
-    items: Array<{
-      id: string;
-      productName: string;
-      productSku: string;
-      quantity: number;
-      unitPrice: number | string;
-    }>;
+    amountPKR: string;
+    amountUSD: string;
+    isCOD: boolean;
+  };
+  timeline: Array<{
+    step: string;
+    status: string;
+    description: string;
+    isDone: boolean;
   }>;
-  wishlist: {
-    items: Array<{
-      id: string;
-      product: {
-        id: string;
-        name: string;
-        slug: string;
-        price: number | string;
-      };
-    }>;
-  } | null;
 }
 
 export default function AccountPage() {
   const router = useRouter();
-  const [data, setData] = React.useState<AccountData | null>(null);
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
+  const searchParams = useSearchParams();
+  const requestedTab = searchParams.get("tab") as AccountTab;
 
-  React.useEffect(() => {
-    async function loadProfile() {
-      try {
-        const res = await fetch("/api/auth/me");
-        if (!res.ok) {
-          router.push("/login?callbackUrl=/account");
-          return;
-        }
-        const json = await res.json();
-        if (json.success && json.user) {
-          setData(json.user);
-        }
-      } catch (err) {
-        console.error("Failed to load account:", err);
-      } finally {
-        setIsLoading(false);
+  const [activeTab, setActiveTab] = useState<AccountTab>(requestedTab || "overview");
+  const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // Selected Order for Modal
+  const [selectedOrder, setSelectedOrder] = useState<OrderDetailModalData | null>(null);
+  const [orderModalLoading, setOrderModalLoading] = useState(false);
+
+  // Wishlist context
+  const { items: wishlistItems, removeItem: removeWishlistItem, moveToCart, clearWishlist } = useWishlist();
+  const { openCart } = useCart();
+
+  // Address Form State
+  const [showAddressModal, setShowAddressModal] = useState(false);
+  const [addressSubmitting, setAddressSubmitting] = useState(false);
+  const [newAddress, setNewAddress] = useState({
+    firstName: "",
+    lastName: "",
+    street1: "",
+    street2: "",
+    city: "Karachi",
+    state: "Sindh",
+    postalCode: "74000",
+    phone: "",
+    isDefault: true,
+  });
+
+  // Profile Form State
+  const [profileForm, setProfileForm] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    preferredCurrency: "PKR",
+  });
+  const [profileSaving, setProfileSaving] = useState(false);
+  const [profileSuccess, setProfileSuccess] = useState(false);
+
+  // Copy tracking helper
+  const [copiedTracking, setCopiedTracking] = useState(false);
+
+  // Load account
+  const loadAccount = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch("/api/auth/me");
+      if (!res.ok) {
+        router.push("/login?callbackUrl=/account");
+        return;
       }
+      const data = await res.json();
+      if (data.success && data.user) {
+        setUserData(data.user);
+        setProfileForm({
+          firstName: data.user.profile?.firstName || "",
+          lastName: data.user.profile?.lastName || "",
+          phone: data.user.profile?.phone || "",
+          preferredCurrency: data.user.profile?.preferredCurrency || "PKR",
+        });
+      }
+    } catch (err) {
+      console.error("Account fetch error:", err);
+    } finally {
+      setLoading(false);
     }
-    loadProfile();
-  }, [router]);
+  };
+
+  useEffect(() => {
+    loadAccount();
+  }, []);
 
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -108,262 +165,1207 @@ export default function AccountPage() {
     }
   };
 
-  if (isLoading) {
+  // Open Full Order Details
+  const handleViewOrderDetails = async (orderIdOrNumber: string) => {
+    try {
+      setOrderModalLoading(true);
+      const res = await fetch(`/api/orders/${orderIdOrNumber}`);
+      const data = await res.json();
+      if (data.success && data.order) {
+        setSelectedOrder(data.order);
+      }
+    } catch (err) {
+      console.error("Failed to load order details:", err);
+    } finally {
+      setOrderModalLoading(false);
+    }
+  };
+
+  // Save Profile
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setProfileSaving(true);
+    setProfileSuccess(false);
+
+    try {
+      const res = await fetch("/api/account/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(profileForm),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setProfileSuccess(true);
+        loadAccount();
+        setTimeout(() => setProfileSuccess(false), 3000);
+      }
+    } catch (err) {
+      console.error("Profile save error:", err);
+    } finally {
+      setProfileSaving(false);
+    }
+  };
+
+  // Add Address
+  const handleAddAddress = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setAddressSubmitting(true);
+
+    try {
+      const res = await fetch("/api/account/addresses", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newAddress),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setShowAddressModal(false);
+        loadAccount();
+        setNewAddress({
+          firstName: "",
+          lastName: "",
+          street1: "",
+          street2: "",
+          city: "Karachi",
+          state: "Sindh",
+          postalCode: "74000",
+          phone: "",
+          isDefault: false,
+        });
+      }
+    } catch (err) {
+      console.error("Address error:", err);
+    } finally {
+      setAddressSubmitting(false);
+    }
+  };
+
+  // Delete Address
+  const handleDeleteAddress = async (id: string) => {
+    if (!confirm("Are you sure you want to remove this delivery sanctuary?")) return;
+    try {
+      await fetch(`/api/account/addresses?id=${id}`, { method: "DELETE" });
+      loadAccount();
+    } catch (err) {
+      console.error("Delete address error:", err);
+    }
+  };
+
+  const copyTrackingToClipboard = (trk: string) => {
+    navigator.clipboard.writeText(trk);
+    setCopiedTracking(true);
+    setTimeout(() => setCopiedTracking(false), 2000);
+  };
+
+  if (loading) {
     return (
-      <div className="py-20">
-        <Container size="default" className="space-y-8">
-          <Skeleton className="h-10 w-64 bg-noir-850" />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Skeleton className="h-48 bg-noir-850" />
-            <Skeleton className="h-48 md:col-span-2 bg-noir-850" />
-          </div>
-        </Container>
+      <div className="min-h-screen bg-black text-white pt-36 pb-24 flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-10 h-10 border-2 border-gold-400 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-gold-300">
+            Accessing Private Collector Salon...
+          </p>
+        </div>
       </div>
     );
   }
 
-  if (!data) return null;
+  if (!userData) return null;
 
-  const isVip = data.role === "VIP_CUSTOMER";
+  const isVip = userData.role === "VIP_CUSTOMER";
+  const ordersList = userData.orders || [];
+  const defaultAddress = userData.addresses?.find((a: any) => a.isDefault) || userData.addresses?.[0];
+
+  const tabs: Array<{ id: AccountTab; label: string; icon: any; count?: number }> = [
+    { id: "overview", label: "Overview", icon: User },
+    { id: "orders", label: "Orders", icon: Package, count: ordersList.length },
+    { id: "wishlist", label: "Wishlist", icon: Heart, count: wishlistItems.length },
+    { id: "addresses", label: "Addresses", icon: MapPin, count: userData.addresses?.length },
+    { id: "profile", label: "Profile", icon: User },
+    { id: "settings", label: "Settings", icon: Settings },
+  ];
 
   return (
-    <div className="py-16 sm:py-24">
+    <div className="min-h-screen bg-black text-white pt-28 pb-24 selection:bg-gold-500/20 selection:text-gold-200">
       <Container size="wide">
         {/* Salon Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-8 border-b border-white/10 gap-4 mb-10">
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="font-serif-luxury text-3xl sm:text-4xl text-sand-50 font-light">
-                Private Salon of {data.profile?.firstName || "Collector"} {data.profile?.lastName || ""}
+        <div className="bg-neutral-950 border border-white/10 p-6 sm:p-10 mb-8 rounded-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400">
+                  Private Salon • Geneva Vault #VEL-{userData.id.slice(-6).toUpperCase()}
+                </span>
+                <span className="px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-gold-950 border border-gold-500/40 text-gold-300 rounded-full">
+                  {isVip ? "VIP Patron" : "Registered Collector"}
+                </span>
+              </div>
+              <h1 className="font-serif-luxury text-2xl sm:text-4xl text-sand-50 font-light">
+                Maison Salon of {userData.profile?.firstName || "Patron"}{" "}
+                {userData.profile?.lastName || ""}
               </h1>
-              <Badge variant={isVip ? "gold" : "silver"}>
-                {isVip ? "VIP Patron" : "Registered Client"}
-              </Badge>
+              <p className="text-xs text-neutral-400 font-light">
+                Direct Email: <span className="text-sand-100 font-mono">{userData.email}</span> • Currency: PKR (₨)
+              </p>
             </div>
-            <p className="text-xs text-platinum-400 font-light mt-1">
-              Member since {formatDate(data.createdAt)} • Private Atelier Vault #ZV-{data.id.slice(-6).toUpperCase()}
-            </p>
-          </div>
 
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleLogout}
-            isLoading={isLoggingOut}
-            className="self-start sm:self-auto gap-2"
-          >
-            <LogOut className="h-3.5 w-3.5" />
-            Terminate Salon Session
-          </Button>
+            <button
+              type="button"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-white/20 hover:border-gold-400 text-xs font-mono uppercase tracking-wider text-sand-200 transition-colors self-start sm:self-auto cursor-pointer"
+            >
+              <LogOut className="w-3.5 h-3.5 text-gold-400" />
+              <span>{isLoggingOut ? "Ending Session..." : "Sign Out"}</span>
+            </button>
+          </div>
         </div>
 
-        {/* Account Details & Status Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Column 1: Profile & Privileges */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">Collector Credentials</CardTitle>
-                  <User className="h-4 w-4 text-gold-400" />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                <div>
-                  <span className="text-platinum-500 block text-[10px] uppercase font-mono">
-                    Direct Email
-                  </span>
-                  <span className="text-sand-100 font-medium">{data.email}</span>
-                </div>
-                {data.profile?.phone && (
-                  <div>
-                    <span className="text-platinum-500 block text-[10px] uppercase font-mono">
-                      Telephone
-                    </span>
-                    <span className="text-sand-100">{data.profile.phone}</span>
-                  </div>
-                )}
-                <div>
-                  <span className="text-platinum-500 block text-[10px] uppercase font-mono">
-                    Preferred Currency
-                  </span>
-                  <span className="text-sand-100 font-mono">
-                    {data.profile?.preferredCurrency || "USD"}
-                  </span>
-                </div>
-                {data.profile?.notes && (
-                  <div className="pt-2 border-t border-white/5">
-                    <span className="text-gold-400 block text-[10px] uppercase font-mono mb-1">
-                      Atelier Curator Note
-                    </span>
-                    <p className="text-[11px] text-platinum-400 italic">
-                      &quot;{data.profile.notes}&quot;
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+        {/* 6 Tabs Navigation Bar */}
+        <div className="border-b border-white/10 mb-10 overflow-x-auto">
+          <div className="flex items-center gap-2 sm:gap-6 min-w-max pb-1">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              const isActive = activeTab === tab.id;
 
-            {/* Saved Addresses */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">Delivery Sanctuary</CardTitle>
-                  <MapPin className="h-4 w-4 text-gold-400" />
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-3 text-xs">
-                {data.addresses.length > 0 ? (
-                  data.addresses.map((addr) => (
-                    <div
-                      key={addr.id}
-                      className="border border-white/5 p-3 rounded bg-noir-850/50 space-y-1"
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`inline-flex items-center gap-2 py-3 px-3 sm:px-4 text-xs font-mono uppercase tracking-wider transition-all border-b-2 cursor-pointer ${
+                    isActive
+                      ? "border-gold-400 text-gold-300 font-semibold"
+                      : "border-transparent text-neutral-400 hover:text-sand-100"
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  <span>{tab.label}</span>
+                  {typeof tab.count === "number" && (
+                    <span
+                      className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                        isActive
+                          ? "bg-gold-400 text-obsidian font-bold"
+                          : "bg-neutral-800 text-neutral-400"
+                      }`}
                     >
-                      <div className="flex items-center justify-between text-[11px]">
-                        <span className="font-medium text-sand-50 uppercase font-mono">
-                          {addr.type} Address
-                        </span>
-                        {addr.isDefault && <Badge variant="gold">Default</Badge>}
-                      </div>
-                      <p className="text-platinum-300 font-light">{addr.street1}</p>
-                      <p className="text-platinum-400 font-light">
-                        {addr.city}, {addr.state} {addr.postalCode}, {addr.country}
-                      </p>
-                    </div>
-                  ))
-                ) : (
-                  <p className="text-platinum-500 text-xs italic">
-                    No private delivery address saved yet.
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          {/* Column 2 & 3: Timepiece Allocations & Orders */}
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-lg">
-                      Timepiece & Fragrance Acquisitions
-                    </CardTitle>
-                    <p className="text-xs text-platinum-400 font-light">
-                      Track high-security assembly and armored courier dispatch.
-                    </p>
-                  </div>
-                  <Package className="h-4 w-4 text-gold-400" />
+        {/* TAB 1: OVERVIEW */}
+        {activeTab === "overview" && (
+          <div className="space-y-10">
+            {/* 4 Stat Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="p-6 bg-neutral-950 border border-white/10 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+                  Total Acquisitions
+                </span>
+                <div className="font-mono text-2xl text-sand-50 font-light">
+                  {ordersList.length}
                 </div>
-              </CardHeader>
-              <CardContent>
-                {data.orders.length > 0 ? (
-                  <div className="space-y-4">
-                    {data.orders.map((ord) => (
+                <span className="text-[11px] text-neutral-500 font-light">
+                  Registered in Geneva ledger
+                </span>
+              </div>
+
+              <div className="p-6 bg-neutral-950 border border-white/10 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-gold-400 block">
+                  Active Transit Orders
+                </span>
+                <div className="font-mono text-2xl text-gold-300 font-light">
+                  {ordersList.filter((o: any) => o.status !== "Delivered").length}
+                </div>
+                <span className="text-[11px] text-neutral-500 font-light">
+                  Armored courier in Pakistan
+                </span>
+              </div>
+
+              <div className="p-6 bg-neutral-950 border border-white/10 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+                  Curated Wishlist
+                </span>
+                <div className="font-mono text-2xl text-sand-50 font-light">
+                  {wishlistItems.length}
+                </div>
+                <span className="text-[11px] text-neutral-500 font-light">
+                  Reserved for private viewing
+                </span>
+              </div>
+
+              <div className="p-6 bg-neutral-950 border border-white/10 space-y-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+                  Delivery Destination
+                </span>
+                <div className="font-serif-luxury text-base text-sand-50 truncate">
+                  {defaultAddress ? `${defaultAddress.city}, Pakistan` : "None Registered"}
+                </div>
+                <span className="text-[11px] text-neutral-500 font-light truncate block">
+                  {defaultAddress ? defaultAddress.street1 : "Add your sanctuary"}
+                </span>
+              </div>
+            </div>
+
+            {/* Recent Orders Preview */}
+            <div className="bg-neutral-950 border border-white/10 p-6 sm:p-8 space-y-6">
+              <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <div>
+                  <h3 className="font-serif-luxury text-xl text-sand-50">
+                    Latest Commissioned Acquisitions
+                  </h3>
+                  <p className="text-xs text-neutral-400 font-light">
+                    Review status, armored courier waybills, and assembly timelines.
+                  </p>
+                </div>
+                {ordersList.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("orders")}
+                    className="text-xs font-mono text-gold-400 hover:text-gold-300 uppercase tracking-wider flex items-center gap-1"
+                  >
+                    <span>View All ({ordersList.length})</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+
+              {ordersList.length === 0 ? (
+                <div className="py-12 text-center space-y-4">
+                  <Package className="w-10 h-10 text-neutral-600 mx-auto" />
+                  <p className="text-xs text-neutral-400 font-light">
+                    You have not commissioned any timepiece acquisitions yet.
+                  </p>
+                  <Link
+                    href="/watches"
+                    className="inline-block px-6 py-2.5 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-wider transition-colors"
+                  >
+                    Explore Atelier Collections
+                  </Link>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {ordersList.slice(0, 3).map((ord: any) => {
+                    const totalUSD = Number(ord.total);
+                    const totalPKR = usdToPKR(totalUSD);
+
+                    return (
                       <div
                         key={ord.id}
-                        className="border border-white/10 p-5 rounded-none bg-noir-850/40 space-y-3"
+                        className="p-5 bg-neutral-900/60 border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                       >
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/5 pb-3 gap-2">
-                          <div>
-                            <span className="text-xs font-mono font-medium text-gold-400">
-                              Order #{ord.orderNumber}
-                            </span>
-                            <span className="text-[11px] text-platinum-500 ml-3">
-                              {formatDate(ord.createdAt)}
-                            </span>
-                          </div>
+                        <div className="space-y-1">
                           <div className="flex items-center gap-3">
-                            <Badge variant="gold">{ord.status}</Badge>
-                            <span className="text-xs font-mono font-semibold text-sand-50">
-                              {formatCurrency(Number(ord.total) * 100)}
+                            <span className="font-mono text-sm text-gold-300 font-semibold">
+                              {ord.orderNumber}
+                            </span>
+                            <span className="px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-gold-950 text-gold-400 border border-gold-500/20 rounded-full">
+                              {ord.status}
                             </span>
                           </div>
+                          <p className="text-xs text-neutral-400">
+                            Commissioned on {new Date(ord.createdAt).toLocaleDateString()} • {ord.items?.length || 1} Piece(s)
+                          </p>
+                          {ord.trackingNumber && (
+                            <span className="text-[10px] font-mono text-neutral-500 block">
+                              Waybill: {ord.trackingNumber}
+                            </span>
+                          )}
                         </div>
 
-                        {/* Order Items */}
-                        <div className="space-y-2">
-                          {ord.items.map((item) => (
-                            <div
-                              key={item.id}
-                              className="flex items-center justify-between text-xs"
-                            >
-                              <span className="text-sand-100 font-light">
-                                {item.productName}{" "}
-                                <span className="text-platinum-500 font-mono text-[10px]">
-                                  (Qty: {item.quantity})
-                                </span>
-                              </span>
-                              <span className="font-mono text-platinum-300">
-                                {formatCurrency(Number(item.unitPrice) * 100)}
-                              </span>
+                        <div className="flex items-center gap-4">
+                          <div className="text-right">
+                            <div className="font-mono text-base text-sand-50 font-medium">
+                              {formatPKR(totalPKR)}
                             </div>
-                          ))}
+                            <div className="text-[10px] font-mono text-neutral-500">
+                              ${totalUSD.toLocaleString()} USD
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleViewOrderDetails(ord.orderNumber || ord.id)}
+                            className="px-4 py-2 border border-white/20 hover:border-gold-400 text-xs font-mono uppercase tracking-wider text-sand-200 transition-colors"
+                          >
+                            Details
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: ORDERS (WITH FULL ORDER DETAILS MODAL / DRAWER) */}
+        {activeTab === "orders" && (
+          <div className="space-y-6">
+            <div className="border-b border-white/10 pb-4 flex justify-between items-center">
+              <div>
+                <h2 className="font-serif-luxury text-2xl text-sand-50">
+                  Maison Acquisitions & Orders
+                </h2>
+                <p className="text-xs text-neutral-400 font-light mt-1">
+                  Complete horological ledger, safe payment details, and live armored transit timeline across Pakistan.
+                </p>
+              </div>
+            </div>
+
+            {ordersList.length === 0 ? (
+              <div className="p-12 text-center bg-neutral-950 border border-white/10 space-y-4">
+                <Package className="w-12 h-12 text-neutral-600 mx-auto" />
+                <h3 className="font-serif-luxury text-lg text-sand-100">No Orders in Record</h3>
+                <p className="text-xs text-neutral-400 font-light max-w-sm mx-auto">
+                  Reserve your first limited Geneva timepiece or bespoke perfume creation.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/watches"
+                    className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-wider inline-block"
+                  >
+                    View Novelties
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {ordersList.map((ord: any) => {
+                  const totalUSD = Number(ord.total);
+                  const totalPKR = usdToPKR(totalUSD);
+
+                  return (
+                    <div
+                      key={ord.id}
+                      className="bg-neutral-950 border border-white/10 p-6 space-y-4 hover:border-gold-500/30 transition-all"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-white/10 pb-4 gap-3">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-3">
+                            <span className="font-mono text-base text-gold-300 font-semibold tracking-wide">
+                              {ord.orderNumber}
+                            </span>
+                            <span className="px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider bg-gold-500/10 text-gold-300 border border-gold-500/30 rounded-sm">
+                              {ord.status}
+                            </span>
+                          </div>
+                          <div className="text-xs text-neutral-400 font-mono">
+                            Reserved: {new Date(ord.createdAt).toLocaleDateString("en-US", {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            })}
+                          </div>
                         </div>
 
-                        {/* Armored tracking note */}
-                        {ord.trackingNumber && (
-                          <div className="pt-2 border-t border-white/5 flex items-center justify-between text-[11px] text-platinum-400 font-mono">
-                            <span className="flex items-center gap-1.5">
-                              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-                              Courier Waybill: {ord.trackingNumber}
-                            </span>
-                            <span className="text-emerald-400">Armored Transit</span>
+                        <div className="flex items-center gap-4">
+                          <div className="text-right">
+                            <div className="font-mono text-lg text-sand-50 font-semibold">
+                              {formatPKR(totalPKR)}
+                            </div>
+                            <div className="text-xs font-mono text-neutral-500">
+                              Approx. ${totalUSD.toLocaleString()} USD
+                            </div>
                           </div>
+
+                          <button
+                            type="button"
+                            onClick={() => handleViewOrderDetails(ord.orderNumber || ord.id)}
+                            className="px-5 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-sand-100 border border-white/20 hover:border-gold-400 text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer"
+                          >
+                            Inspect Order & Timeline
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Items Preview */}
+                      <div className="space-y-2 text-xs">
+                        {ord.items?.map((it: any) => (
+                          <div key={it.id} className="flex justify-between items-center text-neutral-300">
+                            <span>
+                              {it.productName}{" "}
+                              <span className="text-neutral-500 font-mono text-[10px]">
+                                (x{it.quantity})
+                              </span>
+                            </span>
+                            <span className="font-mono text-neutral-400">
+                              {formatPKR(usdToPKR(Number(it.unitPrice) * it.quantity))}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Quick Waybill note */}
+                      {ord.trackingNumber && (
+                        <div className="pt-3 border-t border-white/5 flex items-center justify-between text-xs font-mono text-neutral-400">
+                          <div className="flex items-center gap-2">
+                            <Truck className="w-3.5 h-3.5 text-gold-400" />
+                            <span>Armored Transit: {ord.trackingNumber}</span>
+                          </div>
+                          <span className="text-emerald-400 text-[11px]">
+                            Insured by Ferrari Logistics
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 3: WISHLIST (CONNECTED WITH useWishlist()) */}
+        {activeTab === "wishlist" && (
+          <div className="space-y-6">
+            <div className="border-b border-white/10 pb-4 flex justify-between items-center">
+              <div>
+                <h2 className="font-serif-luxury text-2xl text-sand-50">
+                  Curated Salon Wishlist
+                </h2>
+                <p className="text-xs text-neutral-400 font-light mt-1">
+                  Saved creations are synchronized with your patron vault across all devices.
+                </p>
+              </div>
+
+              {wishlistItems.length > 0 && (
+                <button
+                  type="button"
+                  onClick={clearWishlist}
+                  className="text-xs font-mono text-neutral-500 hover:text-rose-400 uppercase tracking-wider"
+                >
+                  Clear All
+                </button>
+              )}
+            </div>
+
+            {wishlistItems.length === 0 ? (
+              <div className="p-12 text-center bg-neutral-950 border border-white/10 space-y-4">
+                <Heart className="w-12 h-12 text-neutral-600 mx-auto" />
+                <h3 className="font-serif-luxury text-lg text-sand-100">
+                  Your Wishlist is Empty
+                </h3>
+                <p className="text-xs text-neutral-400 font-light max-w-sm mx-auto">
+                  Click the heart icon on any timepiece or extrait de parfum to save it for your private collection.
+                </p>
+                <div className="pt-2">
+                  <Link
+                    href="/watches"
+                    className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-wider inline-block"
+                  >
+                    Explore Watches
+                  </Link>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {wishlistItems.map((item) => {
+                  const itemPricePKR = usdToPKR(item.price);
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-neutral-950 border border-white/10 group flex flex-col justify-between"
+                    >
+                      <div className="relative aspect-[4/3] bg-neutral-900 overflow-hidden">
+                        <img
+                          src={item.imageUrl}
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => removeWishlistItem(item.productId)}
+                          className="absolute top-3 right-3 p-2 bg-black/60 hover:bg-rose-950 text-neutral-300 hover:text-rose-300 border border-white/10 transition-colors"
+                          title="Remove from Wishlist"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+
+                      <div className="p-5 space-y-4">
+                        <div className="space-y-1">
+                          <span className="text-[9px] font-mono uppercase tracking-wider text-gold-400">
+                            REF. {item.sku}
+                          </span>
+                          <h4 className="font-serif-luxury text-base text-sand-50 truncate">
+                            {item.name}
+                          </h4>
+                          <div className="pt-1">
+                            <span className="font-mono text-gold-300 text-sm font-semibold">
+                              {formatPKR(itemPricePKR)}
+                            </span>
+                            <span className="text-[11px] font-mono text-neutral-500 ml-2">
+                              ${item.price.toLocaleString()} USD
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="pt-2 border-t border-white/10 flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              moveToCart(item.productId);
+                              openCart();
+                            }}
+                            className="flex-1 h-10 bg-gold-500 hover:bg-gold-400 text-obsidian font-semibold text-[11px] uppercase tracking-wider transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                          >
+                            <ShoppingBag className="w-3.5 h-3.5" />
+                            <span>Move to Bag</span>
+                          </button>
+
+                          <Link
+                            href={`/product/${item.slug || item.productId}`}
+                            className="px-3 h-10 border border-white/20 hover:border-white/40 flex items-center justify-center text-neutral-300 hover:text-white transition-colors"
+                            title="Inspect Details"
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 4: ADDRESSES */}
+        {activeTab === "addresses" && (
+          <div className="space-y-6">
+            <div className="border-b border-white/10 pb-4 flex justify-between items-center">
+              <div>
+                <h2 className="font-serif-luxury text-2xl text-sand-50">
+                  Delivery Sanctuaries (Pakistan)
+                </h2>
+                <p className="text-xs text-neutral-400 font-light mt-1">
+                  Manage white-glove armored transit delivery locations across Karachi, Lahore, Islamabad, and other territories.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setShowAddressModal(true)}
+                className="px-4 py-2.5 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer"
+              >
+                <Plus className="w-3.5 h-3.5" />
+                <span>Add Sanctuary</span>
+              </button>
+            </div>
+
+            {(!userData.addresses || userData.addresses.length === 0) ? (
+              <div className="p-12 text-center bg-neutral-950 border border-white/10 space-y-4">
+                <MapPin className="w-12 h-12 text-neutral-600 mx-auto" />
+                <h3 className="font-serif-luxury text-lg text-sand-100">
+                  No Saved Delivery Sanctuary
+                </h3>
+                <p className="text-xs text-neutral-400 font-light max-w-sm mx-auto">
+                  Add your residence address in Pakistan for seamless allocation handoffs.
+                </p>
+                <div className="pt-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddressModal(true)}
+                    className="px-6 py-2.5 border border-gold-400 text-gold-300 hover:bg-gold-500/10 text-xs font-mono uppercase tracking-wider inline-block cursor-pointer"
+                  >
+                    + Register Address
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {userData.addresses.map((addr: any) => (
+                  <div
+                    key={addr.id}
+                    className="p-6 bg-neutral-950 border border-white/10 space-y-4 relative"
+                  >
+                    <div className="flex justify-between items-start">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-gold-400" />
+                        <span className="font-mono text-xs uppercase tracking-wider text-sand-50 font-semibold">
+                          {addr.type} Address
+                        </span>
+                        {addr.isDefault && (
+                          <span className="px-2 py-0.5 text-[9px] font-mono uppercase bg-gold-950 border border-gold-500/30 text-gold-300 rounded-full">
+                            Primary
+                          </span>
                         )}
                       </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="py-8 text-center border border-dashed border-white/10 rounded">
-                    <Sparkles className="h-6 w-6 text-gold-400/60 mx-auto mb-2" />
-                    <p className="text-xs text-platinum-400 font-light">
-                      You have no commissioned timepieces or orders in progress.
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
 
-            {/* Saved Wishlist */}
-            <Card>
-              <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="text-lg">Curated Wishlist</CardTitle>
-                  <Heart className="h-4 w-4 text-gold-400" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                {data.wishlist && data.wishlist.items.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {data.wishlist.items.map((item) => (
-                      <div
-                        key={item.id}
-                        className="border border-white/10 p-3 bg-noir-850/50 flex items-center justify-between"
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteAddress(addr.id)}
+                        className="text-neutral-500 hover:text-rose-400 p-1"
+                        title="Delete Sanctuary"
                       >
-                        <div>
-                          <p className="text-xs font-serif-luxury text-sand-50">
-                            {item.product.name}
-                          </p>
-                          <p className="text-[11px] font-mono text-gold-400">
-                            {formatCurrency(Number(item.product.price) * 100)}
-                          </p>
-                        </div>
-                        <Button variant="outline" size="sm" className="text-[10px] h-7 px-2">
-                          View Piece
-                        </Button>
-                      </div>
-                    ))}
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+
+                    <div className="text-xs space-y-1 text-neutral-300">
+                      <p className="text-sand-100 font-medium">
+                        {addr.firstName} {addr.lastName}
+                      </p>
+                      <p>{addr.street1}</p>
+                      {addr.street2 && <p>{addr.street2}</p>}
+                      <p>
+                        {addr.city}, {addr.state} {addr.postalCode}
+                      </p>
+                      <p className="text-neutral-400">{addr.country}</p>
+                      {addr.phone && (
+                        <p className="text-neutral-500 font-mono pt-1">Tel: {addr.phone}</p>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  <p className="text-xs text-platinum-500 italic">
-                    Your salon wishlist is currently empty.
-                  </p>
-                )}
-              </CardContent>
-            </Card>
+                ))}
+              </div>
+            )}
           </div>
-        </div>
+        )}
+
+        {/* TAB 5: PROFILE */}
+        {activeTab === "profile" && (
+          <div className="max-w-2xl bg-neutral-950 border border-white/10 p-6 sm:p-8 space-y-6">
+            <div className="border-b border-white/10 pb-4">
+              <h2 className="font-serif-luxury text-2xl text-sand-50">Patron Credentials</h2>
+              <p className="text-xs text-neutral-400 font-light mt-1">
+                Update your identity details for insured Geneva certificates and private viewing invitations.
+              </p>
+            </div>
+
+            {profileSuccess && (
+              <div className="p-3 bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Collector profile successfully saved to master ledger.</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSaveProfile} className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
+                    First Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={profileForm.firstName}
+                    onChange={(e) =>
+                      setProfileForm({ ...profileForm, firstName: e.target.value })
+                    }
+                    className="w-full h-11 bg-neutral-900 border border-white/10 px-4 text-sm text-sand-50 focus:outline-none focus:border-gold-400"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
+                    Last Name
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={profileForm.lastName}
+                    onChange={(e) =>
+                      setProfileForm({ ...profileForm, lastName: e.target.value })
+                    }
+                    className="w-full h-11 bg-neutral-900 border border-white/10 px-4 text-sm text-sand-50 focus:outline-none focus:border-gold-400"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
+                  Direct Email Address (Non-editable)
+                </label>
+                <input
+                  type="email"
+                  disabled
+                  value={userData.email}
+                  className="w-full h-11 bg-neutral-900/50 border border-white/5 px-4 text-sm text-neutral-500 font-mono cursor-not-allowed"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
+                  Telephone Contact (Pakistan)
+                </label>
+                <input
+                  type="tel"
+                  placeholder="+92 300 1234567"
+                  value={profileForm.phone}
+                  onChange={(e) => setProfileForm({ ...profileForm, phone: e.target.value })}
+                  className="w-full h-11 bg-neutral-900 border border-white/10 px-4 text-sm text-sand-50 focus:outline-none focus:border-gold-400"
+                />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-mono uppercase tracking-wider text-neutral-400 mb-1.5">
+                  Preferred Currency
+                </label>
+                <select
+                  value={profileForm.preferredCurrency}
+                  onChange={(e) =>
+                    setProfileForm({ ...profileForm, preferredCurrency: e.target.value })
+                  }
+                  className="w-full h-11 bg-neutral-900 border border-white/10 px-4 text-xs text-sand-50 focus:outline-none focus:border-gold-400"
+                >
+                  <option value="PKR">Pakistani Rupee (PKR - ₨)</option>
+                  <option value="USD">United States Dollar (USD - $)</option>
+                </select>
+              </div>
+
+              <div className="pt-4 border-t border-white/10 flex justify-end">
+                <button
+                  type="submit"
+                  disabled={profileSaving}
+                  className="px-8 h-12 bg-gold-500 hover:bg-gold-400 text-obsidian font-semibold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer"
+                >
+                  {profileSaving ? "Preserving Changes..." : "Save Credentials"}
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {/* TAB 6: SETTINGS */}
+        {activeTab === "settings" && (
+          <div className="max-w-2xl space-y-8">
+            {/* Security Section */}
+            <div className="bg-neutral-950 border border-white/10 p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-2 border-b border-white/10 pb-4">
+                <Lock className="w-4 h-4 text-gold-400" />
+                <h3 className="font-serif-luxury text-xl text-sand-50">Salon Vault Security</h3>
+              </div>
+
+              <div className="space-y-4 text-xs font-sans">
+                <p className="text-neutral-400 font-light leading-relaxed">
+                  Your session is protected with 256-bit AES encryption. To update your password, use the reset verification protocol.
+                </p>
+                <Link
+                  href="/forgot-password"
+                  className="inline-block px-5 py-2.5 border border-white/20 hover:border-gold-400 text-xs font-mono uppercase tracking-wider text-sand-200 transition-colors"
+                >
+                  Request Password Reset Link
+                </Link>
+              </div>
+            </div>
+
+            {/* Notifications */}
+            <div className="bg-neutral-950 border border-white/10 p-6 sm:p-8 space-y-6">
+              <div className="flex items-center gap-2 border-b border-white/10 pb-4">
+                <Sparkles className="w-4 h-4 text-gold-400" />
+                <h3 className="font-serif-luxury text-xl text-sand-50">Dispatch Communications</h3>
+              </div>
+
+              <div className="space-y-4 text-xs">
+                <label className="flex items-center justify-between p-3 bg-neutral-900 border border-white/10">
+                  <span className="text-sand-100">SMS Armored Courier Alerts (Pakistan)</span>
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="w-4 h-4 rounded text-gold-500"
+                  />
+                </label>
+
+                <label className="flex items-center justify-between p-3 bg-neutral-900 border border-white/10">
+                  <span className="text-sand-100">Private Viewing & New Series Invitations</span>
+                  <input
+                    type="checkbox"
+                    defaultChecked
+                    className="w-4 h-4 rounded text-gold-500"
+                  />
+                </label>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* FULL ORDER DETAILS MODAL / TIMELINE POPUP */}
+        {selectedOrder && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+            <div className="relative w-full max-w-4xl bg-neutral-950 border border-gold-500/30 p-6 sm:p-8 my-8 shadow-2xl space-y-6 max-h-[90vh] overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-start justify-between border-b border-white/10 pb-4">
+                <div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400">
+                      Acquisition Dossier
+                    </span>
+                    <span className="px-2 py-0.5 text-[9px] font-mono uppercase tracking-wider bg-gold-950 text-gold-300 border border-gold-500/20 rounded-full">
+                      {selectedOrder.status}
+                    </span>
+                  </div>
+                  <h3 className="font-serif-luxury text-2xl text-sand-50 font-light mt-1">
+                    Order Reference {selectedOrder.orderNumber}
+                  </h3>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSelectedOrder(null)}
+                  className="p-1.5 text-neutral-400 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* 6-Stage Timeline */}
+              <div className="space-y-3">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+                  Progressive Dispatch Timeline
+                </span>
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {selectedOrder.timeline?.map((step, sIdx) => (
+                    <div
+                      key={sIdx}
+                      className={`p-3 border text-xs space-y-1 ${
+                        step.isDone
+                          ? "bg-gold-950/20 border-gold-500/40"
+                          : "bg-neutral-900/40 border-white/5 opacity-50"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-[9px] font-mono text-gold-400">0{sIdx + 1}</span>
+                        {step.isDone ? (
+                          <CheckCircle2 className="w-3.5 h-3.5 text-gold-400" />
+                        ) : (
+                          <Clock className="w-3.5 h-3.5 text-neutral-600" />
+                        )}
+                      </div>
+                      <div className="font-serif-luxury text-sand-100 text-[11px] leading-snug">
+                        {step.step}
+                      </div>
+                      <div className="text-[10px] text-neutral-400 font-light line-clamp-2">
+                        {step.description}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Order Products */}
+              <div className="space-y-3 pt-2">
+                <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+                  Reserved Timepieces & Fragrances ({selectedOrder.items.length})
+                </span>
+                <div className="divide-y divide-white/10 border-t border-b border-white/10">
+                  {selectedOrder.items.map((it) => (
+                    <div key={it.id} className="py-3 flex gap-4 text-xs items-center">
+                      <div className="w-16 h-20 bg-neutral-900 border border-white/10 overflow-hidden shrink-0">
+                        <img
+                          src={it.imageUrl || "/images/velora-signature-01.jpg"}
+                          alt={it.productName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0 space-y-0.5">
+                        <span className="text-[9px] font-mono text-gold-400">
+                          REF. {it.productSku}
+                        </span>
+                        <h4 className="font-serif-luxury text-sm text-sand-50 truncate">
+                          {it.productName}
+                        </h4>
+                        {it.variantTitle && (
+                          <p className="text-[10px] text-neutral-400">{it.variantTitle}</p>
+                        )}
+                        <div className="flex justify-between items-center pt-1">
+                          <span className="text-neutral-400 font-mono text-[10px]">
+                            Qty: {it.quantity}
+                          </span>
+                          <span className="font-mono text-gold-300 font-medium">
+                            {formatPKR(it.totalPricePKR)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 2-Column: Destination & Safe Payment Details */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                {/* Shipping & Armored Tracking */}
+                <div className="p-4 bg-neutral-900/60 border border-white/10 space-y-2">
+                  <div className="flex items-center gap-2 text-gold-400">
+                    <MapPin className="w-4 h-4" />
+                    <span className="font-serif-luxury text-sand-100 text-sm">
+                      Sanctuary Destination
+                    </span>
+                  </div>
+                  {selectedOrder.shippingAddress && (
+                    <div className="text-neutral-300 text-[11px] space-y-0.5 font-sans">
+                      <div>
+                        {selectedOrder.shippingAddress.firstName}{" "}
+                        {selectedOrder.shippingAddress.lastName}
+                      </div>
+                      <div>{selectedOrder.shippingAddress.street1}</div>
+                      <div>
+                        {selectedOrder.shippingAddress.city},{" "}
+                        {selectedOrder.shippingAddress.state}{" "}
+                        {selectedOrder.shippingAddress.postalCode}
+                      </div>
+                      <div className="text-neutral-400 font-mono">
+                        {selectedOrder.shippingAddress.country}
+                      </div>
+                    </div>
+                  )}
+
+                  {selectedOrder.trackingNumber && (
+                    <div className="pt-2 border-t border-white/5 space-y-1">
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
+                        Armored Transit Tracking
+                      </span>
+                      <div className="flex items-center justify-between p-2 bg-neutral-950 border border-white/10">
+                        <span className="font-mono text-xs text-gold-300 font-semibold truncate mr-2">
+                          {selectedOrder.trackingNumber}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => copyTrackingToClipboard(selectedOrder.trackingNumber!)}
+                          className="text-neutral-400 hover:text-gold-300 p-1"
+                        >
+                          {copiedTracking ? (
+                            <Check className="w-3.5 h-3.5 text-emerald-400" />
+                          ) : (
+                            <Copy className="w-3.5 h-3.5" />
+                          )}
+                        </button>
+                      </div>
+                      <span className="text-[9px] font-mono text-neutral-500">
+                        Ferrari Secure Armored Logistics (Pakistan)
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Safe Payment Information (NO SENSITIVE DATA REVEALED!) */}
+                <div className="p-4 bg-neutral-900/60 border border-white/10 space-y-2">
+                  <div className="flex items-center gap-2 text-gold-400">
+                    <Banknote className="w-4 h-4" />
+                    <span className="font-serif-luxury text-sand-100 text-sm">
+                      Settlement Protocol
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5 text-[11px] font-sans">
+                    <div className="flex justify-between">
+                      <span className="text-neutral-400">Method:</span>
+                      <span className="text-sand-100 font-mono uppercase font-semibold">
+                        {selectedOrder.payment.method}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-400">Payment Status:</span>
+                      <span className="text-emerald-400 font-mono">
+                        {selectedOrder.payment.status}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-400">Total Allocated:</span>
+                      <span className="text-gold-300 font-mono font-semibold text-xs">
+                        {selectedOrder.pricing.formattedTotalPKR}
+                      </span>
+                    </div>
+                    {selectedOrder.payment.isCOD && (
+                      <div className="p-2 bg-gold-950/30 border border-gold-500/20 text-[10px] text-neutral-300">
+                        Cash on Delivery: Payment payable upon physical presentation check.
+                      </div>
+                    )}
+                    <div className="text-[9px] text-neutral-500 pt-1 border-t border-white/5">
+                      No card numbers, CVVs, or secret payment credentials stored.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Close Button */}
+              <div className="pt-2 flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => setSelectedOrder(null)}
+                  className="px-6 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-sand-100 border border-white/20 text-xs font-mono uppercase tracking-wider"
+                >
+                  Close Dossier
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ADD ADDRESS MODAL */}
+        {showAddressModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+            <div className="relative w-full max-w-lg bg-neutral-950 border border-white/20 p-6 sm:p-8 shadow-2xl space-y-6">
+              <div className="flex justify-between items-center border-b border-white/10 pb-4">
+                <h3 className="font-serif-luxury text-xl text-sand-50">
+                  Register Delivery Sanctuary (Pakistan)
+                </h3>
+                <button
+                  type="button"
+                  onClick={() => setShowAddressModal(false)}
+                  className="p-1 text-neutral-400 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleAddAddress} className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                      First Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newAddress.firstName}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, firstName: e.target.value })
+                      }
+                      className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                      Last Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={newAddress.lastName}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, lastName: e.target.value })
+                      }
+                      className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                      Province *
+                    </label>
+                    <select
+                      value={newAddress.state}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, state: e.target.value })
+                      }
+                      className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                    >
+                      {PAKISTAN_PROVINCES.map((p) => (
+                        <option key={p} value={p}>
+                          {p}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                      City *
+                    </label>
+                    <select
+                      value={newAddress.city}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, city: e.target.value })
+                      }
+                      className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                    >
+                      {MAJOR_PAKISTAN_CITIES.map((c) => (
+                        <option key={c} value={c}>
+                          {c}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                    Street Address & Sector / Phase *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. 14-C, Khayaban-e-Tanzeem, Phase 5, DHA"
+                    value={newAddress.street1}
+                    onChange={(e) =>
+                      setNewAddress({ ...newAddress, street1: e.target.value })
+                    }
+                    className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                      Postal Code
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="74000"
+                      value={newAddress.postalCode}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, postalCode: e.target.value })
+                      }
+                      className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-mono uppercase text-neutral-400 mb-1">
+                      Mobile Phone
+                    </label>
+                    <input
+                      type="tel"
+                      placeholder="+92 300 1234567"
+                      value={newAddress.phone}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, phone: e.target.value })
+                      }
+                      className="w-full h-10 bg-neutral-900 border border-white/10 px-3 text-xs text-sand-50 focus:border-gold-400 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <label className="flex items-center gap-2 cursor-pointer text-xs text-neutral-300">
+                    <input
+                      type="checkbox"
+                      checked={newAddress.isDefault}
+                      onChange={(e) =>
+                        setNewAddress({ ...newAddress, isDefault: e.target.checked })
+                      }
+                      className="w-4 h-4 rounded text-gold-500"
+                    />
+                    <span>Set as primary delivery sanctuary</span>
+                  </label>
+                </div>
+
+                <div className="pt-4 border-t border-white/10 flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowAddressModal(false)}
+                    className="px-4 py-2 border border-white/20 text-xs font-mono uppercase tracking-wider text-neutral-300"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={addressSubmitting}
+                    className="px-6 py-2 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-wider"
+                  >
+                    {addressSubmitting ? "Saving..." : "Save Sanctuary"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </Container>
     </div>
   );

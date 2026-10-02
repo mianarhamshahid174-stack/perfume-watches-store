@@ -23,6 +23,8 @@ import { megaMenuVariants, LUXURY_EASE } from "@/lib/motion";
 import { Drawer } from "@/components/ui/drawer";
 import { SearchExperience } from "@/components/storefront/search-experience";
 import { useCart } from "@/context/cart-context";
+import { CartDrawer } from "@/components/storefront/cart-drawer";
+import { AnnouncementBar } from "@/components/storefront/announcement-bar";
 
 export function Header() {
   const pathname = usePathname();
@@ -66,12 +68,13 @@ export function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500 ease-out ${
           isScrolled
-            ? "bg-black/95 backdrop-blur-md border-b border-white/10 py-3.5 shadow-2xl"
-            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-transparent py-5"
+            ? "bg-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl"
+            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-transparent"
         }`}
         onMouseLeave={() => setActiveMegaMenu(null)}
       >
-        <Container size="wide">
+        <AnnouncementBar />
+        <Container size="wide" className={isScrolled ? "py-3.5" : "py-5"}>
           <div className="flex items-center justify-between">
             {/* Mobile Hamburger Button */}
             <div className="flex items-center lg:hidden">
@@ -420,111 +423,7 @@ export function Header() {
       </AnimatePresence>
 
       {/* SHOPPING BAG SLIDE-OUT DRAWER */}
-      <Drawer
-        isOpen={isCartOpen}
-        onClose={closeCart}
-        side="right"
-        size="md"
-        title="Your Atelier Bag"
-        subtitle={`${itemCount} Reserved ${itemCount === 1 ? "Piece" : "Pieces"}`}
-        footer={
-          <div className="space-y-4">
-            <div className="flex justify-between items-center text-sm font-sans">
-              <span className="text-neutral-stone">Estimated Subtotal</span>
-              <span className="font-mono text-metallic font-semibold text-base">
-                ${subtotal.toLocaleString()} USD
-              </span>
-            </div>
-            <p className="text-[11px] text-neutral-slate font-light leading-snug">
-              Complimentary armored delivery by Ferrari Secure Armored Logistics with fully insured transit.
-            </p>
-            <div className="flex flex-col gap-2 pt-1">
-              <Link
-                href="/checkout"
-                onClick={closeCart}
-                className="w-full h-12 bg-metallic text-black hover:bg-metallic-light rounded-none text-xs font-semibold uppercase tracking-editorial transition-colors flex items-center justify-center gap-2"
-              >
-                <span>Proceed to Allocation</span>
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <button
-                type="button"
-                onClick={closeCart}
-                className="w-full text-center text-xs text-neutral-stone hover:text-ivory py-2 transition-colors uppercase tracking-editorial cursor-pointer"
-              >
-                Continue Browsing
-              </button>
-            </div>
-          </div>
-        }
-      >
-        {cartItems.length === 0 ? (
-          <div className="py-20 text-center space-y-4">
-            <ShoppingBag className="w-10 h-10 text-neutral-stone/40 mx-auto stroke-[1.2]" />
-            <div className="space-y-1">
-              <h5 className="font-serif-luxury text-lg text-sand-100">Your Bag is Empty</h5>
-              <p className="text-xs text-platinum-400 font-light max-w-xs mx-auto">
-                No acquisitions have been selected yet. Explore our Haute Horlogerie or High Perfumery ateliers.
-              </p>
-            </div>
-            <div className="pt-2 flex justify-center gap-3">
-              <Link
-                href="/watches"
-                onClick={closeCart}
-                className="px-4 py-2 text-[10px] uppercase tracking-editorial border border-white/10 hover:border-gold-500/50 text-sand-200 transition-colors"
-              >
-                Watches
-              </Link>
-              <Link
-                href="/fragrances"
-                onClick={closeCart}
-                className="px-4 py-2 text-[10px] uppercase tracking-editorial border border-white/10 hover:border-gold-500/50 text-sand-200 transition-colors"
-              >
-                Fragrances
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-4 divide-y divide-white/5">
-            {cartItems.map((item) => (
-              <div key={item.id} className="pt-3 flex gap-4 text-xs group">
-                <img
-                  src={item.imageUrl}
-                  alt={item.name}
-                  className="w-20 h-24 object-cover bg-charcoal-900 border border-white/5 rounded-none flex-shrink-0"
-                />
-                <div className="flex-1 min-w-0 space-y-1">
-                  <div className="flex justify-between items-start">
-                    <span className="text-[9px] uppercase tracking-ultra text-metallic font-mono truncate">
-                      REF. {item.sku}
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => removeFromCart(item.id)}
-                      className="text-neutral-stone hover:text-rose-400 transition-colors p-1 -mr-1"
-                      aria-label="Remove item"
-                    >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                  <h5 className="font-serif-luxury text-sm text-ivory truncate">{item.name}</h5>
-                  {item.variantTitle && (
-                    <p className="text-neutral-stone text-[11px] truncate">{item.variantTitle}</p>
-                  )}
-                  <div className="flex justify-between items-center pt-2">
-                    <span className="text-[11px] text-neutral-slate font-mono">
-                      Qty: {item.quantity}
-                    </span>
-                    <div className="text-metallic font-mono font-medium">
-                      ${(item.price * item.quantity).toLocaleString()} USD
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </Drawer>
+      <CartDrawer />
     </>
   );
 }

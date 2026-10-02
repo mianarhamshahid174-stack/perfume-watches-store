@@ -71,6 +71,7 @@ export default function AdminHomepagePage() {
     secondaryCtaText: "",
     secondaryCtaLink: "",
     bgImageUrl: "",
+    videoUrl: "",
     productSlug: "",
     collectionSlugs: [] as string[],
     badge: "",
@@ -144,6 +145,7 @@ export default function AdminHomepagePage() {
       secondaryCtaText: content.secondaryCtaText || "",
       secondaryCtaLink: content.secondaryCtaLink || "",
       bgImageUrl: content.bgImageUrl || content.imageUrl || "",
+      videoUrl: content.videoUrl || "",
       productSlug: content.productSlug || "",
       collectionSlugs: Array.isArray(content.collectionSlugs) ? content.collectionSlugs : [],
       badge: content.badge || content.tagline || "",
@@ -181,6 +183,7 @@ export default function AdminHomepagePage() {
         secondaryCtaLink: formData.secondaryCtaLink,
         bgImageUrl: formData.bgImageUrl,
         imageUrl: formData.bgImageUrl,
+        videoUrl: formData.videoUrl,
         productSlug: formData.productSlug,
         collectionSlugs: formData.collectionSlugs,
         badge: formData.badge,
@@ -242,23 +245,22 @@ export default function AdminHomepagePage() {
     const targetIndex = direction === "up" ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= sections.length) return;
 
-    const current = sections[index];
-    const target = sections[targetIndex];
+    const newSections = [...sections];
+    const [moved] = newSections.splice(index, 1);
+    newSections.splice(targetIndex, 0, moved);
+    setSections(newSections);
 
     try {
-      await fetch(`/api/admin/homepage/${current.id}`, {
-        method: "PUT",
+      const orderPayload = newSections.map((s, idx) => ({ id: s.id, sortOrder: idx + 1 }));
+      await fetch("/api/admin/homepage/reorder", {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sortOrder: target.sortOrder }),
-      });
-      await fetch(`/api/admin/homepage/${target.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sortOrder: current.sortOrder }),
+        body: JSON.stringify({ sections: orderPayload }),
       });
       fetchSections();
     } catch (err) {
-      console.error(err);
+      console.error("Reorder failed:", err);
+      fetchSections();
     }
   };
 
@@ -668,17 +670,34 @@ export default function AdminHomepagePage() {
               </div>
             </div>
 
-            {/* Media Image URL */}
-            <div className="border-t border-white/5 pt-4">
-              <label className="block text-xs font-medium text-neutral-300 mb-1">
-                Background / Section Image URL
-              </label>
-              <Input
-                value={formData.bgImageUrl}
-                onChange={(e) => setFormData({ ...formData, bgImageUrl: e.target.value })}
-                placeholder="/images/velora-hero-editorial.jpg or https://images.unsplash.com/..."
-                className="bg-neutral-900 border-neutral-800 text-white font-mono text-xs"
-              />
+            {/* Media Image & Video URL */}
+            <div className="border-t border-white/5 pt-4 space-y-4">
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1">
+                  Background / Section Image URL
+                </label>
+                <Input
+                  value={formData.bgImageUrl}
+                  onChange={(e) => setFormData({ ...formData, bgImageUrl: e.target.value })}
+                  placeholder="/images/velora-hero-editorial.jpg or https://images.unsplash.com/..."
+                  className="bg-neutral-900 border-neutral-800 text-white font-mono text-xs"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-medium text-neutral-300 mb-1">
+                  Background / Hero Video URL (Optional MP4 / WebM)
+                </label>
+                <Input
+                  value={formData.videoUrl}
+                  onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
+                  placeholder="https://assets.mixkit.co/videos/... or /videos/hero-reel.mp4"
+                  className="bg-neutral-900 border-neutral-800 text-white font-mono text-xs"
+                />
+                <p className="text-[10px] text-neutral-500 mt-1">
+                  If provided, background video plays in cinematic loop with the background image as poster.
+                </p>
+              </div>
             </div>
 
             {/* Publication & Order Controls */}

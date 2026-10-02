@@ -17,7 +17,7 @@ export async function GET() {
       profile: true,
       addresses: true,
       orders: {
-        take: 5,
+        take: 50,
         orderBy: { createdAt: "desc" },
         include: {
           items: true,

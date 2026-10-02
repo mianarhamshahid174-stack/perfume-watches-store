@@ -4,13 +4,29 @@ import { EditorialHeader } from "@/components/storefront/discovery/editorial-hea
 import { CatalogView } from "@/components/storefront/discovery/catalog-view";
 import { Container } from "@/components/ui/container";
 
+import prisma from "@/lib/prisma";
+
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "High Perfumery Extraits | VELORA Laboratories Grasse",
-  description:
-    "Ultra-concentrated extraits de parfum aged in French oak vats. Wild Cambodian agarwood, Florentine orris butter, and rare ambergris.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cat = await prisma.category.findUnique({ where: { slug: "haute-parfumerie" } });
+  return {
+    title: cat?.seoTitle || "High Perfumery Extraits | VELORA Laboratories Grasse",
+    description:
+      cat?.seoDescription ||
+      "Ultra-concentrated extraits de parfum aged in French oak vats. Wild Cambodian agarwood, Florentine orris butter, and rare ambergris.",
+    alternates: {
+      canonical: cat?.canonicalUrl || "https://velora-ateliers.com/fragrances",
+    },
+    openGraph: {
+      title: cat?.seoTitle || "High Perfumery Extraits | VELORA",
+      description:
+        cat?.seoDescription ||
+        "Ultra-concentrated extraits de parfum aged in French oak vats.",
+      images: [{ url: cat?.ogImage || "/images/velora-hero-editorial.jpg" }],
+    },
+  };
+}
 
 interface FragrancesPageProps {
   searchParams: Promise<{

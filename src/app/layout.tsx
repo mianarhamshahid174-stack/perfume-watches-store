@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { GlobalStructuredData } from "@/components/seo/structured-data";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -22,14 +23,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://velora-ateliers.com"),
   title: {
-    template: "%s | ZAVEN Haute Horlogerie & Parfum",
-    default: "ZAVEN | Haute Horlogerie & High Perfumery",
+    template: "%s | VELORA Haute Horlogerie & High Perfumery",
+    default: "VELORA | Haute Horlogerie & High Perfumery Geneva",
   },
   description:
-    "Explore ZAVEN: Precision mechanical timepieces and bespoke artisanal fragrances crafted with uncompromised artistry.",
+    "Explore VELORA: Precision mechanical timepieces and bespoke artisanal extraits de parfum crafted with uncompromised artistry between Geneva and Grasse.",
   keywords: [
-    "ZAVEN",
+    "VELORA",
     "Luxury Watches",
     "Haute Horlogerie",
     "Niche Perfumery",
@@ -37,14 +39,17 @@ export const metadata: Metadata = {
     "Mechanical Timepieces",
     "Chronograph",
     "Tourbillon",
+    "Swiss Watches",
+    "Geneva Atelier",
   ],
-  authors: [{ name: "ZAVEN Ateliers" }],
+  authors: [{ name: "VELORA Ateliers" }],
   openGraph: {
-    title: "ZAVEN | Haute Horlogerie & High Perfumery",
+    title: "VELORA | Haute Horlogerie & High Perfumery",
     description:
       "Precision mechanical timepieces and bespoke artisanal fragrances crafted with uncompromised artistry.",
     type: "website",
     locale: "en_US",
+    images: [{ url: "/images/velora-hero-editorial.jpg", width: 1200, height: 630 }],
   },
 };
 
@@ -59,6 +64,7 @@ export default function RootLayout({
       className={`${cormorant.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-obsidian text-sand-100 selection:bg-gold-500/30 selection:text-gold-300">
+        <GlobalStructuredData />
         {children}
       </body>
     </html>

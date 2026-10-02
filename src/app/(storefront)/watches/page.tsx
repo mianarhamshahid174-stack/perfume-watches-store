@@ -4,13 +4,29 @@ import { EditorialHeader } from "@/components/storefront/discovery/editorial-hea
 import { CatalogView } from "@/components/storefront/discovery/catalog-view";
 import { Container } from "@/components/ui/container";
 
+import prisma from "@/lib/prisma";
+
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Haute Horlogerie Timepieces | VELORA Ateliers Geneva",
-  description:
-    "Explore precision-engineered mechanical complications, flying tourbillons, and chronometers crafted in finite, numbered editions.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const cat = await prisma.category.findUnique({ where: { slug: "haute-horlogerie" } });
+  return {
+    title: cat?.seoTitle || "Haute Horlogerie Timepieces | VELORA Ateliers Geneva",
+    description:
+      cat?.seoDescription ||
+      "Explore precision-engineered mechanical complications, flying tourbillons, and chronometers crafted in finite, numbered editions.",
+    alternates: {
+      canonical: cat?.canonicalUrl || "https://velora-ateliers.com/watches",
+    },
+    openGraph: {
+      title: cat?.seoTitle || "Haute Horlogerie Timepieces | VELORA",
+      description:
+        cat?.seoDescription ||
+        "Explore precision-engineered mechanical complications crafted in finite, numbered editions.",
+      images: [{ url: cat?.ogImage || "/images/velora-hero-editorial.jpg" }],
+    },
+  };
+}
 
 interface WatchesPageProps {
   searchParams: Promise<{

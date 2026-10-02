@@ -102,6 +102,15 @@ export async function clearCustomerSession(): Promise<void> {
   cookieStore.delete(CUSTOMER_COOKIE_NAME);
 }
 
+export async function getCurrentUser() {
+  const session = await getCustomerSession();
+  if (!session) return null;
+  return prisma.user.findUnique({
+    where: { id: session.userId },
+    include: { profile: true },
+  });
+}
+
 // -----------------------------------------------------------------------------
 // ADMIN SESSIONS & RBAC
 // -----------------------------------------------------------------------------

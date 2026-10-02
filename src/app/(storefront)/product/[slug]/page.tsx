@@ -35,8 +35,11 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const primaryImage =
-    product.images?.[0]?.url || "https://velora-ateliers.com/images/velora-signature-01.jpg";
-  const canonicalUrl = `https://velora-ateliers.com/product/${product.slug}`;
+    (product as any).ogImage ||
+    product.images?.[0]?.url ||
+    "https://velora-ateliers.com/images/velora-signature-01.jpg";
+  const canonicalUrl =
+    (product as any).canonicalUrl || `https://velora-ateliers.com/product/${product.slug}`;
 
   return {
     title: product.seoTitle || `${product.name} | VELORA Ateliers Geneva`,

@@ -30,9 +30,31 @@ export async function generateMetadata({ params }: CollectionPageProps): Promise
   const col = await prisma.collection.findUnique({ where: { slug } });
   if (!col) return { title: "Collection Not Found | VELORA" };
 
+  const title = col.seoTitle || `${col.name} Collection | VELORA Haute Horlogerie`;
+  const description =
+    col.seoDescription || col.description || `Discover the ${col.name} repertoire of fine luxury creations.`;
+  const canonicalUrl = col.canonicalUrl || `https://velora-ateliers.com/collections/${col.slug}`;
+  const ogImageUrl =
+    col.ogImage || col.heroImage || col.bannerUrl || "https://velora-ateliers.com/images/velora-hero-editorial.jpg";
+
   return {
-    title: `${col.name} Collection | VELORA Haute Horlogerie`,
-    description: col.description || `Discover the ${col.name} repertoire of fine luxury creations.`,
+    title,
+    description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: col.name }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
   };
 }
 

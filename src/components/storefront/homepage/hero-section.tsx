@@ -16,6 +16,7 @@ interface HeroSectionProps {
     secondaryCtaText?: string;
     secondaryCtaLink?: string;
     bgImageUrl?: string;
+    videoUrl?: string;
   };
 }
 
@@ -72,12 +73,26 @@ export function HeroSection({ title, subtitle, content }: HeroSectionProps) {
             }}
             className="w-full h-full"
           >
-            <img
-              src={bgImage}
-              alt="VELORA Haute Horlogerie Timepiece"
-              className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08]"
-              loading="eager"
-            />
+            {content?.videoUrl ? (
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster={bgImage}
+                className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08]"
+              >
+                <source src={content.videoUrl} type="video/mp4" />
+                <source src={content.videoUrl} type="video/webm" />
+              </video>
+            ) : (
+              <img
+                src={bgImage}
+                alt="VELORA Haute Horlogerie Timepiece"
+                className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08]"
+                loading="eager"
+              />
+            )}
           </motion.div>
         </motion.div>
 

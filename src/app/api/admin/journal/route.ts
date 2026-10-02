@@ -9,11 +9,19 @@ export const dynamic = "force-dynamic";
 const postSchema = z.object({
   title: z.string().min(2, "Title is required"),
   slug: z.string().min(2, "Slug is required"),
+  subtitle: z.string().optional().nullable(),
   excerpt: z.string().optional().nullable(),
   content: z.string().min(5, "Content is required"),
   coverImageUrl: z.string().optional().nullable(),
+  authorName: z.string().optional().nullable(),
   category: z.string().optional().nullable(),
   isPublished: z.boolean().default(false),
+  publishedAt: z.string().optional().nullable(),
+  seoTitle: z.string().optional().nullable(),
+  seoDescription: z.string().optional().nullable(),
+  ogImage: z.string().optional().nullable(),
+  canonicalUrl: z.string().optional().nullable(),
+  relatedProductIds: z.array(z.string()).default([]),
 });
 
 export async function GET(req: NextRequest) {
@@ -33,6 +41,7 @@ export async function GET(req: NextRequest) {
         ? {
             OR: [
               { title: { contains: search, mode: "insensitive" } },
+              { subtitle: { contains: search, mode: "insensitive" } },
               { excerpt: { contains: search, mode: "insensitive" } },
               { category: { contains: search, mode: "insensitive" } },
             ],
@@ -68,7 +77,23 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { title, slug, excerpt, content, coverImageUrl, category, isPublished } = validated.data;
+    const {
+      title,
+      slug,
+      subtitle,
+      excerpt,
+      content,
+      coverImageUrl,
+      authorName,
+      category,
+      isPublished,
+      publishedAt,
+      seoTitle,
+      seoDescription,
+      ogImage,
+      canonicalUrl,
+      relatedProductIds,
+    } = validated.data;
 
     // Check slug uniqueness
     const existing = await prisma.journalPost.findUnique({ where: { slug } });
@@ -79,17 +104,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const pubDate = publishedAt ? new Date(publishedAt) : isPublished ? new Date() : null;
+
     const post = await prisma.journalPost.create({
       data: {
         title,
         slug,
-        excerpt,
+        subtitle: subtitle || null,
+        excerpt: excerpt || null,
         content,
         coverImageUrl: coverImageUrl || null,
+        authorName: authorName || "Maison Velora Editorial Board",
         category: category || "Horology",
         authorId: admin.adminId,
         isPublished,
-        publishedAt: isPublished ? new Date() : null,
+        publishedAt: pubDate,
+        seoTitle: seoTitle || null,
+        seoDescription: seoDescription || null,
+        ogImage: ogImage || coverImageUrl || null,
+        canonicalUrl: canonicalUrl || null,
+        relatedProductIds: relatedProductIds || [],
       },
     });
 

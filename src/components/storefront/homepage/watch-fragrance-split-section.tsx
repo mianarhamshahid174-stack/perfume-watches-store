@@ -44,7 +44,7 @@ export function WatchFragranceSplitSection({
     content?.scentImageUrl || "/images/products/fragrances/velora-noir-extrait/editorial.jpg";
 
   return (
-    <section className="relative w-full min-h-[80vh] grid grid-cols-1 md:grid-cols-2 border-b border-white/5 overflow-hidden bg-black">
+    <section className="keep-dark relative w-full min-h-[80vh] grid grid-cols-1 md:grid-cols-2 border-b border-white/5 overflow-hidden bg-black">
       {/* LEFT: TIME */}
       <Link
         href={timeHref}

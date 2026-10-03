@@ -71,7 +71,7 @@ export default async function FragrancesPage({ searchParams }: FragrancesPagePro
   ]);
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-32 transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pb-32 transition-colors duration-300">
       {/* Editorial Header */}
       <EditorialHeader
         title="Luxury Fragrances"

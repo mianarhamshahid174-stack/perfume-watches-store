@@ -32,7 +32,7 @@ export function FragranceEditorialSection({
     content?.bgImageUrl || "/images/products/fragrances/velora-noir-extrait/editorial.jpg";
 
   return (
-    <section className="relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black py-28 border-b border-white/5">
+    <section className="keep-dark relative min-h-[85vh] w-full flex items-center justify-center overflow-hidden bg-black py-32 sm:py-40 border-b border-white/5">
       {/* Background Visual */}
       <div className="absolute inset-0 z-0">
         <img

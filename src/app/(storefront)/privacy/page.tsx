@@ -65,7 +65,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc list-inside text-xs sm:text-sm text-neutral-400 font-light space-y-2 pl-2">
               <li>Processing, fulfilling, and delivering your orders with insured couriers.</li>
-              <li>Maintaining your 5-year international warranty and ownership records.</li>
+              <li>Maintaining your checking warranty, order fulfillment, and client care records.</li>
               <li>Responding promptly to your support requests, inquiries, and service requests.</li>
               <li>Sending relevant updates about new releases or journal articles, only if you have chosen to subscribe.</li>
             </ul>

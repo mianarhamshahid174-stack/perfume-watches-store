@@ -102,7 +102,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const canonicalUrl = `https://velora-ateliers.com/product/${product.slug}`;
 
   return (
-    <div className="min-h-screen bg-obsidian text-foreground pb-20 selection:bg-gold-500 selection:text-black">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pb-20 selection:bg-gold-500 selection:text-black">
       {/* Schema.org Structured Data */}
       <ProductStructuredData product={product} canonicalUrl={canonicalUrl} />
 
@@ -135,7 +135,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               </>
             )}
 
-            <span className="text-sand-100 font-medium truncate max-w-[200px] sm:max-w-none">
+            <span className="text-[var(--foreground)] font-medium truncate max-w-[200px] sm:max-w-none">
               {product.name}
             </span>
           </nav>

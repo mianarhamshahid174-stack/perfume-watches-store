@@ -13,7 +13,7 @@ export default function StorefrontLayout({
   return (
     <CartProvider>
       <WishlistProvider>
-        <div className="min-h-screen flex flex-col bg-obsidian text-sand-100 overflow-x-hidden selection:bg-gold-500 selection:text-black transition-colors duration-300">
+        <div className="min-h-screen flex flex-col bg-[var(--background)] text-[var(--foreground)] overflow-x-hidden selection:bg-gold-500/20 selection:text-gold-600 dark:selection:bg-gold-500 dark:selection:text-black transition-colors duration-300">
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

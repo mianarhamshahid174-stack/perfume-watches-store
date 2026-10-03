@@ -377,10 +377,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <ShieldCheck className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <h6 className="text-[11px] font-sans font-medium text-sand-100 uppercase tracking-wider">
-              5-Year Warranty
+              7-Day Checking Warranty
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Official guarantee with local service in Lahore & Karachi.
+              Full replacement for manufacturing or movement defects upon delivery.
             </p>
           </div>
         </div>
@@ -389,10 +389,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <RotateCcw className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <h6 className="text-[11px] font-sans font-medium text-sand-100 uppercase tracking-wider">
-              Cash on Delivery & Returns
+              Open Parcel & Cash on Delivery
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Pay upon arrival with 7-day hassle-free exchange.
+              Inspect package before payment. 3-day defect replacement.
             </p>
           </div>
         </div>

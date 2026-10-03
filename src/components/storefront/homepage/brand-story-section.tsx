@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Compass, Sparkles, MapPin } from "lucide-react";
+import { ArrowRight, Compass, Sparkles, MapPin, ShieldCheck } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { LUXURY_EASE } from "@/lib/motion";
 
@@ -36,7 +36,7 @@ export function BrandStorySection({
   const ctaLink = content?.ctaLink || "/about";
 
   return (
-    <section className="py-28 sm:py-36 bg-obsidian-950 text-foreground border-b border-border overflow-hidden">
+    <section className="py-32 sm:py-40 bg-[var(--background)] text-[var(--foreground)] border-b border-white/5 overflow-hidden">
       <Container size="wide">
         {/* Editorial Layout: Monograph Spread */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -86,7 +86,7 @@ export function BrandStorySection({
               </span>
             </div>
 
-            <h2 className="font-serif-luxury text-4xl sm:text-5xl lg:text-6xl font-light text-foreground tracking-tight leading-[1.08]">
+            <h2 className="font-serif-luxury text-4xl sm:text-5xl lg:text-6xl font-light text-sand-50 tracking-tight leading-[1.08]">
               {headline}
             </h2>
 
@@ -94,35 +94,35 @@ export function BrandStorySection({
               {narrative}
             </p>
 
-            {/* Twin Workshops Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-border">
-              <div className="p-5 bg-card/60 border border-border space-y-2">
+            {/* Twin Disciplines Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-white/10">
+              <div className="p-5 bg-charcoal-900/60 border border-white/10 space-y-2">
                 <div className="flex items-center gap-2 text-gold-400">
-                  <MapPin className="h-4 w-4" />
+                  <ShieldCheck className="h-4 w-4" />
                   <span className="text-[10px] font-mono uppercase tracking-widest text-gold-300">
-                    Lahore & Islamabad Showrooms
+                    Nationwide Horology
                   </span>
                 </div>
-                <h4 className="font-serif-luxury text-base text-foreground">
+                <h4 className="font-serif-luxury text-base text-sand-50">
                   Luxury Watch Workshop
                 </h4>
                 <p className="text-xs text-neutral-stone font-light leading-relaxed">
-                  Precision mechanical movements, sapphire crystals, hand-finished cases, and 5-year official warranty.
+                  Precision mechanical movements, sapphire crystals, hand-finished cases, and 7-day checking warranty with open parcel inspection.
                 </p>
               </div>
 
-              <div className="p-5 bg-card/60 border border-border space-y-2">
+              <div className="p-5 bg-charcoal-900/60 border border-white/10 space-y-2">
                 <div className="flex items-center gap-2 text-gold-400">
                   <Sparkles className="h-4 w-4" />
                   <span className="text-[10px] font-mono uppercase tracking-widest text-gold-300">
-                    Karachi Flagship
+                    Pure Extracts
                   </span>
                 </div>
                 <h4 className="font-serif-luxury text-base text-foreground">
                   Artisanal Fragrance Studio
                 </h4>
                 <p className="text-xs text-neutral-stone font-light leading-relaxed">
-                  Rare aged oud, pure botanicals, and long-lasting perfume extracts formulated for the Pakistani climate.
+                  Rare aged oud, pure botanicals, and long-lasting perfume extracts formulated for the Pakistani climate with leak-proof secure shipping.
                 </p>
               </div>
             </div>

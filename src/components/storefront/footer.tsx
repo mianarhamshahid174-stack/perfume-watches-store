@@ -11,6 +11,9 @@ import {
   Sparkles,
   MapPin,
   Check,
+  Phone,
+  Mail,
+  Clock,
 } from "lucide-react";
 import { DEFAULT_MARKETING_CONFIG } from "@/app/api/marketing/settings/route";
 
@@ -45,19 +48,19 @@ export function Footer() {
   const socials = marketingConfig.socialLinks;
 
   return (
-    <footer className="border-t border-white/10 bg-black text-ivory pt-20 pb-14">
+    <footer className="border-t border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--foreground)] pt-20 pb-14">
       <Container size="wide">
         {/* Top Newsletter & Brand Invitation Banner (Controlled via CMS) */}
         {newsletter.enabled && (
-          <div className="pb-16 mb-16 border-b border-white/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="pb-16 mb-16 border-b border-[var(--border-subtle)] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-6 space-y-2">
               <span className="text-[10px] font-sans font-semibold uppercase tracking-ultra text-metallic">
                 {newsletter.incentiveText || "Stay Connected"}
               </span>
-              <h3 className="font-serif-luxury text-2xl sm:text-3xl font-light text-ivory">
+              <h3 className="font-serif-luxury text-2xl sm:text-3xl font-light text-[var(--foreground)]">
                 {newsletter.title || "Join the VELORA Newsletter"}
               </h3>
-              <p className="text-xs text-neutral-stone font-light leading-relaxed max-w-lg">
+              <p className="text-xs text-[var(--color-neutral-stone)] font-light leading-relaxed max-w-lg">
                 {newsletter.subtitle || "Be the first to hear about new timepieces, fragrance releases, and private events."}
               </p>
             </div>
@@ -71,12 +74,12 @@ export function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email address..."
                     required
-                    className="flex-1 h-12 px-4 rounded-none bg-charcoal-900 border border-white/15 text-xs text-ivory placeholder:text-neutral-stone focus:outline-none focus:border-metallic"
+                    className="flex-1 h-12 px-4 rounded-none bg-[var(--background)] border border-[var(--border-strong)] text-xs text-[var(--foreground)] placeholder:text-[var(--color-neutral-stone)] focus:outline-none focus:border-metallic"
                   />
                   <button
                     type="submit"
                     disabled={isSubscribed}
-                    className="h-12 px-6 bg-metallic hover:bg-metallic-light text-black text-xs font-semibold uppercase tracking-editorial transition-colors shrink-0 flex items-center gap-1.5"
+                    className="h-12 px-6 bg-metallic hover:bg-gold-500 text-black text-xs font-semibold uppercase tracking-editorial transition-colors shrink-0 flex items-center gap-1.5 cursor-pointer"
                   >
                     {isSubscribed ? (
                       <>
@@ -91,7 +94,7 @@ export function Footer() {
                     )}
                   </button>
                 </div>
-                <p className="text-[10px] text-neutral-slate font-light">
+                <p className="text-[10px] text-[var(--color-neutral-stone)] font-light">
                   {newsletter.disclaimer || "We respect your privacy. You can unsubscribe at any time."}
                 </p>
               </form>
@@ -100,34 +103,34 @@ export function Footer() {
         )}
 
         {/* Main Footer Links Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-12 pb-16 border-b border-white/5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-12 pb-16 border-b border-[var(--border-subtle)]">
           {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="inline-block">
-              <span className="font-serif-luxury text-3xl font-light tracking-[0.25em] text-ivory block">
+              <span className="font-serif-luxury text-3xl font-light tracking-[0.25em] text-[var(--foreground)] block">
                 {BRAND.name}
               </span>
-              <span className="text-[8px] font-sans tracking-ultra uppercase text-neutral-stone block -mt-1">
+              <span className="text-[8px] font-sans tracking-ultra uppercase text-[var(--color-neutral-stone)] block -mt-1">
                 {BRAND.subtitle}
               </span>
             </Link>
 
-            <p className="text-xs text-neutral-stone font-light leading-relaxed max-w-sm pt-2">
+            <p className="text-xs text-[var(--color-neutral-stone)] font-light leading-relaxed max-w-sm pt-2">
               Original luxury timepieces and artisanal perfumes, curated with uncompromising excellence for discerning patrons across Pakistan.
             </p>
 
             {/* Social Links controlled live via CMS */}
             <div className="pt-3 space-y-2">
-              <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-500 block">
+              <span className="text-[10px] uppercase font-mono tracking-wider text-[var(--color-neutral-stone)] block">
                 Follow Us
               </span>
-              <div className="flex items-center gap-3 text-neutral-stone">
+              <div className="flex items-center gap-3 text-[var(--color-neutral-stone)]">
                 {socials.instagram && (
                   <a
                     href={socials.instagram}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full bg-white/5 hover:bg-metallic hover:text-black transition-colors"
+                    className="p-2 rounded-full bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:bg-metallic hover:text-black transition-colors"
                     aria-label="Instagram"
                   >
                     <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -140,7 +143,7 @@ export function Footer() {
                     href={socials.x}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full bg-white/5 hover:bg-metallic hover:text-black transition-colors"
+                    className="p-2 rounded-full bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:bg-metallic hover:text-black transition-colors"
                     aria-label="X (Twitter)"
                   >
                     <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -153,7 +156,7 @@ export function Footer() {
                     href={socials.facebook}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full bg-white/5 hover:bg-metallic hover:text-black transition-colors"
+                    className="p-2 rounded-full bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:bg-metallic hover:text-black transition-colors"
                     aria-label="Facebook"
                   >
                     <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -166,7 +169,7 @@ export function Footer() {
                     href={socials.youtube}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full bg-white/5 hover:bg-metallic hover:text-black transition-colors"
+                    className="p-2 rounded-full bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:bg-metallic hover:text-black transition-colors"
                     aria-label="YouTube"
                   >
                     <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -179,7 +182,7 @@ export function Footer() {
                     href={socials.linkedin}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2 rounded-full bg-white/5 hover:bg-metallic hover:text-black transition-colors"
+                    className="p-2 rounded-full bg-[var(--surface-hover)] border border-[var(--border-subtle)] hover:bg-metallic hover:text-black transition-colors"
                     aria-label="LinkedIn"
                   >
                     <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
@@ -190,18 +193,32 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="space-y-2 pt-2 text-xs text-neutral-stone">
-              <div className="flex items-start gap-2">
+            <div className="space-y-2.5 pt-3 text-xs text-[var(--color-neutral-stone)]">
+              <div className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 text-metallic shrink-0 mt-0.5" />
-                <span>Gulberg III, M.M. Alam Road, Lahore, Pakistan</span>
+                <span>Official Online Luxury Boutique · Nationwide Delivery</span>
               </div>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-metallic shrink-0 mt-0.5" />
-                <span>Clifton Block 4, Karachi, Pakistan</span>
+              <div className="flex items-center gap-2.5">
+                <Phone className="h-4 w-4 text-metallic shrink-0" />
+                <a
+                  href={`tel:${BRAND.phone.replace(/\s+/g, "")}`}
+                  className="hover:text-[var(--foreground)] transition-colors font-mono"
+                >
+                  {BRAND.phone} (WhatsApp & Calls)
+                </a>
               </div>
-              <div className="flex items-start gap-2">
-                <MapPin className="h-4 w-4 text-metallic shrink-0 mt-0.5" />
-                <span>Beverly Centre, Blue Area, Islamabad, Pakistan</span>
+              <div className="flex items-center gap-2.5">
+                <Mail className="h-4 w-4 text-metallic shrink-0" />
+                <a
+                  href={`mailto:${BRAND.email}`}
+                  className="hover:text-[var(--foreground)] transition-colors"
+                >
+                  {BRAND.email}
+                </a>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Clock className="h-4 w-4 text-metallic shrink-0" />
+                <span>{BRAND.supportHours}</span>
               </div>
             </div>
           </div>
@@ -212,12 +229,12 @@ export function Footer() {
               <h4 className="text-[11px] font-sans font-semibold tracking-ultra uppercase text-metallic">
                 {sec.title}
               </h4>
-              <ul className="space-y-2 text-xs text-neutral-stone font-light">
+              <ul className="space-y-2 text-xs text-[var(--color-neutral-stone)] font-light">
                 {sec.links.map((link, lIdx) => (
                   <li key={lIdx}>
                     <Link
                       href={link.href}
-                      className="hover:text-ivory transition-colors duration-200 block py-0.5"
+                      className="hover:text-[var(--foreground)] transition-colors duration-200 block py-0.5"
                     >
                       {link.label}
                     </Link>
@@ -229,24 +246,24 @@ export function Footer() {
         </div>
 
         {/* Bottom Trust & Copyright Bar */}
-        <div className="pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-[11px] text-neutral-stone">
+        <div className="pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-[11px] text-[var(--color-neutral-stone)]">
           <div className="flex flex-wrap items-center gap-6">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-metallic" />
-              <span>Complimentary Pakistan Delivery (TCS / Leopard)</span>
+              <span>Complimentary Pakistan Delivery (TCS • Leopard • Trax • Call Courier)</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-metallic" />
-              <span>Cash on Delivery & 5-Year Warranty</span>
+              <span>Cash on Delivery & Open Parcel Inspection</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-metallic" />
-              <span>100% Original Certified Products</span>
+              <span>7-Day Checking Warranty & 3-Day Defect Exchange</span>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="font-mono text-neutral-slate">
+            <span className="font-mono text-[var(--color-neutral-stone)] opacity-70">
               © {new Date().getFullYear()} {BRAND.formalName}. All rights reserved.
             </span>
           </div>

@@ -133,7 +133,7 @@ export default async function CollectionDetailPage({
     "/images/velora-hero-editorial.jpg";
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pb-32">
       {/* Editorial Header */}
       <EditorialHeader
         title={collection.name}

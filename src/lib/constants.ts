@@ -7,15 +7,15 @@ export const BRAND = {
   atelierLocation: "Pakistan",
   currency: "PKR",
   currencySymbol: "Rs.",
-  email: "concierge@velorawatches.pk",
-  phone: "+92 300 1234567",
-  whatsapp: "+92 300 1234567",
-  whatsappUrl: "https://wa.me/923001234567?text=Hello%20VELORA%20Pakistan,%20I%20would%20like%20assistance%20with%20an%20order",
-  boutiques: [
-    { city: "Lahore", address: "M.M. Alam Road, Gulberg III" },
-    { city: "Karachi", address: "E-Street, Clifton Block 4" },
-    { city: "Islamabad", address: "Beverly Centre, Blue Area" },
-  ],
+  email: "shopzaven@gmail.com",
+  phone: "+92 335 6600174",
+  whatsapp: "+92 335 6600174",
+  whatsappUrl: "https://wa.me/923356600174?text=Hello%20VELORA%20Pakistan,%20I%20would%20like%20assistance%20with%20an%20order",
+  supportHours: "Mon – Sat · 10:00 AM – 7:00 PM PKT",
+  responsePromise: "We reply within one business day",
+  couriers: ["TCS Express", "Leopard Courier", "Trax Logistics", "Call Courier"],
+  shippingEstimate: "2–4 business days across Pakistan",
+  boutiques: [],
 } as const;
 
 export interface MegaMenuColumn {
@@ -100,7 +100,7 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
             { label: "All Fragrances", href: "/fragrances", description: "Browse all pure concentrated perfumes" },
             { label: "Nocturne Collection", href: "/collections/nocturne-prive", description: "Evening and contemplative perfumes" },
             { label: "Presentation Gift Boxes", href: "/fragrances", description: "Velvet gift boxes and coffrets" },
-            { label: "Our Story", href: "/journal", description: "Read about our craftsmanship and distillation" },
+            { label: "Client Care & Concierge", href: "/contact", description: "Reach our online client care and support team" },
           ],
         },
       ],
@@ -148,9 +148,31 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
   },
   { label: "Best Sellers", href: "/best-sellers" },
   { label: "Track Order", href: "/track-order" },
-  { label: "Journal", href: "/journal" },
+  { label: "Shipping & Delivery", href: "/shipping" },
   { label: "Contact", href: "/contact" },
   { label: "FAQ", href: "/faq" },
+];
+
+/**
+ * The 4 primary curated buttons displayed on the left side of the header.
+ */
+export const PRIMARY_STOREFRONT_NAV: StorefrontNavItem[] = [
+  STOREFRONT_NAV[0], // Watches
+  STOREFRONT_NAV[1], // Fragrances
+  STOREFRONT_NAV[2], // Collections
+  STOREFRONT_NAV[3], // Best Sellers
+];
+
+/**
+ * Client Services & Maison links for the mobile drawer, search, and footer.
+ */
+export const CLIENT_SERVICES_NAV = [
+  { label: "Track Order", href: "/track-order", description: "Real-time courier tracking across Pakistan" },
+  { label: "Shipping & Delivery", href: "/shipping", description: "Complimentary express courier service" },
+  { label: "Client Concierge", href: "/contact", description: "Direct WhatsApp and email assistance" },
+  { label: "Frequently Asked Questions", href: "/faq", description: "Orders, authenticity, and sizing" },
+  { label: "Watch & Perfume Care", href: "/care-guide", description: "Care instructions for movements & extracts" },
+  { label: "Warranty & Guarantee", href: "/warranty", description: "7-Day checking warranty & open parcel inspection" },
 ];
 
 export const FOOTER_SECTIONS = [
@@ -178,20 +200,19 @@ export const FOOTER_SECTIONS = [
     title: "Customer Care",
     links: [
       { label: "Track Your Order", href: "/track-order" },
-      { label: "Care & Maintenance Guide", href: "/care-guide" },
-      { label: "Contact Us", href: "/contact" },
       { label: "Nationwide Shipping", href: "/shipping" },
       { label: "Returns & Exchanges", href: "/returns" },
+      { label: "Contact Concierge", href: "/contact" },
       { label: "Frequently Asked Questions", href: "/faq" },
-      { label: "5-Year Warranty", href: "/warranty" },
+      { label: "Warranty & Guarantee", href: "/warranty" },
     ],
   },
   {
     title: "About VELORA",
     links: [
-      { label: "Our Story", href: "/journal" },
-      { label: "The Journal", href: "/journal" },
-      { label: "Showrooms", href: "/contact" },
+      { label: "Online Concierge & Care", href: "/contact" },
+      { label: "Courier & Delivery", href: "/shipping" },
+      { label: "Care & Maintenance Guide", href: "/care-guide" },
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
     ],

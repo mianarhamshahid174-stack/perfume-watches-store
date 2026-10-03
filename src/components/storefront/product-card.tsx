@@ -118,7 +118,7 @@ export function ProductCard({
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* 1. Media Container with Smooth Image Transition & Subtle Zoom */}
-      <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-950 border border-white/10 transition-all duration-700 ease-out group-hover:border-gold-500/40 group-hover:shadow-[0_10px_35px_rgba(0,0,0,0.8)]">
+      <div className="relative aspect-[3/4] w-full overflow-hidden bg-[var(--surface)] border border-[var(--border-subtle)] transition-all duration-700 ease-out group-hover:border-gold-500/40 group-hover:shadow-lg">
         <Link href={`/product/${product.slug}`} className="block w-full h-full relative overflow-hidden">
           {/* Primary Image with Subtle Zoom */}
           <img
@@ -142,14 +142,14 @@ export function ProductCard({
           )}
 
           {/* Vignette & Atmospheric Contrast Layer */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent opacity-80 group-hover:opacity-50 transition-opacity duration-500" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-75 group-hover:opacity-40 transition-opacity duration-500" />
         </Link>
 
         {/* Top Badges & Actions */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10 pointer-events-none">
           <div>
             {isOutOfStock ? (
-              <span className="px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] bg-neutral-900/90 text-neutral-400 border border-white/10 pointer-events-auto">
+              <span className="px-2.5 py-1 text-[8px] font-mono uppercase tracking-[0.2em] bg-black/80 text-sand-200 border border-white/10 pointer-events-auto">
                 Out of Stock
               </span>
             ) : product.featured ? (
@@ -163,12 +163,12 @@ export function ProductCard({
           <button
             type="button"
             onClick={toggleWishlist}
-            className="pointer-events-auto p-2.5 rounded-full bg-black/60 backdrop-blur-md text-sand-100 hover:text-gold-300 hover:bg-black/90 transition-all duration-300 border border-white/10 hover:border-gold-500/40"
+            className="pointer-events-auto p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:text-gold-300 hover:bg-black/90 transition-all duration-300 border border-white/15 hover:border-gold-500/40"
             aria-label={isWishlisted ? "Remove from Wishlist" : "Save to Wishlist"}
           >
             <Heart
               className={`h-3.5 w-3.5 transition-transform duration-300 active:scale-125 ${
-                isWishlisted ? "fill-gold-400 text-gold-400" : "text-sand-100"
+                isWishlisted ? "fill-gold-400 text-gold-400" : "text-white"
               }`}
             />
           </button>
@@ -176,7 +176,7 @@ export function ProductCard({
 
         {/* Quick View Link Indicator */}
         <div className="absolute bottom-3 left-3 right-3 z-10 translate-y-3 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 pointer-events-none">
-          <div className="w-full py-2 bg-black/85 backdrop-blur-md border border-white/15 text-sand-100 text-[10px] font-mono uppercase tracking-[0.2em] text-center flex items-center justify-center gap-1.5 shadow-xl">
+          <div className="w-full py-2 bg-black/80 backdrop-blur-md border border-white/20 text-white text-[10px] font-mono uppercase tracking-[0.2em] text-center flex items-center justify-center gap-1.5 shadow-xl">
             <Eye className="h-3 w-3 text-gold-400" />
             <span>View Details</span>
           </div>
@@ -186,34 +186,34 @@ export function ProductCard({
       {/* 2. Product Information Movement on Hover (Subtle smooth upward translate) */}
       <div className="pt-4 space-y-1.5 transition-transform duration-500 ease-out group-hover:-translate-y-1">
         {/* Collection Name */}
-        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em] text-gold-400/90">
+        <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.22em] text-metallic">
           <span>{collectionLabel}</span>
           {product.sku && (
-            <span className="text-neutral-500 text-[9px] hidden sm:inline">{product.sku}</span>
+            <span className="text-[var(--color-neutral-stone)] text-[9px] hidden sm:inline">{product.sku}</span>
           )}
         </div>
 
         {/* Product Name */}
         <Link href={`/product/${product.slug}`} className="block group/title">
-          <h3 className="font-serif-luxury text-base sm:text-lg font-light text-sand-50 group-hover/title:text-gold-300 transition-colors line-clamp-1 leading-snug">
+          <h3 className="font-serif-luxury text-base sm:text-lg font-light text-[var(--foreground)] group-hover/title:text-metallic transition-colors line-clamp-1 leading-snug">
             {product.name}
           </h3>
         </Link>
 
         {/* Optional Specs */}
         {product.specs && (
-          <p className="text-[11px] font-sans text-neutral-400 truncate font-light">
+          <p className="text-[11px] font-sans text-[var(--color-neutral-stone)] truncate font-light">
             {product.specs}
           </p>
         )}
 
         {/* Price */}
         <div className="flex items-baseline gap-2 pt-0.5">
-          <span className="font-mono text-xs sm:text-sm font-medium text-sand-100 tracking-wide">
+          <span className="font-mono text-xs sm:text-sm font-medium text-[var(--foreground)] tracking-wide">
             {formatPrice(priceValue)}
           </span>
           {product.compareAtPrice && (
-            <span className="text-[10px] font-mono text-neutral-500 line-through">
+            <span className="text-[10px] font-mono text-[var(--color-neutral-stone)] line-through">
               {formatPrice(Number(product.compareAtPrice))}
             </span>
           )}

@@ -77,7 +77,7 @@ export default async function WatchesPage({ searchParams }: WatchesPageProps) {
   ]);
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-32 transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pb-32 transition-colors duration-300">
       {/* Editorial Header */}
       <EditorialHeader
         title="Luxury Watches"

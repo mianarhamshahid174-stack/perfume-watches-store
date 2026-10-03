@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export const DEFAULT_MARKETING_CONFIG = {
   announcementBar: {
     enabled: true,
-    text: "Complimentary express delivery across Pakistan • Cash on Delivery available • 5-Year official warranty",
+    text: "Complimentary express delivery across Pakistan • Open Parcel Inspection • Cash on Delivery • 7-Day Checking Warranty",
     badge: "Pakistan Delivery",
     linkText: "Delivery Info",
     linkUrl: "/shipping",
@@ -34,7 +34,7 @@ export const DEFAULT_MARKETING_CONFIG = {
   newsletter: {
     enabled: true,
     title: "Join VELORA Pakistan",
-    subtitle: "Subscribe to receive private updates on new watch arrivals, luxury fragrance releases, and exclusive invitations to our Lahore, Karachi, and Islamabad boutiques.",
+    subtitle: "Subscribe to receive private updates on new watch arrivals, luxury fragrance releases, and exclusive online releases across Pakistan.",
     incentiveText: "Enjoy 10% off your first order",
     disclaimer: "We respect your privacy. You can unsubscribe at any time.",
   },

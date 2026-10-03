@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { GlobalStructuredData } from "@/components/seo/structured-data";
 import { ThemeProvider } from "@/context/theme-context";
 import { FirebaseAnalyticsProvider } from "@/components/providers/firebase-analytics";
 
-const cormorant = Cormorant_Garamond({
+const playfair = Playfair_Display({
   variable: "--font-serif",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
-const geistSans = Geist({
+const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     default: "VELORA Pakistan | Luxury Watches & Fine Fragrances",
   },
   description:
-    "Discover VELORA Pakistan: Curated luxury automatic timepieces and artisanal fine fragrances. Nationwide express delivery with Cash on Delivery and official 5-year warranty.",
+    "Discover VELORA Pakistan: Curated luxury automatic timepieces and artisanal fine fragrances. Nationwide express delivery with Cash on Delivery, open parcel inspection, and 7-day checking warranty.",
   keywords: [
     "VELORA Pakistan",
     "Luxury Watches Pakistan",
@@ -63,7 +63,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       data-theme="dark"
-      className={`${cormorant.variable} ${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${playfair.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased dark`}
     >
       <body className="min-h-full flex flex-col bg-obsidian text-sand-100 selection:bg-gold-500/30 selection:text-gold-300">
         <ThemeProvider>

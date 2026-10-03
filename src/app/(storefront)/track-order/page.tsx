@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { BRAND } from "@/lib/constants";
 import {
   Truck,
   Search,
@@ -314,7 +315,7 @@ export default function TrackOrderPage() {
               </Link>
 
               <a
-                href={`https://wa.me/923001234567?text=Hi%20Velora%2C%20I%20am%20inquiring%20about%20my%20order%20${trackedOrder.orderNumber}`}
+                href={`https://wa.me/923356600174?text=Hi%20Velora%2C%20I%20am%20inquiring%20about%20my%20order%20${trackedOrder.orderNumber}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 hover:underline font-semibold"
@@ -375,25 +376,25 @@ export default function TrackOrderPage() {
         <div className="max-w-2xl mx-auto bg-card border border-border p-6 text-center space-y-3">
           <h4 className="font-serif-luxury text-lg text-foreground">Need Urgent Assistance with Your Delivery?</h4>
           <p className="text-xs text-neutral-stone font-light max-w-lg mx-auto leading-relaxed">
-            Our Pakistan client care team is available Monday to Saturday, 10:00 AM – 8:00 PM PKT. Reach out anytime via WhatsApp or phone.
+            Our online client concierge team is available Monday to Saturday, 10:00 AM – 7:00 PM PKT. Reach out anytime via WhatsApp or phone.
           </p>
           <div className="pt-2 flex flex-wrap items-center justify-center gap-4 text-xs font-mono uppercase tracking-wider">
             <a
-              href="https://wa.me/923001234567"
+              href={BRAND.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="text-emerald-600 dark:text-emerald-400 hover:underline font-semibold flex items-center gap-1.5"
             >
-              <span>WhatsApp: +92 300 1234567</span>
+              <span>WhatsApp: {BRAND.phone}</span>
               <ExternalLink className="w-3 h-3" />
             </a>
             <span className="text-neutral-stone hidden sm:inline">•</span>
-            <a href="tel:+924235789000" className="text-neutral-stone hover:text-foreground">
-              Phone: +92 (42) 3578-9000
+            <a href={`tel:${BRAND.phone.replace(/\s+/g, "")}`} className="text-neutral-stone hover:text-foreground">
+              Phone: {BRAND.phone}
             </a>
             <span className="text-neutral-stone hidden sm:inline">•</span>
-            <Link href="/faq" className="text-gold-600 dark:text-gold-400 hover:underline">
-              Delivery FAQs
+            <Link href="/shipping" className="text-gold-600 dark:text-gold-400 hover:underline">
+              Courier Partners
             </Link>
           </div>
         </div>

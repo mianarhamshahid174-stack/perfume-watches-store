@@ -349,10 +349,10 @@ export default function OrderConfirmationPage() {
               <ShieldCheck className="w-6 h-6 text-gold-400 shrink-0 mt-0.5" />
               <div className="space-y-1 text-xs">
                 <span className="font-serif-luxury text-sand-100 text-sm block">
-                  100% Authentic & 5-Year Warranty
+                  100% Authentic & 7-Day Checking Warranty
                 </span>
                 <p className="text-neutral-400 font-light leading-relaxed">
-                  Your piece includes our luxury presentation box, numbered authenticity certificate, and full 5-year international warranty.
+                  Your piece includes our luxury presentation box, inspection guarantee, and 7-day checking warranty covering movement and manufacturing defects.
                 </p>
               </div>
             </div>

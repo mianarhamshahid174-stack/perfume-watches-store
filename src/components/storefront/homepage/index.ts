@@ -8,5 +8,5 @@ export { CraftsmanshipGallerySection } from "./craftsmanship-gallery-section";
 export { FragranceEditorialSection } from "./fragrance-editorial-section";
 export { GiftingSection } from "./gifting-section";
 export { BrandStorySection } from "./brand-story-section";
-export { JournalPreviewSection } from "./journal-preview-section";
+export { DeliveryConciergeSection } from "./delivery-concierge-section";
 export { NewsletterSection } from "./newsletter-section";

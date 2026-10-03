@@ -198,9 +198,9 @@ export default function BestSellersPage() {
 
           <div className="space-y-1.5">
             <ShieldCheck className="w-5 h-5 text-gold-500 mx-auto" />
-            <h4 className="text-sm font-semibold text-foreground">5-Year Official Warranty</h4>
+            <h4 className="text-sm font-semibold text-foreground">7-Day Checking Warranty</h4>
             <p className="text-xs text-neutral-stone font-light">
-              Full mechanical coverage with service centers in Lahore, Karachi & Islamabad.
+              Full replacement for manufacturing or movement defects upon delivery.
             </p>
           </div>
         </div>

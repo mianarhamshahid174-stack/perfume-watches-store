@@ -194,28 +194,28 @@ export function ProductAccordion({ product }: ProductAccordionProps) {
     },
     {
       id: "returns",
-      title: "RETURNS",
+      title: "RETURNS & INSPECTION",
       content: (
         <div className="space-y-3 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <p>
-            We offer complimentary 30-day returns and exchanges on all unworn items in their original packaging.
+            You are fully entitled to open and inspect your parcel upon arrival before paying Cash on Delivery (COD).
           </p>
           <p className="text-xs text-neutral-400">
-            To request a return, contact our customer service team or start a return from your account. We will provide a prepaid insured return shipping label.
+            We provide a 3-day replacement or return window strictly for defective, damaged, or incorrect items in original unworn condition with packaging intact. For fragrances, due to hygiene standards, returns are only accepted if the bottle remains completely sealed and unopened or was damaged during transit.
           </p>
         </div>
       ),
     },
     {
       id: "warranty",
-      title: "WARRANTY",
+      title: "7-DAY CHECKING WARRANTY",
       content: (
         <div className="space-y-3 text-xs sm:text-sm text-platinum-300 font-light leading-relaxed">
           <p>
-            Every VELORA timepiece comes with our 5-Year International Warranty covering all manufacturing and mechanical defects.
+            Every VELORA timepiece includes our 7-Day Checking & Replacement Warranty covering all manufacturing and movement defects upon delivery.
           </p>
           <p className="text-xs text-neutral-400">
-            Our warranty includes complimentary water-resistance testing, case inspection, and complete mechanical support through our authorized service centers.
+            If your timepiece exhibits any mechanical defect or operational issue within 7 days of delivery, simply contact our WhatsApp concierge (+92 335 6600174) for immediate courier replacement.
           </p>
         </div>
       ),

@@ -122,7 +122,7 @@ export function CraftsmanshipGallerySection({
   };
 
   return (
-    <section className="py-28 sm:py-36 bg-black text-sand-100 border-b border-white/5 overflow-hidden">
+    <section className="py-32 sm:py-40 bg-[var(--background)] text-[var(--foreground)] border-b border-white/5 overflow-hidden">
       <Container size="wide">
         {/* Section Header with Left/Right Scroll Controls */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 sm:mb-16 border-b border-white/10 pb-8">

@@ -32,7 +32,7 @@ export function GiftingSection({
     content?.imageUrl || "/images/velora-gifting-packaging.jpg";
 
   return (
-    <section className="py-28 sm:py-36 bg-obsidian text-sand-100 border-b border-white/5 overflow-hidden">
+    <section className="py-32 sm:py-40 bg-[var(--background)] text-[var(--foreground)] border-b border-white/5 overflow-hidden">
       <Container size="wide">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           {/* Left Column: Premium Packaging Image */}
@@ -43,7 +43,7 @@ export function GiftingSection({
             transition={{ duration: 1.2, ease: LUXURY_EASE }}
             className="lg:col-span-7 relative"
           >
-            <div className="relative aspect-[16/10] sm:aspect-[16/11] rounded-none overflow-hidden bg-neutral-950 border border-white/10 group">
+            <div className="keep-dark relative aspect-[16/10] sm:aspect-[16/11] rounded-none overflow-hidden bg-neutral-950 border border-white/10 group">
               <img
                 src={packagingImage}
                 alt="VELORA Bespoke Presentation Vault"

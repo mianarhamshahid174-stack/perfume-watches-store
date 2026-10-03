@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
+import { BRAND } from "@/lib/constants";
 import { useCart } from "@/context/cart-context";
 import { useWishlist } from "@/context/wishlist-context";
 import { formatPKR, usdToPKR } from "@/lib/currency";
@@ -89,7 +90,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pt-28 pb-20 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pt-28 pb-20 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
       <Container size="wide">
         {/* Editorial Page Header */}
         <div className="border-b border-white/10 pb-8 mb-10">
@@ -280,11 +281,11 @@ export default function CartPage() {
                   <div className="flex items-center gap-2 text-gold-400">
                     <ShieldCheck className="w-4 h-4" />
                     <span className="text-xs font-semibold uppercase tracking-wider">
-                      5-Year Warranty
+                      7-Day Checking Warranty
                     </span>
                   </div>
                   <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                    Every timepiece arrives with an authentic certificate and a 5-year international warranty.
+                    Every timepiece arrives with our 7-day checking and replacement warranty covering movement defects.
                   </p>
                 </div>
 
@@ -292,11 +293,11 @@ export default function CartPage() {
                   <div className="flex items-center gap-2 text-gold-400">
                     <RotateCcw className="w-4 h-4" />
                     <span className="text-xs font-semibold uppercase tracking-wider">
-                      30-Day Returns
+                      Open Parcel & Returns
                     </span>
                   </div>
                   <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                    Hassle-free 30-day returns with free doorstep pickup in original packaging.
+                    Inspect your piece before payment on COD. 3-day replacement for defective items.
                   </p>
                 </div>
               </div>
@@ -424,15 +425,21 @@ export default function CartPage() {
               </div>
 
               {/* Customer Support Card */}
-              <div className="p-5 bg-neutral-950/40 border border-white/5 space-y-2 text-center">
-                <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block">
-                  Pakistan Customer Care
+              <div className="p-5 bg-[var(--surface)] border border-[var(--border-subtle)] space-y-2 text-center">
+                <span className="text-[10px] font-sans font-semibold uppercase tracking-wider text-metallic block">
+                  Pakistan Online Client Concierge
                 </span>
-                <p className="text-xs text-neutral-400 font-light">
-                  Need help placing your order or have questions about delivery?
+                <p className="text-xs text-[var(--color-neutral-stone)] font-light">
+                  Need help placing your order or have questions about courier delivery?
                 </p>
-                <div className="pt-1 font-mono text-xs text-sand-200">
-                  concierge@velora.pk | +92 300 1234567
+                <div className="pt-1 font-mono text-xs text-[var(--foreground)]">
+                  <a href={`mailto:${BRAND.email}`} className="hover:text-metallic transition-colors">
+                    {BRAND.email}
+                  </a>
+                  {" "}|{" "}
+                  <a href={BRAND.whatsappUrl} target="_blank" rel="noopener noreferrer" className="hover:text-metallic transition-colors">
+                    {BRAND.phone}
+                  </a>
                 </div>
               </div>
             </div>

@@ -99,7 +99,7 @@ export function PersonalStylist() {
   const recommendedItems = getRecommendations();
 
   return (
-    <section className="py-24 sm:py-32 bg-card border-t border-b border-border overflow-hidden transition-colors duration-300">
+    <section className="py-32 sm:py-40 bg-card border-t border-b border-border overflow-hidden transition-colors duration-300">
       <Container size="wide">
         <div className="max-w-4xl mx-auto space-y-10">
           {/* Header */}
@@ -507,10 +507,10 @@ export function PersonalStylist() {
 
                   <div className="p-4 bg-muted/60 border border-border flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
                     <span className="text-neutral-stone">
-                      Prefer bespoke consultation or private viewing in Lahore, Karachi, or Islamabad?
+                      Prefer bespoke consultation or live video demonstration on WhatsApp?
                     </span>
                     <a
-                      href="https://wa.me/923001234567?text=Hi%20Velora%2C%20I%20completed%20the%20Personal%20Advisor%20and%20would%20like%20to%20inquire%20about%20recommendations."
+                      href="https://wa.me/923356600174?text=Hi%20Velora%2C%20I%20completed%20the%20Personal%20Advisor%20and%20would%20like%20to%20inquire%20about%20recommendations."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-emerald-600 dark:text-emerald-400 font-semibold uppercase font-mono tracking-wider hover:underline flex items-center gap-1.5"

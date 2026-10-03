@@ -186,20 +186,20 @@ export function FilterDrawer({
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ duration: 0.4, ease: LUXURY_EASE }}
-            className="relative z-10 w-full max-w-md bg-neutral-950 border-l border-white/10 text-sand-100 flex flex-col h-full shadow-2xl overflow-hidden"
+            className="relative z-10 w-full max-w-md bg-[var(--surface)] border-l border-[var(--border-subtle)] text-[var(--foreground)] flex flex-col h-full shadow-2xl overflow-hidden"
           >
             {/* Header */}
-            <div className="p-6 border-b border-white/10 flex items-center justify-between">
+            <div className="p-6 border-b border-[var(--border-subtle)] flex items-center justify-between">
               <div className="flex items-center gap-2.5">
-                <SlidersHorizontal className="h-4 w-4 text-gold-400" />
-                <h3 className="font-serif-luxury text-xl font-light text-sand-50">
+                <SlidersHorizontal className="h-4 w-4 text-metallic" />
+                <h3 className="font-serif-luxury text-xl font-light text-[var(--foreground)]">
                   Filter Products
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 text-neutral-400 hover:text-white transition-colors"
+                className="p-2 text-[var(--color-neutral-stone)] hover:text-[var(--foreground)] transition-colors cursor-pointer"
                 aria-label="Close filters"
               >
                 <X className="h-5 w-5" />
@@ -470,11 +470,11 @@ export function FilterDrawer({
             </div>
 
             {/* Footer Buttons */}
-            <div className="p-6 border-t border-white/10 bg-black flex items-center justify-between gap-3">
+            <div className="p-6 border-t border-[var(--border-subtle)] bg-[var(--surface)] flex items-center justify-between gap-3">
               <button
                 type="button"
                 onClick={handleReset}
-                className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-neutral-400 hover:text-white transition-colors flex items-center gap-1.5"
+                className="px-4 py-3 text-xs font-mono uppercase tracking-wider text-[var(--color-neutral-stone)] hover:text-[var(--foreground)] transition-colors flex items-center gap-1.5 cursor-pointer"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
                 <span>Reset</span>
@@ -483,7 +483,7 @@ export function FilterDrawer({
               <button
                 type="button"
                 onClick={handleApply}
-                className="flex-1 py-3 px-6 bg-sand-50 hover:bg-gold-300 text-black text-xs font-medium uppercase tracking-[0.2em] transition-all text-center"
+                className="flex-1 py-3 px-6 bg-metallic hover:bg-gold-500 text-black text-xs font-semibold uppercase tracking-[0.2em] transition-all text-center cursor-pointer shadow-md"
               >
                 Apply Filters
               </button>

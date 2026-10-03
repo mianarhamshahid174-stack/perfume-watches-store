@@ -12,17 +12,13 @@ export function GlobalStructuredData() {
       "Original luxury timepieces and fine fragrances crafted for connoisseurs across Pakistan.",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "M.M. Alam Road, Gulberg III",
-      addressLocality: "Lahore",
-      addressRegion: "Punjab",
-      postalCode: "54000",
       addressCountry: "PK",
     },
     contactPoint: {
       "@type": "ContactPoint",
-      contactType: "Customer Care & Boutique Concierge",
-      email: "concierge@velora.pk",
-      telephone: "+92 300 1234567",
+      contactType: "Customer Care & Online Concierge",
+      email: "shopzaven@gmail.com",
+      telephone: "+92 335 6600174",
     },
     sameAs: [
       "https://instagram.com/velorapakistan",

@@ -26,7 +26,7 @@ export function EditorialHeader({
   breadcrumbs = [],
 }: EditorialHeaderProps) {
   return (
-    <div className="relative w-full pt-32 pb-16 sm:pt-40 sm:pb-20 border-b border-white/10 overflow-hidden bg-black text-sand-100">
+    <div className="keep-dark relative w-full pt-32 pb-16 sm:pt-40 sm:pb-20 border-b border-white/10 overflow-hidden bg-black text-sand-100">
       {/* Background Cinematic Visual if provided */}
       {imageUrl && (
         <div className="absolute inset-0 z-0">

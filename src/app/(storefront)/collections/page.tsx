@@ -78,7 +78,7 @@ export default async function CollectionsIndexPage() {
   };
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pb-32">
       {/* Editorial Header */}
       <EditorialHeader
         title="The Collections"
@@ -102,12 +102,12 @@ export default async function CollectionsIndexPage() {
             return (
               <div
                 key={col.id}
-                className="group relative flex flex-col bg-neutral-950 border border-white/10 hover:border-gold-500/40 transition-all duration-700 overflow-hidden"
+                className="group relative flex flex-col bg-[var(--surface)] border border-[var(--border-subtle)] hover:border-gold-500/40 transition-all duration-700 overflow-hidden"
               >
                 {/* Large Editorial Visual */}
                 <Link
                   href={`/collections/${col.slug}`}
-                  className="block relative aspect-[16/10] w-full overflow-hidden bg-neutral-900"
+                  className="keep-dark block relative aspect-[16/10] w-full overflow-hidden bg-neutral-900"
                 >
                   <img
                     src={banner}
@@ -134,30 +134,30 @@ export default async function CollectionsIndexPage() {
                 {/* Editorial Content */}
                 <div className="p-8 sm:p-10 flex-1 flex flex-col justify-between space-y-6">
                   <div className="space-y-3">
-                    <h2 className="font-serif-luxury text-3xl sm:text-4xl font-light text-sand-50 group-hover:text-gold-300 transition-colors">
+                    <h2 className="font-serif-luxury text-3xl sm:text-4xl font-light text-[var(--foreground)] group-hover:text-metallic transition-colors">
                       <Link href={`/collections/${col.slug}`}>
                         {col.name}
                       </Link>
                     </h2>
 
                     {col.description && (
-                      <p className="text-xs sm:text-sm text-platinum-400 font-light leading-relaxed max-w-lg">
+                      <p className="text-xs sm:text-sm text-[var(--color-neutral-stone)] font-light leading-relaxed max-w-lg">
                         {col.description}
                       </p>
                     )}
                   </div>
 
                   {/* Bottom Action */}
-                  <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                  <div className="pt-4 border-t border-[var(--border-subtle)] flex items-center justify-between">
                     <Link
                       href={`/collections/${col.slug}`}
-                      className="inline-flex items-center text-xs font-mono uppercase tracking-[0.22em] text-sand-100 group-hover:text-gold-300 transition-colors"
+                      className="inline-flex items-center text-xs font-mono uppercase tracking-[0.22em] text-[var(--foreground)] group-hover:text-metallic transition-colors"
                     >
                       <span>Explore Collection</span>
                       <ArrowRight className="ml-2 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
                     </Link>
 
-                    <ArrowUpRight className="h-4 w-4 text-neutral-500 group-hover:text-gold-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="h-4 w-4 text-[var(--color-neutral-stone)] group-hover:text-metallic transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 </div>
               </div>

@@ -109,7 +109,7 @@ export function FilterBar({
 
   return (
     <>
-      <div className="py-6 border-b border-white/10 space-y-4 mb-8">
+      <div className="py-6 border-b border-[var(--border-subtle)] space-y-4 mb-8">
         {/* Main Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           {/* Left: Filter Trigger & Total Count */}
@@ -117,18 +117,18 @@ export function FilterBar({
             <button
               type="button"
               onClick={() => setIsDrawerOpen(true)}
-              className="inline-flex items-center gap-2.5 px-4 py-2.5 bg-neutral-900/80 hover:bg-neutral-800 border border-white/15 text-sand-100 hover:text-gold-300 text-xs font-mono uppercase tracking-[0.2em] transition-all"
+              className="inline-flex items-center gap-2.5 px-4 py-2.5 bg-[var(--surface)] hover:bg-[var(--surface-hover)] border border-[var(--border-subtle)] text-[var(--foreground)] hover:text-metallic text-xs font-mono uppercase tracking-[0.2em] transition-all cursor-pointer"
             >
-              <SlidersHorizontal className="h-3.5 w-3.5 text-gold-400" />
+              <SlidersHorizontal className="h-3.5 w-3.5 text-metallic" />
               <span>Filter Products</span>
               {activeCount > 0 && (
-                <span className="h-5 w-5 rounded-full bg-gold-400 text-black text-[10px] font-bold flex items-center justify-center font-mono ml-1">
+                <span className="h-5 w-5 rounded-full bg-metallic text-black text-[10px] font-bold flex items-center justify-center font-mono ml-1">
                   {activeCount}
                 </span>
               )}
             </button>
 
-            <span className="text-xs font-mono text-neutral-400 hidden sm:inline">
+            <span className="text-xs font-mono text-[var(--color-neutral-stone)] hidden sm:inline">
               {totalCount} {totalCount === 1 ? "Product" : "Products"}
             </span>
           </div>
@@ -137,12 +137,12 @@ export function FilterBar({
           <div className="flex items-center gap-4 self-end sm:self-center">
             {/* Desktop Column Switcher */}
             {onColumnsChange && (
-              <div className="hidden lg:flex items-center gap-1 border border-white/10 p-1 bg-neutral-950">
+              <div className="hidden lg:flex items-center gap-1 border border-[var(--border-subtle)] p-1 bg-[var(--surface)]">
                 <button
                   type="button"
                   onClick={() => onColumnsChange(3)}
-                  className={`p-1.5 transition-colors ${
-                    columns === 3 ? "text-gold-400 bg-white/10" : "text-neutral-500 hover:text-white"
+                  className={`p-1.5 transition-colors cursor-pointer ${
+                    columns === 3 ? "text-metallic bg-[var(--surface-hover)]" : "text-[var(--color-neutral-stone)] hover:text-[var(--foreground)]"
                   }`}
                   title="3 Columns"
                   aria-label="3 Columns View"
@@ -152,8 +152,8 @@ export function FilterBar({
                 <button
                   type="button"
                   onClick={() => onColumnsChange(4)}
-                  className={`p-1.5 transition-colors ${
-                    columns === 4 ? "text-gold-400 bg-white/10" : "text-neutral-500 hover:text-white"
+                  className={`p-1.5 transition-colors cursor-pointer ${
+                    columns === 4 ? "text-metallic bg-[var(--surface-hover)]" : "text-[var(--color-neutral-stone)] hover:text-[var(--foreground)]"
                   }`}
                   title="4 Columns"
                   aria-label="4 Columns View"
@@ -165,14 +165,14 @@ export function FilterBar({
 
             {/* Sort Dropdown */}
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-500 hidden md:inline">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-neutral-stone)] hidden md:inline">
                 Sort:
               </span>
               <div className="relative">
                 <select
                   value={currentSort}
                   onChange={(e) => handleSortChange(e.target.value)}
-                  className="h-10 pl-3 pr-8 bg-neutral-950 border border-white/15 text-sand-100 text-xs font-mono tracking-wide focus:outline-none focus:border-gold-500 appearance-none cursor-pointer"
+                  className="h-10 pl-3 pr-8 bg-[var(--surface)] border border-[var(--border-subtle)] text-[var(--foreground)] text-xs font-mono tracking-wide focus:outline-none focus:border-metallic appearance-none cursor-pointer"
                 >
                   <option value="featured">Featured</option>
                   <option value="newest">Newest</option>
@@ -180,7 +180,7 @@ export function FilterBar({
                   <option value="price-desc">Price: High to Low</option>
                   <option value="best-selling">Best Selling</option>
                 </select>
-                <ArrowUpDown className="h-3 w-3 text-neutral-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <ArrowUpDown className="h-3 w-3 text-[var(--color-neutral-stone)] absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
           </div>

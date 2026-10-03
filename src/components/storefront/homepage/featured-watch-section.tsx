@@ -57,7 +57,7 @@ export function FeaturedWatchSection({
     : "Rs. 125,000";
 
   return (
-    <section className="relative py-28 sm:py-36 bg-obsidian text-sand-100 border-b border-white/5 overflow-hidden">
+    <section className="relative py-32 sm:py-40 bg-[var(--background)] text-[var(--foreground)] border-b border-white/5 overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-1/4 right-0 w-[550px] h-[550px] bg-gold-500/5 rounded-full blur-[140px] pointer-events-none" />
 
@@ -139,7 +139,7 @@ export function FeaturedWatchSection({
             className="lg:col-span-7 relative"
           >
             {/* Architectural Frame with Subtle Borders */}
-            <div className="relative aspect-[4/5] sm:aspect-[16/13] w-full rounded-none overflow-hidden bg-gradient-to-b from-neutral-900/60 to-black border border-white/10 group">
+            <div className="keep-dark relative aspect-[4/5] sm:aspect-[16/13] w-full rounded-none overflow-hidden bg-gradient-to-b from-neutral-900/60 to-black border border-white/10 group">
               <img
                 src={heroImage}
                 alt={product?.name || headline}

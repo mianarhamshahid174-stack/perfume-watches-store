@@ -33,9 +33,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/journal`,
+      url: `${baseUrl}/shipping`,
       lastModified: new Date(),
-      changeFrequency: "daily",
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
@@ -73,20 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-    // 4. Dynamic Published Journal Posts
-    const journalPosts = await prisma.journalPost.findMany({
-      where: { isPublished: true },
-      select: { slug: true, updatedAt: true, canonicalUrl: true },
-    });
-
-    const journalRoutes: MetadataRoute.Sitemap = journalPosts.map((j) => ({
-      url: j.canonicalUrl || `${baseUrl}/journal/${j.slug}`,
-      lastModified: j.updatedAt,
-      changeFrequency: "weekly",
-      priority: 0.75,
-    }));
-
-    return [...staticRoutes, ...productRoutes, ...collectionRoutes, ...journalRoutes];
+    return [...staticRoutes, ...productRoutes, ...collectionRoutes];
   } catch (error) {
     console.error("Sitemap generation error:", error);
     return staticRoutes;

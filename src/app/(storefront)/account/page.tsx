@@ -390,9 +390,9 @@ export default function AccountPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-4 bg-card border border-border space-y-1.5">
                   <ShieldCheck className="w-4 h-4 text-gold-500" />
-                  <h4 className="text-xs font-semibold text-foreground">5-Year Official Warranty</h4>
+                  <h4 className="text-xs font-semibold text-foreground">7-Day Checking Warranty</h4>
                   <p className="text-[11px] text-neutral-stone font-light leading-relaxed">
-                    Every timepiece comes with an authorized warranty card valid across Pakistan.
+                    Full replacement for manufacturing or movement defects upon delivery.
                   </p>
                 </div>
                 <div className="p-4 bg-card border border-border space-y-1.5">
@@ -495,16 +495,16 @@ export default function AccountPage() {
                   Need Assistance?
                 </span>
                 <p className="text-xs text-neutral-stone font-light leading-relaxed">
-                  Our Pakistan concierge is on standby to assist with order status, customization, or private showroom visits in Lahore, Karachi, and Islamabad.
+                  Our Pakistan concierge is on standby to assist with order status, tracking, or checking warranty claims.
                 </p>
                 <div className="flex items-center gap-4 pt-1">
                   <a
-                    href="https://wa.me/923001234567"
+                    href="https://wa.me/923356600174"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 hover:underline font-semibold"
                   >
-                    <span>WhatsApp: +92 300 1234567</span>
+                    <span>WhatsApp: +92 335 6600174</span>
                     <ExternalLink className="w-3 h-3" />
                   </a>
                 </div>

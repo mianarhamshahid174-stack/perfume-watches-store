@@ -46,7 +46,7 @@ export function HeroSection({ title, subtitle, content }: HeroSectionProps) {
   return (
     <section
       ref={containerRef}
-      className="relative h-screen min-h-[720px] w-full flex items-center justify-center overflow-hidden bg-black select-none"
+      className="keep-dark relative h-screen min-h-[720px] w-full flex items-center justify-center overflow-hidden bg-black select-none"
     >
       {/* 1. Cinematic Background Image Reveal & Subtle Ambient Drift */}
       <motion.div

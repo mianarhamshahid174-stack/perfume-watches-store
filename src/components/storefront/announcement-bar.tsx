@@ -42,8 +42,8 @@ export function AnnouncementBar() {
     config.theme === "gold"
       ? "bg-metallic text-black font-medium"
       : config.theme === "charcoal"
-      ? "bg-charcoal-900 text-sand-100 border-b border-white/10"
-      : "bg-black text-metallic border-b border-metallic/30";
+      ? "bg-[var(--surface)] text-[var(--foreground)] border-b border-[var(--border-subtle)]"
+      : "bg-[var(--background)] text-metallic border-b border-[var(--border-subtle)]";
 
   return (
     <div
@@ -55,8 +55,8 @@ export function AnnouncementBar() {
             <span
               className={`text-[9px] uppercase tracking-ultra px-2 py-0.5 rounded-full font-bold shrink-0 ${
                 config.theme === "gold"
-                  ? "bg-black/20 text-black border border-black/20"
-                  : "bg-metallic/20 text-metallic border border-metallic/30"
+                  ? "bg-black/15 text-black border border-black/20"
+                  : "bg-metallic/15 text-metallic border border-metallic/30"
               }`}
             >
               {config.badge}

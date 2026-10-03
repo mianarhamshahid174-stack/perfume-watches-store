@@ -95,7 +95,7 @@ export function Drawer({
               animate="visible"
               exit="exit"
               className={cn(
-                "pointer-events-auto w-screen border-white/10 bg-charcoal-950 p-6 sm:p-8 shadow-2xl flex flex-col justify-between overflow-y-auto",
+                "pointer-events-auto w-screen border-[var(--border-subtle)] bg-[var(--surface)] text-[var(--foreground)] p-6 sm:p-8 shadow-2xl flex flex-col justify-between overflow-y-auto",
                 side === "right" ? "border-l" : "border-r",
                 sizeStyles[size],
                 className
@@ -103,15 +103,15 @@ export function Drawer({
             >
               {/* Header */}
               <div className="flex-1">
-                <div className="flex items-center justify-between border-b border-white/10 pb-5 mb-6">
+                <div className="flex items-center justify-between border-b border-[var(--border-subtle)] pb-5 mb-6">
                   <div>
                     {title && (
-                      <h3 className="font-serif-luxury text-xl sm:text-2xl font-light text-ivory">
+                      <h3 className="font-serif-luxury text-xl sm:text-2xl font-light text-[var(--foreground)]">
                         {title}
                       </h3>
                     )}
                     {subtitle && (
-                      <p className="font-sans text-[11px] text-neutral-stone font-light mt-0.5">
+                      <p className="font-sans text-[11px] text-[var(--color-neutral-stone)] font-light mt-0.5">
                         {subtitle}
                       </p>
                     )}
@@ -120,7 +120,7 @@ export function Drawer({
                   <button
                     type="button"
                     onClick={onClose}
-                    className="p-2 rounded-full text-neutral-stone hover:text-ivory hover:bg-white/5 transition-colors cursor-pointer"
+                    className="p-2 rounded-full text-[var(--color-neutral-stone)] hover:text-[var(--foreground)] hover:bg-[var(--border-subtle)] transition-colors cursor-pointer"
                     aria-label="Close drawer"
                   >
                     <X className="h-4 w-4" />
@@ -133,7 +133,7 @@ export function Drawer({
 
               {/* Optional Sticky Footer */}
               {footer && (
-                <div className="pt-6 mt-6 border-t border-white/10 bg-charcoal-950 sticky bottom-0">
+                <div className="pt-6 mt-6 border-t border-[var(--border-subtle)] bg-[var(--surface)] sticky bottom-0">
                   {footer}
                 </div>
               )}

@@ -12,7 +12,7 @@ import {
   FragranceEditorialSection,
   GiftingSection,
   BrandStorySection,
-  JournalPreviewSection,
+  DeliveryConciergeSection,
   NewsletterSection,
 } from "@/components/storefront/homepage";
 import { PersonalStylist } from "@/components/storefront/personal-stylist";
@@ -22,7 +22,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "VELORA Pakistan | Luxury Watches & Fine Fragrances",
   description:
-    "Original luxury automatic timepieces and artisanal fine fragrances. Nationwide complimentary delivery across Pakistan with Cash on Delivery and official 5-year warranty.",
+    "Original luxury automatic timepieces and artisanal fine fragrances. Nationwide complimentary delivery across Pakistan with Cash on Delivery, open parcel inspection, and 7-day checking warranty.",
   openGraph: {
     title: "VELORA Pakistan | Luxury Watches & Fine Fragrances",
     description:
@@ -35,7 +35,6 @@ import {
   FALLBACK_HOMEPAGE_SECTIONS,
   FALLBACK_PRODUCTS,
   FALLBACK_COLLECTIONS,
-  FALLBACK_JOURNAL_POSTS,
 } from "@/lib/catalog-data";
 
 // Default fallback ordering if CMS is temporarily unseeded
@@ -50,7 +49,7 @@ const DEFAULT_SECTION_KEYS = [
   "fragrance_editorial",
   "gifting_packaging",
   "brand_story",
-  "journal_preview",
+  "delivery_concierge",
   "newsletter_section",
 ];
 
@@ -153,21 +152,7 @@ export default async function StorefrontHomePage() {
     }));
   }
 
-  // Journal: Fetch latest 3 published articles
-  let journalPosts: any[] = [];
-  try {
-    journalPosts = await prisma.journalPost.findMany({
-      where: { isPublished: true },
-      orderBy: { publishedAt: "desc" },
-      take: 3,
-    });
-  } catch (err) {
-    console.warn("Could not query journal posts from DB, using fallback posts:", err);
-  }
 
-  if (journalPosts.length === 0) {
-    journalPosts = FALLBACK_JOURNAL_POSTS.slice(0, 3);
-  }
 
   // Helper map to quickly find products by slug
   const productMap = new Map(publishedProducts.map((p: any) => [p.slug, p]));
@@ -175,7 +160,7 @@ export default async function StorefrontHomePage() {
     productMap.get("velora-signature-01") || publishedProducts[0] || null;
 
   return (
-    <div className="flex flex-col w-full bg-obsidian text-sand-100 overflow-x-hidden">
+    <div className="flex flex-col w-full bg-[var(--background)] text-[var(--foreground)] overflow-x-hidden">
       {sectionsToRender.map((sec: any) => {
         const key = sec.sectionKey;
         const content = (sec.content as any) || {};
@@ -306,15 +291,15 @@ export default async function StorefrontHomePage() {
               />
             );
 
-          // SECTION 11 — JOURNAL (LATEST 3 ARTICLES)
+          // SECTION 11 — COURIER, DELIVERY & CONCIERGE CARE
+          case "delivery_concierge":
           case "journal_preview":
             return (
-              <JournalPreviewSection
+              <DeliveryConciergeSection
                 key={sec.id}
                 title={sec.title}
                 subtitle={sec.subtitle}
                 content={content}
-                posts={journalPosts}
               />
             );
 

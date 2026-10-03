@@ -125,7 +125,7 @@ export function ContactForm() {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="e.g. +92 300 1234567"
+            placeholder="e.g. +92 335 6600174"
             className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground placeholder:text-neutral-500 focus:outline-none focus:border-gold-500 transition-colors"
           />
         </div>
@@ -141,9 +141,9 @@ export function ContactForm() {
             className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground focus:outline-none focus:border-gold-500 transition-colors cursor-pointer"
           >
             <option value="order">Order Status & Tracking</option>
-            <option value="product">Product Information & Horology</option>
-            <option value="warranty">Warranty, Service & Repairs</option>
-            <option value="appointment">Private Appointment in Lahore / Karachi / Islamabad</option>
+            <option value="product">Product Information & Styling Advice</option>
+            <option value="warranty">7-Day Checking Warranty Claim</option>
+            <option value="returns">3-Day Defect Return or Exchange Request</option>
             <option value="other">General Concierge Inquiry</option>
           </select>
         </div>

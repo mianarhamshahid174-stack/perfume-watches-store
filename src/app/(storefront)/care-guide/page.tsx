@@ -138,53 +138,53 @@ export default function CareGuidePage() {
                 Part III
               </span>
               <h2 className="font-serif-luxury text-2xl text-foreground font-light">
-                5-Year Official Warranty & Servicing in Pakistan
+                7-Day Checking Warranty & Longevity Care
               </h2>
             </div>
           </div>
 
           <p className="text-xs sm:text-sm text-neutral-stone font-light leading-relaxed">
-            Every VELORA timepiece purchased in Pakistan includes our comprehensive 5-year movement warranty. Complimentary ultrasonic bracelet cleaning and accuracy regulation are available at all three official showrooms:
+            Every VELORA timepiece purchased in Pakistan includes our 7-day checking warranty covering movement and manufacturing defects upon delivery. To keep your automatic and mechanical timepieces running with enduring precision for years to come:
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
             <div className="p-4 bg-background border border-border space-y-1">
               <span className="font-mono text-xs font-semibold text-gold-600 dark:text-gold-400 block">
-                Lahore Service Workshop
+                Routine Winding & Crown Care
               </span>
-              <p className="text-xs text-foreground">M.M. Alam Road, Gulberg III</p>
-              <p className="text-[11px] text-neutral-stone">Mon – Sat: 11:00 AM – 8:00 PM</p>
+              <p className="text-xs text-foreground">Turn crown clockwise 20–30 times</p>
+              <p className="text-[11px] text-neutral-stone">Always ensure crown is pushed in before wearing or exposure to moisture.</p>
             </div>
 
             <div className="p-4 bg-background border border-border space-y-1">
               <span className="font-mono text-xs font-semibold text-gold-600 dark:text-gold-400 block">
-                Karachi Flagship Bar
+                Magnetic Protection
               </span>
-              <p className="text-xs text-foreground">Clifton Block 4</p>
-              <p className="text-[11px] text-neutral-stone">Mon – Sat: 11:00 AM – 8:00 PM</p>
+              <p className="text-xs text-foreground">Avoid Strong Magnetic Fields</p>
+              <p className="text-[11px] text-neutral-stone">Keep watches away from high-powered speakers, laptops, and magnetic clasps.</p>
             </div>
 
             <div className="p-4 bg-background border border-border space-y-1">
               <span className="font-mono text-xs font-semibold text-gold-600 dark:text-gold-400 block">
-                Islamabad Boutique
+                Clean Storage
               </span>
-              <p className="text-xs text-foreground">Beverly Centre, Blue Area</p>
-              <p className="text-[11px] text-neutral-stone">Mon – Sat: 11:00 AM – 8:00 PM</p>
+              <p className="text-xs text-foreground">Original Presentation Box</p>
+              <p className="text-[11px] text-neutral-stone">Store in a dry, temperate environment inside your velvet-lined presentation box.</p>
             </div>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-border">
             <span className="text-xs text-neutral-stone font-light">
-              Need a service appointment or warranty verification?
+              Need assistance with your watch or checking warranty verification?
             </span>
 
             <a
-              href="https://wa.me/923001234567?text=Hi%20Velora%2C%20I%20would%20like%20to%20book%20a%20watch%20service%20or%20cleaning%20appointment."
+              href="https://wa.me/923356600174?text=Hi%20Velora%2C%20I%20have%20a%20question%20regarding%20watch%20care%20or%20warranty."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2.5 bg-metallic hover:bg-gold-500 text-black text-xs font-mono uppercase tracking-wider font-semibold transition-colors cursor-pointer shadow-sm"
             >
-              <span>Book Service via WhatsApp</span>
+              <span>WhatsApp Concierge</span>
               <ExternalLink className="w-3.5 h-3.5" />
             </a>
           </div>

@@ -20,6 +20,16 @@ const nextConfig: NextConfig = {
         destination: "/product/:slug",
         permanent: true,
       },
+      {
+        source: "/journal",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/journal/:path*",
+        destination: "/contact",
+        permanent: true,
+      },
     ];
   },
 };

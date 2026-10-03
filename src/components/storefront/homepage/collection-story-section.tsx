@@ -44,7 +44,7 @@ export function CollectionStorySection({
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[85vh] sm:min-h-[90vh] w-full flex items-center justify-center overflow-hidden bg-black py-28 border-b border-white/5"
+      className="keep-dark relative min-h-[85vh] sm:min-h-[90vh] w-full flex items-center justify-center overflow-hidden bg-black py-32 sm:py-40 border-b border-white/5"
     >
       {/* Parallax Background Container */}
       <motion.div

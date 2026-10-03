@@ -55,7 +55,7 @@ export function CollectionsGridSection({
   };
 
   return (
-    <section className="py-28 sm:py-36 bg-black text-sand-100 border-b border-white/5">
+    <section className="py-32 sm:py-40 bg-[var(--background)] text-[var(--foreground)] border-b border-white/5">
       <Container size="wide">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 border-b border-white/10 pb-8">
@@ -116,7 +116,7 @@ export function CollectionsGridSection({
               >
                 <Link
                   href={`/collections/${col.slug}`}
-                  className="group block relative overflow-hidden bg-neutral-950 border border-white/10 hover:border-gold-500/40 transition-all duration-500"
+                  className="keep-dark group block relative overflow-hidden bg-neutral-950 border border-white/10 hover:border-gold-500/40 transition-all duration-500"
                 >
                   {/* Tall Aspect Ratio Editorial Visual */}
                   <div className="relative aspect-[3/4] w-full overflow-hidden bg-neutral-900">

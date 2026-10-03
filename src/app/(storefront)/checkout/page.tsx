@@ -257,7 +257,7 @@ export default function CheckoutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pt-24 pb-24 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
+    <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] pt-24 pb-24 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
       <Container size="wide">
         {/* Top Header & Breadcrumb */}
         <div className="border-b border-white/10 pb-6 mb-8">

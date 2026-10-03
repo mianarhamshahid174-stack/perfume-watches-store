@@ -7,7 +7,7 @@ import { BRAND } from "@/lib/constants";
 export function WhatsAppConcierge() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const phoneClean = "923001234567";
+  const phoneClean = "923356600174";
   const defaultMessage = encodeURIComponent(
     "Hello VELORA Pakistan, I would like assistance with your luxury watches and perfumes."
   );
@@ -35,7 +35,7 @@ export function WhatsAppConcierge() {
           </div>
 
           <p className="text-xs mt-2.5 text-neutral-600 dark:text-platinum-400 leading-relaxed">
-            Need help choosing a watch or fragrance? Chat directly with our Pakistan customer care team in Lahore & Karachi.
+            Need help choosing a watch or fragrance? Chat directly with our online customer concierge team for instant guidance.
           </p>
 
           <a

@@ -65,7 +65,7 @@ export function SignatureProductSection({
     : "Rs. 125,000";
 
   return (
-    <section className="relative py-28 sm:py-36 bg-obsidian text-sand-100 border-b border-white/5 overflow-hidden">
+    <section className="relative py-32 sm:py-40 bg-[var(--background)] text-[var(--foreground)] border-b border-white/5 overflow-hidden">
       {/* Background ambient radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-[radial-gradient(circle,rgba(197,160,89,0.08)_0%,rgba(0,0,0,0)_70%)] pointer-events-none" />
 

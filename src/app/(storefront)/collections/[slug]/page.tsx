@@ -25,9 +25,21 @@ interface CollectionPageProps {
   }>;
 }
 
+import { FALLBACK_COLLECTIONS } from "@/lib/catalog-data";
+
 export async function generateMetadata({ params }: CollectionPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const col = await prisma.collection.findUnique({ where: { slug } });
+  let col: any = null;
+  try {
+    col = await prisma.collection.findUnique({ where: { slug } });
+  } catch {
+    col = null;
+  }
+
+  if (!col) {
+    col = FALLBACK_COLLECTIONS.find((c) => c.slug === slug);
+  }
+
   if (!col) return { title: "Collection Not Found | VELORA" };
 
   const title = col.seoTitle || `${col.name} Collection | VELORA`;
@@ -65,9 +77,18 @@ export default async function CollectionDetailPage({
   const { slug } = await params;
   const resolvedParams = await searchParams;
 
-  const collection = await prisma.collection.findUnique({
-    where: { slug },
-  });
+  let collection: any = null;
+  try {
+    collection = await prisma.collection.findUnique({
+      where: { slug },
+    });
+  } catch (err) {
+    console.warn("Could not load collection from DB, checking fallback:", err);
+  }
+
+  if (!collection) {
+    collection = FALLBACK_COLLECTIONS.find((c) => c.slug === slug);
+  }
 
   if (!collection) {
     notFound();

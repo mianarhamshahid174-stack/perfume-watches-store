@@ -8,22 +8,33 @@ import prisma from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
+import { FALLBACK_CATEGORIES } from "@/lib/catalog-data";
+
 export async function generateMetadata(): Promise<Metadata> {
-  const cat = await prisma.category.findUnique({ where: { slug: "haute-horlogerie" } });
+  let cat: any = null;
+  try {
+    cat = await prisma.category.findUnique({ where: { slug: "haute-horlogerie" } });
+  } catch {
+    cat = null;
+  }
+  const fallbackCat = FALLBACK_CATEGORIES[0];
+
   return {
-    title: cat?.seoTitle || "Luxury Watches | VELORA",
+    title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Watches | VELORA",
     description:
       cat?.seoDescription ||
+      fallbackCat.seoDescription ||
       "Explore precision mechanical watches crafted with in-house movements, sapphire crystal, and premium materials.",
     alternates: {
-      canonical: cat?.canonicalUrl || "https://velora-ateliers.com/watches",
+      canonical: cat?.canonicalUrl || fallbackCat.canonicalUrl || "https://velora-ateliers.com/watches",
     },
     openGraph: {
-      title: cat?.seoTitle || "Luxury Watches | VELORA",
+      title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Watches | VELORA",
       description:
         cat?.seoDescription ||
+        fallbackCat.seoDescription ||
         "Explore precision mechanical watches crafted with in-house movements, sapphire crystal, and premium materials.",
-      images: [{ url: cat?.ogImage || "/images/velora-hero-editorial.jpg" }],
+      images: [{ url: cat?.ogImage || fallbackCat.ogImage || "/images/velora-hero-editorial.jpg" }],
     },
   };
 }

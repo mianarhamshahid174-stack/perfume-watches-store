@@ -29,6 +29,13 @@ export const metadata: Metadata = {
   },
 };
 
+import {
+  FALLBACK_HOMEPAGE_SECTIONS,
+  FALLBACK_PRODUCTS,
+  FALLBACK_COLLECTIONS,
+  FALLBACK_JOURNAL_POSTS,
+} from "@/lib/catalog-data";
+
 // Default fallback ordering if CMS is temporarily unseeded
 const DEFAULT_SECTION_KEYS = [
   "hero_main",
@@ -47,90 +54,118 @@ const DEFAULT_SECTION_KEYS = [
 
 export default async function StorefrontHomePage() {
   // 1. Fetch CMS-controlled active homepage sections in sort order
-  const cmsSections = await prisma.homepageSection.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-  });
+  let cmsSections: any[] = [];
+  try {
+    cmsSections = await prisma.homepageSection.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+    });
+  } catch (err) {
+    console.warn("Could not query homepage sections from DB, using fallback sections:", err);
+  }
 
-  // If no sections found in DB yet, create fallback objects for seamless display
+  // If no sections found in DB yet, use fallback sections
   const sectionsToRender =
-    cmsSections.length > 0
+    cmsSections && cmsSections.length > 0
       ? cmsSections
-      : DEFAULT_SECTION_KEYS.map((key, idx) => ({
-          id: `fallback_${key}`,
-          name: key,
-          sectionKey: key,
-          title: null,
-          subtitle: null,
-          content: null,
-          sortOrder: idx + 1,
-          isActive: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }));
+      : FALLBACK_HOMEPAGE_SECTIONS;
 
-  // 2. Fetch real database entities required by sections (no hardcoding!)
-  const rawPublishedProducts = await prisma.product.findMany({
-    where: { status: "PUBLISHED" },
-    include: {
-      images: { orderBy: { sortOrder: "asc" } },
-      category: true,
-      variants: true,
-    },
-  });
+  // 2. Fetch real database entities required by sections (with safe fallback)
+  let publishedProducts: any[] = [];
+  try {
+    const rawPublishedProducts = await prisma.product.findMany({
+      where: { status: "PUBLISHED" },
+      include: {
+        images: { orderBy: { sortOrder: "asc" } },
+        category: true,
+        variants: true,
+      },
+    });
 
-  const publishedProducts = rawPublishedProducts.map((p: any) => ({
-    ...p,
-    price: Number(p.price),
-    compareAtPrice: p.compareAtPrice ? Number(p.compareAtPrice) : null,
-    cost: p.cost ? Number(p.cost) : null,
-    variants: p.variants.map((v: any) => ({
-      ...v,
-      price: Number(v.price),
-      attributes: v.attributes as Record<string, string> | null,
-    })),
-    createdAt: p.createdAt.toISOString(),
-    updatedAt: p.updatedAt.toISOString(),
-  }));
+    publishedProducts = rawPublishedProducts.map((p: any) => ({
+      ...p,
+      price: Number(p.price),
+      compareAtPrice: p.compareAtPrice ? Number(p.compareAtPrice) : null,
+      cost: p.cost ? Number(p.cost) : null,
+      variants: p.variants.map((v: any) => ({
+        ...v,
+        price: Number(v.price),
+        attributes: v.attributes as Record<string, string> | null,
+      })),
+      createdAt: p.createdAt.toISOString(),
+      updatedAt: p.updatedAt.toISOString(),
+    }));
+  } catch (err) {
+    console.warn("Could not query products from DB, using fallback catalog:", err);
+  }
+
+  if (publishedProducts.length === 0) {
+    publishedProducts = FALLBACK_PRODUCTS;
+  }
 
   // Collections: Fetch real collections (SIGNATURE, NOIR, CLASSIC, etc.)
-  const rawCollections = await prisma.collection.findMany({
-    where: { isActive: true },
-    include: {
-      products: {
-        include: {
-          product: {
-            include: { images: true },
+  let collections: any[] = [];
+  try {
+    const rawCollections = await prisma.collection.findMany({
+      where: { isActive: true },
+      include: {
+        products: {
+          include: {
+            product: {
+              include: { images: true },
+            },
           },
         },
       },
-    },
-    orderBy: { createdAt: "asc" },
-  });
+      orderBy: { createdAt: "asc" },
+    });
 
-  const collections = rawCollections.map((col: any) => ({
-    ...col,
-    products: col.products.map((cp: any) => ({
-      ...cp,
-      product: {
-        ...cp.product,
-        price: Number(cp.product.price),
-        compareAtPrice: cp.product.compareAtPrice ? Number(cp.product.compareAtPrice) : null,
-        cost: cp.product.cost ? Number(cp.product.cost) : null,
-        createdAt: cp.product.createdAt.toISOString(),
-        updatedAt: cp.product.updatedAt.toISOString(),
-      },
-    })),
-    createdAt: col.createdAt.toISOString(),
-    updatedAt: col.updatedAt.toISOString(),
-  }));
+    collections = rawCollections.map((col: any) => ({
+      ...col,
+      products: col.products.map((cp: any) => ({
+        ...cp,
+        product: {
+          ...cp.product,
+          price: Number(cp.product.price),
+          compareAtPrice: cp.product.compareAtPrice ? Number(cp.product.compareAtPrice) : null,
+          cost: cp.product.cost ? Number(cp.product.cost) : null,
+          createdAt: cp.product.createdAt.toISOString(),
+          updatedAt: cp.product.updatedAt.toISOString(),
+        },
+      })),
+      createdAt: col.createdAt.toISOString(),
+      updatedAt: col.updatedAt.toISOString(),
+    }));
+  } catch (err) {
+    console.warn("Could not query collections from DB, using fallback collections:", err);
+  }
+
+  if (collections.length === 0) {
+    collections = FALLBACK_COLLECTIONS.map((c) => ({
+      ...c,
+      products: FALLBACK_PRODUCTS.filter((p) =>
+        p.collections?.some((col) => col.collection.slug === c.slug)
+      ).map((prod) => ({
+        product: prod,
+      })),
+    }));
+  }
 
   // Journal: Fetch latest 3 published articles
-  const journalPosts = await prisma.journalPost.findMany({
-    where: { isPublished: true },
-    orderBy: { publishedAt: "desc" },
-    take: 3,
-  });
+  let journalPosts: any[] = [];
+  try {
+    journalPosts = await prisma.journalPost.findMany({
+      where: { isPublished: true },
+      orderBy: { publishedAt: "desc" },
+      take: 3,
+    });
+  } catch (err) {
+    console.warn("Could not query journal posts from DB, using fallback posts:", err);
+  }
+
+  if (journalPosts.length === 0) {
+    journalPosts = FALLBACK_JOURNAL_POSTS.slice(0, 3);
+  }
 
   // Helper map to quickly find products by slug
   const productMap = new Map(publishedProducts.map((p: any) => [p.slug, p]));

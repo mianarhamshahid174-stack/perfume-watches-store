@@ -8,22 +8,33 @@ import prisma from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
+import { FALLBACK_CATEGORIES } from "@/lib/catalog-data";
+
 export async function generateMetadata(): Promise<Metadata> {
-  const cat = await prisma.category.findUnique({ where: { slug: "haute-parfumerie" } });
+  let cat: any = null;
+  try {
+    cat = await prisma.category.findUnique({ where: { slug: "haute-parfumerie" } });
+  } catch {
+    cat = null;
+  }
+  const fallbackCat = FALLBACK_CATEGORIES[1];
+
   return {
-    title: cat?.seoTitle || "Luxury Fragrances | VELORA",
+    title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Fragrances | VELORA",
     description:
       cat?.seoDescription ||
+      fallbackCat.seoDescription ||
       "Discover luxury perfumes and extraits crafted with pure oils, rich woody notes, and long-lasting sillage.",
     alternates: {
-      canonical: cat?.canonicalUrl || "https://velora-ateliers.com/fragrances",
+      canonical: cat?.canonicalUrl || fallbackCat.canonicalUrl || "https://velora-ateliers.com/fragrances",
     },
     openGraph: {
-      title: cat?.seoTitle || "Luxury Fragrances | VELORA",
+      title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Fragrances | VELORA",
       description:
         cat?.seoDescription ||
+        fallbackCat.seoDescription ||
         "Discover luxury perfumes and extraits crafted with pure oils, rich woody notes, and long-lasting sillage.",
-      images: [{ url: cat?.ogImage || "/images/velora-hero-editorial.jpg" }],
+      images: [{ url: cat?.ogImage || fallbackCat.ogImage || "/images/velora-hero-editorial.jpg" }],
     },
   };
 }

@@ -37,6 +37,8 @@ interface JournalPageProps {
   }>;
 }
 
+import { FALLBACK_JOURNAL_POSTS } from "@/lib/catalog-data";
+
 export default async function JournalIndexPage({ searchParams }: JournalPageProps) {
   const { category } = await searchParams;
 
@@ -51,15 +53,27 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
     };
   }
 
-  const posts = await prisma.journalPost.findMany({
-    where: whereClause,
-    orderBy: { publishedAt: "desc" },
-    include: {
-      author: {
-        select: { firstName: true, lastName: true },
+  let posts: any[] = [];
+  try {
+    posts = await prisma.journalPost.findMany({
+      where: whereClause,
+      orderBy: { publishedAt: "desc" },
+      include: {
+        author: {
+          select: { firstName: true, lastName: true },
+        },
       },
-    },
-  });
+    });
+  } catch (err) {
+    console.warn("Could not query journal posts from DB, using fallback:", err);
+  }
+
+  if (posts.length === 0) {
+    posts = FALLBACK_JOURNAL_POSTS.filter((p) => {
+      if (!category || category === "ALL") return true;
+      return p.category.toLowerCase().includes(category.toLowerCase());
+    });
+  }
 
   const featuredPost = posts[0] || null;
   const remainingPosts = posts.slice(1);

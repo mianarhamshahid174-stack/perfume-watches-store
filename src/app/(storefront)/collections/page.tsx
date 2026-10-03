@@ -21,26 +21,50 @@ export const metadata: Metadata = {
   },
 };
 
+import { FALLBACK_COLLECTIONS, FALLBACK_PRODUCTS } from "@/lib/catalog-data";
+
 export default async function CollectionsIndexPage() {
-  const collections = await prisma.collection.findMany({
-    where: { isActive: true },
-    include: {
-      products: {
-        include: {
-          product: {
-            select: {
-              id: true,
-              name: true,
-              slug: true,
-              price: true,
-              images: { select: { url: true }, take: 1 },
+  let collections: any[] = [];
+  try {
+    collections = await prisma.collection.findMany({
+      where: { isActive: true },
+      include: {
+        products: {
+          include: {
+            product: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+                price: true,
+                images: { select: { url: true }, take: 1 },
+              },
             },
           },
         },
       },
-    },
-    orderBy: { createdAt: "asc" },
-  });
+      orderBy: { createdAt: "asc" },
+    });
+  } catch (err) {
+    console.warn("Could not load collections from DB, using fallback:", err);
+  }
+
+  if (collections.length === 0) {
+    collections = FALLBACK_COLLECTIONS.map((c) => ({
+      ...c,
+      products: FALLBACK_PRODUCTS.filter((p) =>
+        p.collections?.some((col) => col.collection.slug === c.slug)
+      ).map((prod) => ({
+        product: {
+          id: prod.id,
+          name: prod.name,
+          slug: prod.slug,
+          price: prod.price,
+          images: [{ url: prod.images[0]?.url || "/images/velora-signature-01.jpg" }],
+        },
+      })),
+    }));
+  }
 
   const totalProducts = collections.reduce((acc: number, c: any) => acc + (c.products?.length || 0), 0);
 

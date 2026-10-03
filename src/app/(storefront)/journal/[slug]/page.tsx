@@ -23,11 +23,22 @@ interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
+import { FALLBACK_JOURNAL_POSTS, FALLBACK_PRODUCTS } from "@/lib/catalog-data";
+
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await prisma.journalPost.findUnique({
-    where: { slug },
-  });
+  let post: any = null;
+  try {
+    post = await prisma.journalPost.findUnique({
+      where: { slug },
+    });
+  } catch {
+    post = null;
+  }
+
+  if (!post) {
+    post = FALLBACK_JOURNAL_POSTS.find((p) => p.slug === slug);
+  }
 
   if (!post) {
     return {
@@ -60,7 +71,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       description,
       url: canonicalUrl,
       type: "article",
-      publishedTime: post.publishedAt?.toISOString(),
+      publishedTime: post.publishedAt instanceof Date ? post.publishedAt.toISOString() : post.publishedAt,
       images: [
         {
           url: ogImageUrl,
@@ -82,14 +93,23 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 export default async function JournalArticlePage({ params }: ArticlePageProps) {
   const { slug } = await params;
 
-  const post = await prisma.journalPost.findUnique({
-    where: { slug },
-    include: {
-      author: {
-        select: { firstName: true, lastName: true, email: true },
+  let post: any = null;
+  try {
+    post = await prisma.journalPost.findUnique({
+      where: { slug },
+      include: {
+        author: {
+          select: { firstName: true, lastName: true, email: true },
+        },
       },
-    },
-  });
+    });
+  } catch (err) {
+    console.warn("Could not query article from DB, checking fallback:", err);
+  }
+
+  if (!post) {
+    post = FALLBACK_JOURNAL_POSTS.find((p) => p.slug === slug);
+  }
 
   if (!post || !post.isPublished) {
     notFound();
@@ -97,50 +117,68 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
 
   // Fetch real related products assigned to this article
   let relatedProducts: any[] = [];
-  if (post.relatedProductIds && post.relatedProductIds.length > 0) {
-    relatedProducts = await prisma.product.findMany({
-      where: {
-        id: { in: post.relatedProductIds },
-        status: "PUBLISHED",
-      },
-      include: {
-        images: { orderBy: { sortOrder: "asc" } },
-        category: true,
-      },
-    });
+  try {
+    if (post.relatedProductIds && post.relatedProductIds.length > 0) {
+      relatedProducts = await prisma.product.findMany({
+        where: {
+          id: { in: post.relatedProductIds },
+          status: "PUBLISHED",
+        },
+        include: {
+          images: { orderBy: { sortOrder: "asc" } },
+          category: true,
+        },
+      });
+    }
+
+    if (relatedProducts.length === 0) {
+      relatedProducts = await prisma.product.findMany({
+        where: { status: "PUBLISHED" },
+        take: 2,
+        include: {
+          images: { orderBy: { sortOrder: "asc" } },
+          category: true,
+        },
+      });
+    }
+  } catch (err) {
+    console.warn("Could not load article related products from DB:", err);
   }
 
-  // If no related products assigned, fetch 2 flagship pieces as default
   if (relatedProducts.length === 0) {
-    relatedProducts = await prisma.product.findMany({
-      where: { status: "PUBLISHED" },
-      take: 2,
-      include: {
-        images: { orderBy: { sortOrder: "asc" } },
-        category: true,
-      },
-    });
+    relatedProducts = FALLBACK_PRODUCTS.slice(0, 2);
   }
 
   // Adjacent articles for bottom navigation
-  const [previousPost, nextPost] = await Promise.all([
-    prisma.journalPost.findFirst({
-      where: {
-        isPublished: true,
-        publishedAt: post.publishedAt ? { lt: post.publishedAt } : undefined,
-      },
-      orderBy: { publishedAt: "desc" },
-      select: { title: true, slug: true, coverImageUrl: true },
-    }),
-    prisma.journalPost.findFirst({
-      where: {
-        isPublished: true,
-        publishedAt: post.publishedAt ? { gt: post.publishedAt } : undefined,
-      },
-      orderBy: { publishedAt: "asc" },
-      select: { title: true, slug: true, coverImageUrl: true },
-    }),
-  ]);
+  let previousPost: any = null;
+  let nextPost: any = null;
+  try {
+    const [prev, next] = await Promise.all([
+      prisma.journalPost.findFirst({
+        where: {
+          isPublished: true,
+          publishedAt: post.publishedAt ? { lt: post.publishedAt } : undefined,
+        },
+        orderBy: { publishedAt: "desc" },
+        select: { title: true, slug: true, coverImageUrl: true },
+      }),
+      prisma.journalPost.findFirst({
+        where: {
+          isPublished: true,
+          publishedAt: post.publishedAt ? { gt: post.publishedAt } : undefined,
+        },
+        orderBy: { publishedAt: "asc" },
+        select: { title: true, slug: true, coverImageUrl: true },
+      }),
+    ]);
+    previousPost = prev;
+    nextPost = next;
+  } catch {
+    const postIdx = FALLBACK_JOURNAL_POSTS.findIndex((p) => p.slug === slug);
+    if (postIdx > 0) previousPost = FALLBACK_JOURNAL_POSTS[postIdx - 1];
+    if (postIdx >= 0 && postIdx < FALLBACK_JOURNAL_POSTS.length - 1)
+      nextPost = FALLBACK_JOURNAL_POSTS[postIdx + 1];
+  }
 
   const authorDisplayName =
     post.authorName ||

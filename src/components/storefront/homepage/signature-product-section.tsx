@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Check } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { LUXURY_EASE } from "@/lib/motion";
+import { formatPrice } from "@/lib/currency";
 
 interface ProductData {
   id: string;
@@ -60,12 +61,8 @@ export function SignatureProductSection({
     "/images/products/watches/velora-signature-01/front.jpg";
 
   const formattedPrice = product?.price
-    ? new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      }).format(Number(product.price))
-    : "$12,500";
+    ? formatPrice(Number(product.price))
+    : "Rs. 125,000";
 
   return (
     <section className="relative py-28 sm:py-36 bg-obsidian text-sand-100 border-b border-white/5 overflow-hidden">
@@ -83,7 +80,7 @@ export function SignatureProductSection({
         >
           <span className="h-px w-8 bg-gold-400/60" />
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-gold-400">
-            Maison Signature Creation
+            Signature Creation
           </span>
           <span className="h-px w-8 bg-gold-400/60" />
         </motion.div>

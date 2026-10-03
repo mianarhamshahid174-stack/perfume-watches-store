@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ProductItem, ProductVariantItem } from "@/types/product";
 import { useCart } from "@/context/cart-context";
 import { Check } from "lucide-react";
+import { formatPrice } from "@/lib/currency";
 
 interface StickyAddToCartProps {
   product: ProductItem;
@@ -66,7 +67,7 @@ export function StickyAddToCart({ product, selectedVariant }: StickyAddToCartPro
               {product.name}
             </h5>
             <div className="text-xs font-mono font-medium text-gold-300">
-              ${effectivePrice.toLocaleString()} USD
+              {formatPrice(effectivePrice)}
             </div>
           </div>
         </div>

@@ -257,7 +257,7 @@ export function FilterDrawer({
               {/* 3. Price Filter */}
               <div className="pt-6">
                 <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-                  Price Range (USD)
+                  Price Range (PKR)
                 </span>
                 <div className="grid grid-cols-2 gap-3">
                   <div>
@@ -266,7 +266,7 @@ export function FilterDrawer({
                     </label>
                     <input
                       type="number"
-                      placeholder="$ Min"
+                      placeholder="Rs. Min"
                       value={minPrice}
                       onChange={(e) => setMinPrice(e.target.value)}
                       className="w-full bg-neutral-900 border border-white/10 text-xs px-3 py-2 text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500 font-mono"
@@ -278,7 +278,7 @@ export function FilterDrawer({
                     </label>
                     <input
                       type="number"
-                      placeholder="$ Max"
+                      placeholder="Rs. Max"
                       value={maxPrice}
                       onChange={(e) => setMaxPrice(e.target.value)}
                       className="w-full bg-neutral-900 border border-white/10 text-xs px-3 py-2 text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500 font-mono"

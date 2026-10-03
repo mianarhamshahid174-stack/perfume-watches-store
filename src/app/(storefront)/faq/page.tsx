@@ -5,9 +5,9 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { HelpCircle, ArrowRight, ShieldCheck, Truck, RotateCcw, CreditCard } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Frequently Asked Questions | VELORA",
+  title: "Frequently Asked Questions | VELORA Pakistan",
   description:
-    "Find answers to common questions about VELORA luxury watches, high perfumery, shipping, warranty, and returns.",
+    "Find answers to common questions about VELORA luxury watches, perfumes, Cash on Delivery, warranty, and returns in Pakistan.",
 };
 
 const FAQ_SECTIONS = [
@@ -16,19 +16,19 @@ const FAQ_SECTIONS = [
     icon: CreditCard,
     items: [
       {
-        question: "What payment methods do you accept?",
+        question: "What payment methods do you accept in Pakistan?",
         answer:
-          "We accept all major credit and debit cards (Visa, MasterCard, American Express), Bank Wire Transfers for high-value orders, and Cash on Delivery (COD) for eligible domestic addresses.",
+          "We offer Cash on Delivery (COD) nationwide, Raast / Direct Bank Transfer, JazzCash, EasyPaisa, and major debit/credit cards (Visa & MasterCard).",
       },
       {
-        question: "Is shopping on VELORA secure?",
+        question: "Can I inspect the parcel before paying for COD?",
         answer:
-          "Yes. All payment transactions are encrypted using 256-bit SSL encryption. We do not store your full card details on our servers.",
+          "Yes. We support open parcel verification on delivery so you can confirm the pristine condition of your timepiece or perfume before handing payment to the rider.",
       },
       {
         question: "Can I cancel or modify my order after placing it?",
         answer:
-          "Orders are processed quickly to ensure prompt delivery. If you need to make changes or cancel, please contact our support team immediately at concierge@velora-ateliers.com or +41 22 819 89 00.",
+          "Yes. Simply contact our Pakistan customer care team via WhatsApp at +92 300 1234567 or email concierge@velora.pk before the parcel is dispatched.",
       },
     ],
   },
@@ -37,40 +37,40 @@ const FAQ_SECTIONS = [
     icon: Truck,
     items: [
       {
-        question: "How much does shipping cost?",
+        question: "What is the delivery fee across Pakistan?",
         answer:
-          "We provide complimentary, fully insured priority shipping on all orders worldwide. There are no additional shipping charges at checkout.",
+          "Delivery is completely free on all orders across Pakistan. There are no courier charges or hidden fees.",
       },
       {
-        question: "How long will delivery take?",
+        question: "How long does delivery take?",
         answer:
-          "Domestic orders typically arrive within 2–4 business days. International express orders are delivered within 3–7 business days, depending on customs clearance.",
+          "Deliveries to major cities (Lahore, Karachi, Islamabad, Rawalpindi, Faisalabad) take 2 to 3 business days. Other cities and towns take 3 to 5 business days.",
       },
       {
-        question: "How can I track my shipment?",
+        question: "Which courier services do you use?",
         answer:
-          "Once your order ships, you will receive an email with a secure tracking link. You can also view real-time shipping updates in your VELORA Account under 'My Orders'.",
+          "We ship using verified express courier networks including TCS Express, Leopard Courier, and Trax Logistics with full SMS and WhatsApp tracking.",
       },
     ],
   },
   {
-    category: "Authenticity & Warranty",
+    category: "Authenticity & 5-Year Warranty",
     icon: ShieldCheck,
     items: [
       {
-        question: "Are all VELORA timepieces authentic?",
+        question: "Are all VELORA products 100% authentic?",
         answer:
-          "Every VELORA watch is 100% original, designed in-house, and manufactured under strict quality standards. Each timepiece comes with an individually numbered certificate of authenticity and warranty card.",
+          "Yes, all VELORA watches and fragrances are 100% original. Each watch arrives in our luxury gift box with a serialized certificate and stamped 5-year official warranty card.",
       },
       {
-        question: "What warranty coverage is included?",
+        question: "How does the 5-year warranty work in Pakistan?",
         answer:
-          "All mechanical timepieces include a 5-year international warranty against manufacturing and movement defects. Normal wear and tear, accidental impacts, and unauthorized servicing are not covered.",
+          "Our official 5-year warranty covers all internal movement defects and manufacturing issues. Local service and warranty support are available through our boutiques in Lahore and Karachi.",
       },
       {
-        question: "How are VELORA fragrances produced?",
+        question: "What is the concentration and longevity of VELORA perfumes?",
         answer:
-          "Our extraits de parfum are formulated in Grasse, France using precious natural absolutes and aged oils. Every bottle is individually inspected and sealed to guarantee freshness and concentration.",
+          "Our fragrances are formulated as pure high-concentration perfumes using premium fragrance oils. They provide exceptional longevity of 12+ hours with rich projection.",
       },
     ],
   },
@@ -79,19 +79,19 @@ const FAQ_SECTIONS = [
     icon: RotateCcw,
     items: [
       {
-        question: "What is your return policy?",
+        question: "What is your exchange and return policy?",
         answer:
-          "We offer a 14-day return window from the date of delivery. Items must be unworn, undamaged, and returned in their original packaging with all protective films, boxes, and certificates intact.",
+          "We offer a 7-day hassle-free exchange and return policy. Items must be unworn, undamaged, and returned in original packaging with all warranty cards intact.",
       },
       {
-        question: "Are fragrance returns accepted?",
+        question: "Can I exchange an item at a physical boutique?",
         answer:
-          "For hygiene and safety reasons, fragrances may only be returned if the exterior security seal is unbroken and unopened.",
+          "Yes! You can visit our showrooms in Lahore (Gulberg III), Karachi (Clifton), or Islamabad (Beverly Centre, Blue Area) for direct, in-person exchange.",
       },
       {
-        question: "How long does a refund take to process?",
+        question: "How quickly are refunds processed?",
         answer:
-          "Once our inspection team verifies the returned item, your refund will be credited back to your original payment method within 5–7 business days.",
+          "Refunds are transferred directly to your bank account, Raast ID, JazzCash, or EasyPaisa account within 2 to 3 business days following quick quality inspection.",
       },
     ],
   },
@@ -99,7 +99,7 @@ const FAQ_SECTIONS = [
 
 export default function FAQPage() {
   return (
-    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32">
+    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32 transition-colors duration-300">
       <Container size="wide">
         {/* Breadcrumbs */}
         <div className="mb-8">

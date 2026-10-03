@@ -6,16 +6,16 @@ export const dynamic = "force-dynamic";
 export const DEFAULT_MARKETING_CONFIG = {
   announcementBar: {
     enabled: true,
-    text: "Complimentary insured worldwide shipping and 5-year warranty on all orders.",
-    badge: "Free Shipping",
-    linkText: "Learn More",
+    text: "Complimentary express delivery across Pakistan • Cash on Delivery available • 5-Year official warranty",
+    badge: "Pakistan Delivery",
+    linkText: "Delivery Info",
     linkUrl: "/shipping",
     theme: "gold" as const, // "gold" | "black" | "charcoal"
   },
   homepagePromotions: {
     enabled: true,
-    headline: "Welcome to VELORA",
-    subheadline: "Use code VELORA10 at checkout to enjoy 10% off your first order.",
+    headline: "Welcome to VELORA Pakistan",
+    subheadline: "Use code VELORA10 at checkout to enjoy 10% off your first order. Cash on Delivery available nationwide.",
     promoCode: "VELORA10",
     discountText: "10% Off Your Order",
     ctaText: "Explore Watches",
@@ -33,16 +33,16 @@ export const DEFAULT_MARKETING_CONFIG = {
   ],
   newsletter: {
     enabled: true,
-    title: "Join the VELORA Newsletter",
-    subtitle: "Subscribe to receive updates on new watch releases, fragrance arrivals, and private events.",
+    title: "Join VELORA Pakistan",
+    subtitle: "Subscribe to receive private updates on new watch arrivals, luxury fragrance releases, and exclusive invitations to our Lahore, Karachi, and Islamabad boutiques.",
     incentiveText: "Enjoy 10% off your first order",
     disclaimer: "We respect your privacy. You can unsubscribe at any time.",
   },
   popup: {
     enabled: true,
     delaySeconds: 5,
-    title: "Welcome to VELORA",
-    subtitle: "Subscribe to our newsletter and enjoy 10% off your first watch or fragrance order.",
+    title: "Welcome to VELORA Pakistan",
+    subtitle: "Subscribe to our VIP list and receive 10% off your first watch or fragrance order. Cash on delivery available across Pakistan.",
     badge: "Welcome Gift",
     couponCode: "VELORA10",
     discountText: "10% Off",
@@ -50,12 +50,12 @@ export const DEFAULT_MARKETING_CONFIG = {
     ctaText: "Claim 10% Off",
   },
   socialLinks: {
-    instagram: "https://instagram.com/velorawatches",
-    x: "https://x.com/velorawatches",
-    facebook: "https://facebook.com/velorawatches",
-    pinterest: "https://pinterest.com/velorawatches",
-    youtube: "https://youtube.com/@velorawatches",
-    linkedin: "https://linkedin.com/company/velora-geneva",
+    instagram: "https://instagram.com/velorapakistan",
+    x: "https://x.com/velorapakistan",
+    facebook: "https://facebook.com/velorapakistan",
+    pinterest: "https://pinterest.com/velorapakistan",
+    youtube: "https://youtube.com/@velorapakistan",
+    linkedin: "https://linkedin.com/company/velora-pakistan",
   },
 };
 

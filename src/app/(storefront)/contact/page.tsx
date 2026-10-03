@@ -5,14 +5,14 @@ import { Mail, Phone, MapPin, Clock, MessageSquare, ShieldCheck } from "lucide-r
 import { ContactForm } from "@/components/storefront/contact-form";
 
 export const metadata: Metadata = {
-  title: "Contact Us | VELORA",
+  title: "Contact VELORA Pakistan | Lahore, Karachi, Islamabad",
   description:
-    "Get in touch with the VELORA client support team for inquiries regarding orders, products, and private appointments.",
+    "Get in touch with VELORA Pakistan customer care. Boutique showrooms in Lahore, Karachi, and Islamabad. WhatsApp assistance at +92 300 1234567.",
 };
 
 export default function ContactPage() {
   return (
-    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32">
+    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32 transition-colors duration-300">
       <Container size="wide">
         {/* Breadcrumbs */}
         <div className="mb-8">
@@ -27,13 +27,13 @@ export default function ContactPage() {
         {/* Header */}
         <div className="max-w-2xl mb-16">
           <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-            Client Support
+            Pakistan Client Care
           </span>
           <h1 className="font-serif-luxury text-4xl sm:text-5xl font-light text-sand-50 tracking-tight mb-4">
-            How Can We Help You?
+            How Can We Assist You?
           </h1>
           <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
-            Our team is available to assist you with order tracking, product recommendations, warranty service, and general inquiries.
+            Our team is available to assist you with order verification, watch sizing, fragrance recommendations, warranty service, and boutique appointments across Pakistan.
           </p>
         </div>
 
@@ -48,40 +48,42 @@ export default function ContactPage() {
               <div className="space-y-5 text-sm">
                 <div className="flex items-start gap-4">
                   <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-gold-400 shrink-0">
-                    <Mail className="h-5 w-5" />
+                    <Phone className="h-5 w-5" />
                   </div>
                   <div>
                     <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">
-                      Email Support
+                      WhatsApp & Phone
                     </span>
                     <a
-                      href="mailto:concierge@velora-ateliers.com"
+                      href="https://wa.me/923001234567"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="text-sand-100 hover:text-gold-300 font-light transition-colors"
                     >
-                      concierge@velora-ateliers.com
+                      +92 300 1234567
                     </a>
                     <p className="text-xs text-neutral-500 mt-0.5">
-                      Response within 24 hours on business days
+                      Mon–Sat: 10:00 AM – 9:00 PM PKT
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-4">
                   <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-gold-400 shrink-0">
-                    <Phone className="h-5 w-5" />
+                    <Mail className="h-5 w-5" />
                   </div>
                   <div>
                     <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">
-                      Phone & WhatsApp
+                      Email Concierge
                     </span>
                     <a
-                      href="tel:+41228198900"
+                      href="mailto:concierge@velora.pk"
                       className="text-sand-100 hover:text-gold-300 font-light transition-colors"
                     >
-                      +41 (0) 22 819 89 00
+                      concierge@velora.pk
                     </a>
                     <p className="text-xs text-neutral-500 mt-0.5">
-                      Mon–Fri: 9:00 AM – 6:00 PM CET
+                      Response within a few hours on business days
                     </p>
                   </div>
                 </div>
@@ -95,10 +97,10 @@ export default function ContactPage() {
                       Operating Hours
                     </span>
                     <p className="text-sand-100 font-light">
-                      Monday to Friday: 09:00 – 18:00
+                      Monday to Saturday: 10:00 AM – 9:00 PM
                     </p>
                     <p className="text-xs text-neutral-500 mt-0.5">
-                      Closed on Swiss national holidays
+                      Sunday: Online orders dispatched next day
                     </p>
                   </div>
                 </div>
@@ -107,15 +109,18 @@ export default function ContactPage() {
                   <div className="p-2.5 rounded-lg bg-white/5 border border-white/10 text-gold-400 shrink-0">
                     <MapPin className="h-5 w-5" />
                   </div>
-                  <div>
+                  <div className="space-y-2">
                     <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">
-                      Geneva Atelier
+                      Showroom Boutiques
                     </span>
-                    <p className="text-sand-100 font-light">
-                      Rue du Rhône 42, 1204 Geneva, Switzerland
+                    <p className="text-xs text-sand-100 font-light">
+                      <strong>Lahore:</strong> M.M. Alam Road, Gulberg III
                     </p>
-                    <p className="text-xs text-neutral-500 mt-0.5">
-                      Private appointments available upon request
+                    <p className="text-xs text-sand-100 font-light">
+                      <strong>Karachi:</strong> Block 4, Clifton
+                    </p>
+                    <p className="text-xs text-sand-100 font-light">
+                      <strong>Islamabad:</strong> Beverly Centre, Blue Area
                     </p>
                   </div>
                 </div>
@@ -126,10 +131,10 @@ export default function ContactPage() {
             <div className="p-6 bg-gold-950/20 border border-gold-500/20 rounded-xl space-y-2">
               <div className="flex items-center gap-2 text-gold-300 font-serif-luxury text-base">
                 <ShieldCheck className="h-4 w-4" />
-                <span>Authenticity & Warranty</span>
+                <span>Authenticity & Official 5-Year Warranty</span>
               </div>
               <p className="text-xs text-sand-200/80 font-light leading-relaxed">
-                Every timepiece includes a 5-year international warranty and a certificate of origin. Fragrance bottles are protected with tamper-evident seals.
+                Every timepiece includes a serialized 5-year warranty card with authorized service in Pakistan. Fragrances are batch-coded with tamper-evident seals.
               </p>
             </div>
           </div>

@@ -88,7 +88,7 @@ export function HeroSection({ title, subtitle, content }: HeroSectionProps) {
             ) : (
               <img
                 src={bgImage}
-                alt="VELORA Haute Horlogerie Timepiece"
+                alt="VELORA Luxury Timepiece"
                 className="w-full h-full object-cover object-center filter brightness-[0.72] contrast-[1.08]"
                 loading="eager"
               />

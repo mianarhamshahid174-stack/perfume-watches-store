@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heart, Eye, ShoppingBag } from "lucide-react";
+import { formatPrice } from "@/lib/currency";
 
 export interface ProductCardData {
   id?: string;
@@ -209,11 +210,11 @@ export function ProductCard({
         {/* Price */}
         <div className="flex items-baseline gap-2 pt-0.5">
           <span className="font-mono text-xs sm:text-sm font-medium text-sand-100 tracking-wide">
-            ${priceValue.toLocaleString()} USD
+            {formatPrice(priceValue)}
           </span>
           {product.compareAtPrice && (
             <span className="text-[10px] font-mono text-neutral-500 line-through">
-              ${Number(product.compareAtPrice).toLocaleString()}
+              {formatPrice(Number(product.compareAtPrice))}
             </span>
           )}
         </div>

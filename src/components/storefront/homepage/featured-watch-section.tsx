@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Compass, ShieldCheck, Sparkles } from "lucide-react";
 import { Container } from "@/components/ui/container";
 import { LUXURY_EASE } from "@/lib/motion";
+import { formatPrice } from "@/lib/currency";
 
 interface ProductData {
   id: string;
@@ -52,12 +53,8 @@ export function FeaturedWatchSection({
     product?.images?.[0]?.url || "/images/products/watches/velora-signature-01/front.jpg";
 
   const formattedPrice = product?.price
-    ? new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      }).format(Number(product.price))
-    : "$12,500";
+    ? formatPrice(Number(product.price))
+    : "Rs. 125,000";
 
   return (
     <section className="relative py-28 sm:py-36 bg-obsidian text-sand-100 border-b border-white/5 overflow-hidden">

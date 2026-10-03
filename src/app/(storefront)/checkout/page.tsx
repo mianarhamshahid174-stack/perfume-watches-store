@@ -209,7 +209,7 @@ export default function CheckoutPage() {
   // If bag is empty and not submitting, offer return link
   if (items.length === 0 && !submitting) {
     return (
-      <div className="min-h-screen bg-black text-white pt-32 pb-20">
+      <div className="min-h-screen bg-obsidian text-sand-100 pt-32 pb-20 transition-colors duration-300">
         <Container size="narrow">
           <div className="text-center py-20 bg-neutral-950 border border-white/10 p-8 space-y-6">
             <h1 className="font-serif-luxury text-3xl text-sand-50">Your Bag is Empty</h1>
@@ -239,7 +239,7 @@ export default function CheckoutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white pt-24 pb-24 selection:bg-gold-500/20 selection:text-gold-200">
+    <div className="min-h-screen bg-obsidian text-sand-100 pt-24 pb-24 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
       <Container size="wide">
         {/* Top Header & Breadcrumb */}
         <div className="border-b border-white/10 pb-6 mb-8">

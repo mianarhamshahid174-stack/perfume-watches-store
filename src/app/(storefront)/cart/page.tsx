@@ -89,7 +89,7 @@ export default function CartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white pt-28 pb-20 selection:bg-gold-500/20 selection:text-gold-200">
+    <div className="min-h-screen bg-obsidian text-sand-100 pt-28 pb-20 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
       <Container size="wide">
         {/* Editorial Page Header */}
         <div className="border-b border-white/10 pb-8 mb-10">
@@ -402,9 +402,6 @@ export default function CartPage() {
                       <div className="font-mono text-xl sm:text-2xl text-gold-300 font-medium">
                         {formatPKR(totalPKR, { includeCode: true })}
                       </div>
-                      <div className="text-xs font-mono text-neutral-500">
-                        Approx. ${totalUSD.toLocaleString()} USD
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -429,13 +426,13 @@ export default function CartPage() {
               {/* Customer Support Card */}
               <div className="p-5 bg-neutral-950/40 border border-white/5 space-y-2 text-center">
                 <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block">
-                  Customer Support
+                  Pakistan Customer Care
                 </span>
                 <p className="text-xs text-neutral-400 font-light">
-                  Need help with your order or have questions?
+                  Need help placing your order or have questions about delivery?
                 </p>
                 <div className="pt-1 font-mono text-xs text-sand-200">
-                  support@velora.com | +92 (021) 111-VELORA
+                  concierge@velora.pk | +92 300 1234567
                 </div>
               </div>
             </div>

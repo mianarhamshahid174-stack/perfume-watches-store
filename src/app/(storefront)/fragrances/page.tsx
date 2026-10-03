@@ -20,20 +20,20 @@ export async function generateMetadata(): Promise<Metadata> {
   const fallbackCat = FALLBACK_CATEGORIES[1];
 
   return {
-    title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Fragrances | VELORA",
+    title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Fragrances | VELORA Pakistan",
     description:
       cat?.seoDescription ||
       fallbackCat.seoDescription ||
-      "Discover luxury perfumes and extraits crafted with pure oils, rich woody notes, and long-lasting sillage.",
+      "Discover luxury perfumes crafted with pure essential oils, rich woody notes, and exceptional all-day longevity.",
     alternates: {
-      canonical: cat?.canonicalUrl || fallbackCat.canonicalUrl || "https://velora-ateliers.com/fragrances",
+      canonical: cat?.canonicalUrl || fallbackCat.canonicalUrl || "https://velora.pk/fragrances",
     },
     openGraph: {
-      title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Fragrances | VELORA",
+      title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Fragrances | VELORA Pakistan",
       description:
         cat?.seoDescription ||
         fallbackCat.seoDescription ||
-        "Discover luxury perfumes and extraits crafted with pure oils, rich woody notes, and long-lasting sillage.",
+        "Discover luxury perfumes crafted with pure essential oils, rich woody notes, and exceptional all-day longevity.",
       images: [{ url: cat?.ogImage || fallbackCat.ogImage || "/images/velora-hero-editorial.jpg" }],
     },
   };
@@ -71,12 +71,12 @@ export default async function FragrancesPage({ searchParams }: FragrancesPagePro
   ]);
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
+    <div className="min-h-screen bg-obsidian text-sand-100 pb-32 transition-colors duration-300">
       {/* Editorial Header */}
       <EditorialHeader
         title="Luxury Fragrances"
-        subtitle="Artisanal Perfumes & Extraits"
-        description="Handcrafted in small batches using pure essential oils, rare woods, and floral absolutes. Each fragrance is carefully aged for depth, balance, and all-day longevity."
+        subtitle="Artisanal Fine Perfumes"
+        description="Handcrafted in small batches using pure essential oils, rare woods, and floral notes. Each fragrance is carefully aged for depth, balance, and all-day longevity."
         imageUrl="https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=2000&q=85"
         productCount={products.length}
         badge="Fragrances"

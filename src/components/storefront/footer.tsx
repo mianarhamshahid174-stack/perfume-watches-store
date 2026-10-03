@@ -113,7 +113,7 @@ export function Footer() {
             </Link>
 
             <p className="text-xs text-neutral-stone font-light leading-relaxed max-w-sm pt-2">
-              Original luxury timepieces and artisanal perfumes, crafted with refined materials in Geneva and Grasse.
+              Original luxury timepieces and artisanal perfumes, curated with uncompromising excellence for discerning patrons across Pakistan.
             </p>
 
             {/* Social Links controlled live via CMS */}
@@ -190,14 +190,18 @@ export function Footer() {
               </div>
             </div>
 
-            <div className="space-y-1.5 pt-2 text-xs text-neutral-stone">
+            <div className="space-y-2 pt-2 text-xs text-neutral-stone">
               <div className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-metallic shrink-0 mt-0.5" />
-                <span>Rue du Rhône 42, 1204 Genève, Switzerland</span>
+                <span>Gulberg III, M.M. Alam Road, Lahore, Pakistan</span>
               </div>
               <div className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-metallic shrink-0 mt-0.5" />
-                <span>Chemin des Parfumeurs, 06130 Grasse, France</span>
+                <span>Clifton Block 4, Karachi, Pakistan</span>
+              </div>
+              <div className="flex items-start gap-2">
+                <MapPin className="h-4 w-4 text-metallic shrink-0 mt-0.5" />
+                <span>Beverly Centre, Blue Area, Islamabad, Pakistan</span>
               </div>
             </div>
           </div>
@@ -229,15 +233,15 @@ export function Footer() {
           <div className="flex flex-wrap items-center gap-6">
             <div className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-metallic" />
-              <span>Free Insured Shipping</span>
+              <span>Complimentary Pakistan Delivery (TCS / Leopard)</span>
             </div>
             <div className="flex items-center gap-2">
               <ShieldCheck className="h-4 w-4 text-metallic" />
-              <span>5-Year International Warranty</span>
+              <span>Cash on Delivery & 5-Year Warranty</span>
             </div>
             <div className="flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-metallic" />
-              <span>100% Original Products</span>
+              <span>100% Original Certified Products</span>
             </div>
           </div>
 

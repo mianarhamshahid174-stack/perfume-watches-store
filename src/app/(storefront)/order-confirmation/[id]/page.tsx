@@ -121,7 +121,7 @@ export default function OrderConfirmationPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black text-white pt-36 pb-24 flex items-center justify-center">
+      <div className="min-h-screen bg-obsidian text-sand-100 pt-36 pb-24 flex items-center justify-center transition-colors duration-300">
         <div className="text-center space-y-4">
           <div className="w-12 h-12 border-2 border-gold-400 border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-gold-300">
@@ -134,7 +134,7 @@ export default function OrderConfirmationPage() {
 
   if (error || !order) {
     return (
-      <div className="min-h-screen bg-black text-white pt-36 pb-24">
+      <div className="min-h-screen bg-obsidian text-sand-100 pt-36 pb-24 transition-colors duration-300">
         <Container size="narrow">
           <div className="p-8 bg-neutral-950 border border-white/10 text-center space-y-4">
             <h1 className="font-serif-luxury text-2xl text-sand-50">Order Notice</h1>
@@ -154,7 +154,7 @@ export default function OrderConfirmationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white pt-28 pb-24 selection:bg-gold-500/20 selection:text-gold-200">
+    <div className="min-h-screen bg-obsidian text-sand-100 pt-28 pb-24 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
       <Container size="wide">
         {/* Top Hero Confirmation Banner */}
         <div className="bg-neutral-950 border border-gold-500/30 p-8 sm:p-12 mb-10 relative overflow-hidden">
@@ -294,9 +294,6 @@ export default function OrderConfirmationPage() {
                           <span className="font-mono text-gold-300 font-medium">
                             ₨ {item.totalPricePKR.toLocaleString()}
                           </span>
-                          <span className="text-[10px] text-neutral-500 font-mono block">
-                            ${item.totalPriceUSD.toLocaleString()} USD
-                          </span>
                         </div>
                       </div>
                     </div>
@@ -341,9 +338,6 @@ export default function OrderConfirmationPage() {
                   <div className="text-right">
                     <div className="font-mono text-xl sm:text-2xl text-gold-300 font-semibold">
                       {order.pricing.formattedTotalPKR}
-                    </div>
-                    <div className="text-[11px] font-mono text-neutral-500">
-                      Approx. ${order.pricing.totalUSD.toLocaleString()} USD
                     </div>
                   </div>
                 </div>

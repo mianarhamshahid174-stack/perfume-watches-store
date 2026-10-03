@@ -20,20 +20,20 @@ export async function generateMetadata(): Promise<Metadata> {
   const fallbackCat = FALLBACK_CATEGORIES[0];
 
   return {
-    title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Watches | VELORA",
+    title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Watches | VELORA Pakistan",
     description:
       cat?.seoDescription ||
       fallbackCat.seoDescription ||
-      "Explore precision mechanical watches crafted with in-house movements, sapphire crystal, and premium materials.",
+      "Explore precision mechanical watches crafted with automatic movements, sapphire crystal, and premium materials across Pakistan.",
     alternates: {
-      canonical: cat?.canonicalUrl || fallbackCat.canonicalUrl || "https://velora-ateliers.com/watches",
+      canonical: cat?.canonicalUrl || fallbackCat.canonicalUrl || "https://velora.pk/watches",
     },
     openGraph: {
-      title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Watches | VELORA",
+      title: cat?.seoTitle || fallbackCat.seoTitle || "Luxury Watches | VELORA Pakistan",
       description:
         cat?.seoDescription ||
         fallbackCat.seoDescription ||
-        "Explore precision mechanical watches crafted with in-house movements, sapphire crystal, and premium materials.",
+        "Explore precision mechanical watches crafted with automatic movements, sapphire crystal, and premium materials across Pakistan.",
       images: [{ url: cat?.ogImage || fallbackCat.ogImage || "/images/velora-hero-editorial.jpg" }],
     },
   };
@@ -77,7 +77,7 @@ export default async function WatchesPage({ searchParams }: WatchesPageProps) {
   ]);
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-32">
+    <div className="min-h-screen bg-obsidian text-sand-100 pb-32 transition-colors duration-300">
       {/* Editorial Header */}
       <EditorialHeader
         title="Luxury Watches"

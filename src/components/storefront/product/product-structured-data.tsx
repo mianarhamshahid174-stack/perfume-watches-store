@@ -26,13 +26,13 @@ export function ProductStructuredData({ product, canonicalUrl }: ProductStructur
     mpn: product.sku,
     brand: {
       "@type": "Brand",
-      name: "VELORA Ateliers Geneva",
+      name: "VELORA Pakistan",
     },
-    category: product.category?.name || "Haute Horlogerie",
+    category: product.category?.name || "Luxury Watches",
     offers: {
       "@type": "Offer",
       url: canonicalUrl,
-      priceCurrency: "USD",
+      priceCurrency: "PKR",
       price: product.price,
       priceValidUntil: "2027-12-31",
       itemCondition: "https://schema.org/NewCondition",
@@ -41,7 +41,7 @@ export function ProductStructuredData({ product, canonicalUrl }: ProductStructur
         : "https://schema.org/OutOfStock",
       seller: {
         "@type": "Organization",
-        name: "VELORA Ateliers Geneva",
+        name: "VELORA Pakistan",
       },
     },
   };
@@ -53,8 +53,8 @@ export function ProductStructuredData({ product, canonicalUrl }: ProductStructur
       {
         "@type": "ListItem",
         position: 1,
-        name: "Maison",
-        item: "https://velora-ateliers.com",
+        name: "Home",
+        item: "https://velora.pk",
       },
       {
         "@type": "ListItem",

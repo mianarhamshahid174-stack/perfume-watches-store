@@ -1,45 +1,57 @@
 /**
- * Currency and localization utility for VELORA Ateliers
+ * Currency and localization utility for VELORA Pakistan
  * Primary Market: Pakistan
- * Currency: PKR (Pakistani Rupee)
+ * Currency: PKR (Pakistani Rupee - Rs. / ₨)
  */
 
-export const USD_TO_PKR_RATE = 280;
-
-/**
- * Convert USD amount to PKR
- */
-export function usdToPKR(usdAmount: number): number {
-  return Math.round(usdAmount * USD_TO_PKR_RATE);
-}
+export const DEFAULT_CURRENCY = "PKR";
+export const DEFAULT_CURRENCY_SYMBOL = "Rs.";
 
 /**
- * Format a number as Pakistani Rupee (PKR)
- * Example: 3500000 -> "₨ 3,500,000" or "PKR 3,500,000"
+ * Format a numeric price as Pakistani Rupee (PKR)
+ * Example: 65000 -> "Rs. 65,000"
  */
-export function formatPKR(
+export function formatPrice(
   amount: number,
-  options: { includeCode?: boolean; fromUSD?: boolean } = {}
+  options: { includeCode?: boolean; symbol?: string } = {}
 ): string {
-  const pkrValue = options.fromUSD ? usdToPKR(amount) : Math.round(amount);
-  const formatted = pkrValue.toLocaleString("en-PK");
+  const rounded = Math.round(amount || 0);
+  const formatted = rounded.toLocaleString("en-PK");
 
   if (options.includeCode) {
     return `PKR ${formatted}`;
   }
-  return `₨ ${formatted}`;
+  const symbol = options.symbol || DEFAULT_CURRENCY_SYMBOL;
+  return `${symbol} ${formatted}`;
 }
 
 /**
- * Dual price display helper (PKR with subtle USD reference)
+ * Format specifically as PKR
  */
-export function formatDualPrice(usdAmount: number): {
+export function formatPKR(
+  amount: number,
+  options: { includeCode?: boolean } = {}
+): string {
+  return formatPrice(amount, options);
+}
+
+/**
+ * Legacy conversion helper if needed for calculations
+ */
+export const USD_TO_PKR_RATE = 280;
+
+export function usdToPKR(usdAmount: number): number {
+  return Math.round(usdAmount * USD_TO_PKR_RATE);
+}
+
+export function formatDualPrice(pkrAmount: number): {
   pkr: string;
   usd: string;
 } {
+  const usdApprox = Math.round(pkrAmount / USD_TO_PKR_RATE);
   return {
-    pkr: formatPKR(usdAmount, { fromUSD: true }),
-    usd: `$${usdAmount.toLocaleString("en-US")} USD`,
+    pkr: formatPrice(pkrAmount),
+    usd: `$${usdApprox.toLocaleString("en-US")} USD`,
   };
 }
 
@@ -54,8 +66,8 @@ export const PAKISTAN_PROVINCES = [
 ];
 
 export const MAJOR_PAKISTAN_CITIES = [
-  "Karachi",
   "Lahore",
+  "Karachi",
   "Islamabad",
   "Rawalpindi",
   "Faisalabad",
@@ -69,4 +81,35 @@ export const MAJOR_PAKISTAN_CITIES = [
   "Bahawalpur",
   "Sargodha",
   "Sukkur",
+  "Wah Cantt",
+  "Gujrat",
+  "Jhelum",
+  "Rahim Yar Khan",
+];
+
+export const PAKISTAN_PAYMENT_METHODS = [
+  {
+    id: "cod",
+    title: "Cash on Delivery (COD)",
+    subtitle: "Pay cash upon inspecting and receiving your parcel at your doorstep.",
+    badge: "Most Popular in Pakistan",
+  },
+  {
+    id: "bank_transfer",
+    title: "Direct Bank Transfer / Raast",
+    subtitle: "Transfer instantly via Meezan Bank, HBL, Alfalah, or any Raast ID.",
+    badge: "Instant Confirmation",
+  },
+  {
+    id: "mobile_wallet",
+    title: "JazzCash / EasyPaisa",
+    subtitle: "Pay securely via your mobile wallet account.",
+    badge: "Fast & Convenient",
+  },
+  {
+    id: "online_card",
+    title: "Credit / Debit Card",
+    subtitle: "Visa, Mastercard, and UnionPay processed with 3D Secure verification.",
+    badge: "100% Encrypted",
+  },
 ];

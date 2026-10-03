@@ -73,7 +73,7 @@ export function WatchFragranceSplitSection({
         {/* Content */}
         <div className="relative z-10 space-y-4 max-w-md">
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-gold-400 block">
-            Haute Horlogerie
+            Luxury Watches
           </span>
 
           <h2 className="font-serif-luxury text-5xl sm:text-6xl lg:text-7xl font-light text-sand-50 tracking-tight group-hover:text-gold-200 transition-colors">
@@ -86,7 +86,7 @@ export function WatchFragranceSplitSection({
 
           <div className="pt-4">
             <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-sand-100 group-hover:text-gold-300 transition-colors pb-1 border-b border-gold-400/40 group-hover:border-gold-300">
-              <span>Explore Timepieces</span>
+              <span>Explore Watches</span>
               <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </div>
@@ -121,7 +121,7 @@ export function WatchFragranceSplitSection({
         {/* Content */}
         <div className="relative z-10 space-y-4 max-w-md">
           <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-gold-400 block">
-            High Perfumery
+            Luxury Fragrances
           </span>
 
           <h2 className="font-serif-luxury text-5xl sm:text-6xl lg:text-7xl font-light text-sand-50 tracking-tight group-hover:text-gold-200 transition-colors">
@@ -134,7 +134,7 @@ export function WatchFragranceSplitSection({
 
           <div className="pt-4">
             <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.25em] text-sand-100 group-hover:text-gold-300 transition-colors pb-1 border-b border-gold-400/40 group-hover:border-gold-300">
-              <span>Explore Extraits</span>
+              <span>Explore Fragrances</span>
               <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </div>

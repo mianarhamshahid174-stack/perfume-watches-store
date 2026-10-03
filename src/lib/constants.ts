@@ -1,14 +1,21 @@
 export const BRAND = {
   name: "VELORA",
-  formalName: "VELORA ATELIERS",
+  formalName: "VELORA PAKISTAN",
   tagline: "Luxury Watches & Fine Fragrances",
-  subtitle: "Handcrafted Swiss Timepieces and Artisanal Perfumes",
-  founded: "1892",
-  atelierLocation: "Geneva & Grasse",
-  currency: "USD",
-  currencySymbol: "$",
-  email: "concierge@velora-ateliers.com",
-  phone: "+41 22 819 9200",
+  subtitle: "Pakistan's Premier Luxury Watch and Fragrance House",
+  founded: "2020",
+  atelierLocation: "Pakistan",
+  currency: "PKR",
+  currencySymbol: "Rs.",
+  email: "concierge@velorawatches.pk",
+  phone: "+92 300 1234567",
+  whatsapp: "+92 300 1234567",
+  whatsappUrl: "https://wa.me/923001234567?text=Hello%20VELORA%20Pakistan,%20I%20would%20like%20assistance%20with%20an%20order",
+  boutiques: [
+    { city: "Lahore", address: "M.M. Alam Road, Gulberg III" },
+    { city: "Karachi", address: "E-Street, Clifton Block 4" },
+    { city: "Islamabad", address: "Beverly Centre, Blue Area" },
+  ],
 } as const;
 
 export interface MegaMenuColumn {
@@ -58,7 +65,7 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
             { label: "Signature Collection", href: "/collections/signature", description: "Timeless everyday proportions" },
             { label: "Noir Collection", href: "/collections/noir", description: "Monochrome titanium and ceramic" },
             { label: "Classic Collection", href: "/collections/classic", description: "Ultra-thin dress watches" },
-            { label: "All Watches", href: "/watches", description: "Browse the complete horology catalog" },
+            { label: "All Watches", href: "/watches", description: "Browse the complete luxury watch catalog" },
           ],
         },
       ],
@@ -78,28 +85,28 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
     megaMenu: {
       columns: [
         {
-          title: "Extrait de Parfum",
+          title: "Pure Perfumes",
           items: [
-            { label: "VELORA NOIR", href: "/product/velora-noir-extrait", description: "Smoked leather, dark birch, and agarwood" },
-            { label: "VELORA AURA", href: "/product/velora-aura-extrait", description: "Calabrian bergamot, jasmine, and warm amber" },
+            { label: "VELORA NOIR", href: "/product/velora-noir-extrait", description: "Smoked leather, dark birch, and aged agarwood" },
+            { label: "VELORA AURA", href: "/product/velora-aura-extrait", description: "Citrus, solar jasmine, and warm amber" },
             { label: "VELORA ÉLAN", href: "/product/velora-elan-extrait", description: "Fresh juniper, green cypress, and vetiver" },
-            { label: "VELORA OUD", href: "/product/velora-oud-extrait", description: "Wild Cambodian agarwood and saffron" },
-            { label: "VELORA SANTÉ", href: "/product/velora-sante-extrait", description: "Imperial white tea, pear, and soft rose" },
+            { label: "VELORA OUD", href: "/product/velora-oud-extrait", description: "Rare Cambodian agarwood and saffron threads" },
+            { label: "VELORA SANTÉ", href: "/product/velora-sante-extrait", description: "White tea, crisp pear, and soft rose" },
           ],
         },
         {
           title: "Explore",
           items: [
-            { label: "All Fragrances", href: "/fragrances", description: "Browse all pure extraits de parfum" },
-            { label: "Nocturne Privé", href: "/collections/nocturne-prive", description: "Evening and contemplative perfumes" },
-            { label: "Fragrance Gift Sets", href: "/fragrances", description: "Luxury packaging and presentation boxes" },
-            { label: "Our Story in Grasse", href: "/journal", description: "Read about our botanical distillation" },
+            { label: "All Fragrances", href: "/fragrances", description: "Browse all pure concentrated perfumes" },
+            { label: "Nocturne Collection", href: "/collections/nocturne-prive", description: "Evening and contemplative perfumes" },
+            { label: "Presentation Gift Boxes", href: "/fragrances", description: "Velvet gift boxes and coffrets" },
+            { label: "Our Story", href: "/journal", description: "Read about our craftsmanship and distillation" },
           ],
         },
       ],
       featured: {
-        title: "VELORA NOIR Extrait",
-        subtitle: "32% oil concentration in smoked obsidian crystal",
+        title: "VELORA NOIR",
+        subtitle: "32% perfume oil concentration in smoked crystal bottle",
         imageUrl: "/images/products/fragrances/velora-noir-extrait/bottle-front.jpg",
         href: "/product/velora-noir-extrait",
         tag: "Bestseller",
@@ -123,7 +130,7 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
         {
           title: "Fragrance Lines",
           items: [
-            { label: "Nocturne Privé", href: "/collections/nocturne-prive", description: "Deep evening extraits" },
+            { label: "Nocturne Collection", href: "/collections/nocturne-prive", description: "Deep evening concentrated perfumes" },
             { label: "All Collections", href: "/collections", description: "View all curations" },
             { label: "All Watches", href: "/watches", description: "View all timepieces" },
             { label: "All Fragrances", href: "/fragrances", description: "View all perfumes" },
@@ -158,7 +165,7 @@ export const FOOTER_SECTIONS = [
     title: "Fragrances",
     links: [
       { label: "All Fragrances", href: "/fragrances" },
-      { label: "Nocturne Privé", href: "/collections/nocturne-prive" },
+      { label: "Nocturne Collection", href: "/collections/nocturne-prive" },
       { label: "All Collections", href: "/collections" },
       { label: "Search Catalog", href: "/search" },
     ],
@@ -167,9 +174,10 @@ export const FOOTER_SECTIONS = [
     title: "Customer Care",
     links: [
       { label: "Contact Us", href: "/contact" },
-      { label: "Shipping & Delivery", href: "/shipping" },
+      { label: "Nationwide Shipping", href: "/shipping" },
       { label: "Returns & Exchanges", href: "/returns" },
       { label: "Frequently Asked Questions", href: "/faq" },
+      { label: "5-Year Warranty", href: "/warranty" },
     ],
   },
   {

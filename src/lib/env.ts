@@ -5,8 +5,8 @@ const serverSchema = z.object({
   AUTH_SECRET: z.string().min(16, "AUTH_SECRET must be at least 16 characters"),
   NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
   NEXT_PUBLIC_APP_URL: z.string().default("http://localhost:3000"),
-  NEXT_PUBLIC_BRAND_NAME: z.string().default("ZAVEN"),
-  NEXT_PUBLIC_CURRENCY: z.string().default("USD"),
+  NEXT_PUBLIC_BRAND_NAME: z.string().default("VELORA Pakistan"),
+  NEXT_PUBLIC_CURRENCY: z.string().default("PKR"),
   NEXT_PUBLIC_ENABLE_MOCK_PAYMENTS: z
     .string()
     .optional()
@@ -23,8 +23,8 @@ const parsed = serverSchema.safeParse({
     "zaven_dev_auth_secret_key_luxury_platform_super_secure_9921",
   NODE_ENV: process.env.NODE_ENV ?? "development",
   NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
-  NEXT_PUBLIC_BRAND_NAME: process.env.NEXT_PUBLIC_BRAND_NAME ?? "ZAVEN",
-  NEXT_PUBLIC_CURRENCY: process.env.NEXT_PUBLIC_CURRENCY ?? "USD",
+  NEXT_PUBLIC_BRAND_NAME: process.env.NEXT_PUBLIC_BRAND_NAME ?? "VELORA Pakistan",
+  NEXT_PUBLIC_CURRENCY: process.env.NEXT_PUBLIC_CURRENCY ?? "PKR",
   NEXT_PUBLIC_ENABLE_MOCK_PAYMENTS:
     process.env.NEXT_PUBLIC_ENABLE_MOCK_PAYMENTS ?? "true",
 });

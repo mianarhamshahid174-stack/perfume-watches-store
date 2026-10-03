@@ -6,46 +6,46 @@
   --font-mono: var(--font-mono), monospace;
 
   /* Black & Obsidian */
-  --color-obsidian: #080808;
-  --color-noir: #0b0b0d;
-  --color-black: #050505;
+  --color-obsidian: var(--color-obsidian, #080808);
+  --color-noir: var(--color-noir, #0b0b0d);
+  --color-black: var(--color-black, #050505);
 
   /* Deep Charcoal */
-  --color-charcoal-950: #0f1013;
-  --color-charcoal-900: #15161a;
-  --color-charcoal-850: #1a1c22;
-  --color-charcoal-800: #22242b;
-  --color-charcoal-700: #2c2f38;
-  --color-charcoal-600: #424653;
-  --color-charcoal: #15161a;
+  --color-charcoal-950: var(--color-charcoal-950, #0f1013);
+  --color-charcoal-900: var(--color-charcoal-900, #15161a);
+  --color-charcoal-850: var(--color-charcoal-850, #1a1c22);
+  --color-charcoal-800: var(--color-charcoal-800, #22242b);
+  --color-charcoal-700: var(--color-charcoal-700, #2c2f38);
+  --color-charcoal-600: var(--color-charcoal-600, #424653);
+  --color-charcoal: var(--color-charcoal, #15161a);
 
   /* Warm Ivory */
-  --color-ivory-50: #faf8f5;
-  --color-ivory-100: #f5f2eb;
-  --color-ivory-200: #efebe1;
-  --color-ivory-300: #e2dbcd;
-  --color-ivory-400: #c9bea9;
-  --color-ivory: #faf8f5;
+  --color-ivory-50: var(--color-ivory-50, #faf8f5);
+  --color-ivory-100: var(--color-ivory-100, #f5f2eb);
+  --color-ivory-200: var(--color-ivory-200, #efebe1);
+  --color-ivory-300: var(--color-ivory-300, #e2dbcd);
+  --color-ivory-400: var(--color-ivory-400, #c9bea9);
+  --color-ivory: var(--color-ivory, #faf8f5);
 
   /* Subtle Warm Metallic Accents (Champagne / Aged Brass / Gold) */
   --color-metallic-light: #ebdcc6;
-  --color-metallic: #c5a880;
+  --color-metallic: var(--color-metallic, #c5a880);
   --color-metallic-brass: #bfa175;
   --color-metallic-bronze: #9a7d52;
   --color-metallic-dark: #705833;
-  --color-gold-300: #e9d5a1;
-  --color-gold-400: #d8b873;
-  --color-gold-500: #c5a059;
-  --color-gold-600: #a9823e;
+  --color-gold-300: var(--color-gold-300, #e9d5a1);
+  --color-gold-400: var(--color-gold-400, #d8b873);
+  --color-gold-500: var(--color-gold-500, #c5a059);
+  --color-gold-600: var(--color-gold-600, #a9823e);
 
   /* Muted Neutral Tones (Cashmere, Stone, Oyster, Slate) */
   --color-neutral-oyster: #e7e2d9;
   --color-neutral-cashmere: #d6d0c6;
-  --color-neutral-stone: #9e988f;
+  --color-neutral-stone: var(--color-neutral-stone, #9e988f);
   --color-neutral-slate: #736e67;
-  --color-sand-50: #faf8f5;
-  --color-sand-100: #f4efe6;
-  --color-sand-200: #e8ded0;
+  --color-sand-50: var(--color-sand-50, #faf8f5);
+  --color-sand-100: var(--color-sand-100, #f4efe6);
+  --color-sand-200: var(--color-sand-200, #e8ded0);
 
   /* Easing */
   --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
@@ -61,11 +61,81 @@
   --border-strong: rgba(250, 248, 245, 0.18);
   --accent-metallic: #c5a880;
   --accent-metallic-glow: rgba(197, 168, 128, 0.18);
+
+  --color-obsidian: #080808;
+  --color-noir: #0b0b0d;
+  --color-black: #050505;
+  --color-charcoal-950: #0f1013;
+  --color-charcoal-900: #15161a;
+  --color-charcoal-850: #1a1c22;
+  --color-charcoal-800: #22242b;
+  --color-charcoal-700: #2c2f38;
+  --color-charcoal-600: #424653;
+  --color-charcoal: #15161a;
+
+  --color-sand-50: #faf8f5;
+  --color-sand-100: #f4efe6;
+  --color-sand-200: #e8ded0;
+  --color-ivory: #faf8f5;
+  --color-ivory-50: #faf8f5;
+  --color-ivory-100: #f5f2eb;
+  --color-ivory-200: #efebe1;
+  --color-ivory-300: #e2dbcd;
+  --color-ivory-400: #c9bea9;
+
+  --color-neutral-stone: #9e988f;
+  --color-metallic: #c5a880;
+  --color-gold-300: #e9d5a1;
+  --color-gold-400: #d8b873;
+  --color-gold-500: #c5a059;
+  --color-gold-600: #a9823e;
+}
+
+/* Light Mode Overrides */
+html.light, [data-theme="light"] {
+  color-scheme: light;
+  --background: #fbf9f5;
+  --foreground: #121316;
+  --surface: #ffffff;
+  --surface-hover: #f5f2eb;
+  --border-subtle: rgba(18, 19, 22, 0.08);
+  --border-strong: rgba(18, 19, 22, 0.18);
+  --accent-metallic: #9a7d52;
+  --accent-metallic-glow: rgba(154, 125, 82, 0.15);
+
+  --color-obsidian: #fbf9f5;
+  --color-noir: #ffffff;
+  --color-black: #f5f2eb;
+
+  --color-charcoal-950: #f5f2eb;
+  --color-charcoal-900: #ffffff;
+  --color-charcoal-850: #faf8f5;
+  --color-charcoal-800: #ede8df;
+  --color-charcoal-700: #e2dbcd;
+  --color-charcoal-600: #c9bea9;
+  --color-charcoal: #ffffff;
+
+  --color-sand-50: #0a0b0d;
+  --color-sand-100: #141519;
+  --color-sand-200: #252830;
+
+  --color-ivory-50: #0a0b0d;
+  --color-ivory-100: #141519;
+  --color-ivory-200: #252830;
+  --color-ivory-300: #3c404b;
+  --color-ivory-400: #555a68;
+  --color-ivory: #141519;
+
+  --color-neutral-stone: #6b7280;
+  --color-gold-300: #b08d48;
+  --color-gold-400: #9c7a3c;
+  --color-gold-500: #88662c;
+  --color-gold-600: #6f4d14;
+  --color-metallic: #9c7a3c;
 }
 
 /* Base resets & typography */
 html {
-  color-scheme: dark;
   scroll-behavior: smooth;
 }
 
@@ -76,6 +146,80 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Light Mode Global Element Enhancements */
+.light body {
+  background-color: #fbf9f5;
+  color: #121316;
+}
+
+.light header {
+  background-color: rgba(251, 249, 245, 0.95) !important;
+  border-bottom-color: rgba(18, 19, 22, 0.08) !important;
+}
+
+.light .glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(18, 19, 22, 0.08);
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+}
+
+.light .glass-panel-subtle {
+  background: rgba(255, 255, 255, 0.65);
+  border-color: rgba(18, 19, 22, 0.06);
+}
+
+.light .border-white\/10 {
+  border-color: rgba(18, 19, 22, 0.1) !important;
+}
+
+.light .border-white\/20 {
+  border-color: rgba(18, 19, 22, 0.18) !important;
+}
+
+.light .border-white\/5 {
+  border-color: rgba(18, 19, 22, 0.05) !important;
+}
+
+.light .bg-black\/95 {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+}
+
+.light .bg-black\/80 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.light .bg-black\/40 {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.light .text-sand-100 {
+  color: #141519 !important;
+}
+
+.light .text-sand-50 {
+  color: #0a0b0d !important;
+}
+
+.light .text-platinum-400 {
+  color: #4b5563 !important;
+}
+
+.light .text-platinum-300 {
+  color: #374151 !important;
+}
+
+.light .text-platinum-500 {
+  color: #6b7280 !important;
+}
+
+.light .text-neutral-stone {
+  color: #6b7280 !important;
+}
+
+.light .text-ivory {
+  color: #141519 !important;
 }
 
 /* Editorial Typography Utilities */
@@ -109,8 +253,20 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+.light .metallic-gradient-text {
+  background: linear-gradient(135deg, #785a21 0%, #9c7a3c 50%, #b8954d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .ivory-gradient-text {
   background: linear-gradient(180deg, #ffffff 0%, #faf8f5 60%, #e2dbcd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.light .ivory-gradient-text {
+  background: linear-gradient(180deg, #111215 0%, #252830 60%, #4b5563 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -173,4 +329,14 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3b3e4a;
+}
+
+.light ::-webkit-scrollbar-track {
+  background: #fbf9f5;
+}
+.light ::-webkit-scrollbar-thumb {
+  background: #d4cfc4;
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: #b5af9f;
 }

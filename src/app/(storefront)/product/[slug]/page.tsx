@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       title: product.name,
       description: product.shortDescription,
       url: canonicalUrl,
-      siteName: "VELORA Haute Horlogerie & Parfum",
+      siteName: "VELORA Pakistan",
       images: [
         {
           url: primaryImage,
@@ -102,16 +102,16 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const canonicalUrl = `https://velora-ateliers.com/product/${product.slug}`;
 
   return (
-    <div className="min-h-screen bg-obsidian text-sand-100 pb-20 selection:bg-gold-500 selection:text-black">
+    <div className="min-h-screen bg-obsidian text-foreground pb-20 selection:bg-gold-500 selection:text-black">
       {/* Schema.org Structured Data */}
       <ProductStructuredData product={product} canonicalUrl={canonicalUrl} />
 
       {/* TOP BREADCRUMBS BAR */}
-      <div className="border-b border-white/5 bg-black/40">
+      <div className="border-b border-border bg-card/40">
         <Container size="wide" className="py-4">
           <nav aria-label="Breadcrumbs" className="flex items-center gap-2 text-xs font-sans text-neutral-400">
             <Link href="/" className="hover:text-gold-300 transition-colors">
-              Maison
+              Home
             </Link>
             <ChevronRight className="w-3 h-3 text-neutral-600" />
 
@@ -119,7 +119,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               href={primaryCategorySlug === "high-perfumery" ? "/fragrances" : "/watches"}
               className="hover:text-gold-300 transition-colors"
             >
-              {product.category?.name || "Horlogerie"}
+              {product.category?.name || (primaryCategorySlug === "high-perfumery" ? "Fragrances" : "Watches")}
             </Link>
             <ChevronRight className="w-3 h-3 text-neutral-600" />
 

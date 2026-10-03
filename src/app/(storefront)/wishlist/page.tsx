@@ -20,7 +20,7 @@ export default function WishlistPage() {
   const { openCart } = useCart();
 
   return (
-    <div className="min-h-screen bg-black text-white pt-28 pb-24 selection:bg-gold-500/20 selection:text-gold-200">
+    <div className="min-h-screen bg-obsidian text-sand-100 pt-28 pb-24 selection:bg-gold-500/20 selection:text-gold-200 transition-colors duration-300">
       <Container size="wide">
         {/* Editorial Header */}
         <div className="border-b border-white/10 pb-6 mb-10">
@@ -113,9 +113,6 @@ export default function WishlistPage() {
                       <div className="pt-2 flex items-baseline gap-2">
                         <span className="font-mono text-gold-300 text-base font-semibold">
                           {formatPKR(itemPricePKR)}
-                        </span>
-                        <span className="text-xs font-mono text-neutral-500">
-                          ${item.price.toLocaleString()} USD
                         </span>
                       </div>
                     </div>

@@ -5,14 +5,14 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { ShieldCheck, Award, Wrench, CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Warranty & Servicing | VELORA",
+  title: "5-Year Official Warranty & Servicing | VELORA Pakistan",
   description:
-    "Details of VELORA's 5-year international warranty, precision movement servicing, and care instructions.",
+    "Details of VELORA Pakistan's 5-year official warranty, precision movement servicing, and boutique support in Lahore, Karachi, and Islamabad.",
 };
 
 export default function WarrantyPage() {
   return (
-    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32">
+    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32 transition-colors duration-300">
       <Container size="wide">
         {/* Breadcrumbs */}
         <div className="mb-8">
@@ -27,13 +27,13 @@ export default function WarrantyPage() {
         {/* Header */}
         <div className="max-w-3xl mb-16">
           <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-            5-Year International Guarantee
+            5-Year Official Guarantee
           </span>
           <h1 className="font-serif-luxury text-4xl sm:text-5xl font-light text-sand-50 tracking-tight mb-4">
             Warranty & Servicing
           </h1>
           <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
-            Every VELORA timepiece is built to rigorous mechanical standards. To ensure lasting precision and peace of mind, every watch is backed by our comprehensive 5-year international warranty.
+            Every VELORA timepiece is crafted to exacting mechanical standards. To ensure lasting precision and peace of mind across Pakistan, every watch is backed by our comprehensive 5-year official warranty.
           </p>
         </div>
 
@@ -47,7 +47,7 @@ export default function WarrantyPage() {
               5-Year Coverage
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              Full international coverage on mechanical movement components, escapements, and manufacturing tolerances from the date of original purchase.
+              Full coverage on automatic and mechanical movement components, timing regulation, and manufacturing tolerances from the date of original purchase.
             </p>
           </div>
 
@@ -59,7 +59,7 @@ export default function WarrantyPage() {
               Numbered Certificate
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              Each watch includes a digital and physical certificate of authenticity detailing its individual caliber reference, case serial number, and testing dossier.
+              Each watch includes a physical, stamped warranty card detailing its individual serial number, model reference, and verification QR code.
             </p>
           </div>
 
@@ -68,10 +68,10 @@ export default function WarrantyPage() {
               <Wrench className="h-5 w-5" />
             </div>
             <h2 className="font-serif-luxury text-xl font-light text-sand-50">
-              Certified Watchmakers
+              Expert Watchmakers
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              All warranty repairs and routine servicing are executed exclusively by certified watchmakers using genuine in-house parts.
+              All warranty adjustments, timing regulations, and servicing are performed by skilled watchmakers using authentic parts in Lahore and Karachi.
             </p>
           </div>
         </div>
@@ -86,19 +86,19 @@ export default function WarrantyPage() {
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-gold-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Mechanical Movement:</strong> Irregular timekeeping exceeding standard tolerances, balance wheel regulation, and premature component fatigue.
+                  <strong>Mechanical Movement:</strong> Irregular timekeeping exceeding standard tolerances, balance wheel regulation, and internal component performance.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-gold-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Dial & Hands:</strong> Loose hands, indices, dial alignment issues, or internal dust under the sapphire crystal resulting from assembly.
+                  <strong>Dial & Hands:</strong> Loose hands, markers, dial alignment issues, or internal particles under the sapphire crystal resulting from manufacturing.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-gold-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Case & Crown:</strong> Crown screw-down failures and water resistance issues under rated depth conditions (assuming crown is properly fastened).
+                  <strong>Case & Crown:</strong> Crown screw-down mechanisms and water resistance seals under rated depth conditions.
                 </span>
               </li>
             </ul>
@@ -112,19 +112,19 @@ export default function WarrantyPage() {
               <li className="flex items-start gap-2.5">
                 <AlertCircle className="h-4 w-4 text-neutral-500 shrink-0 mt-0.5" />
                 <span>
-                  Normal aesthetic wear and tear (surface scratches on titanium or gold cases, leather patina, clasp scuffs).
+                  Normal surface wear and tear (scratches on steel cases, strap creasing, or clasp scratches).
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <AlertCircle className="h-4 w-4 text-neutral-500 shrink-0 mt-0.5" />
                 <span>
-                  Damage caused by accidents, severe physical impacts, dropping, or operating the crown underwater.
+                  Damage caused by severe physical impacts, dropping, or operating the crown underwater.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <AlertCircle className="h-4 w-4 text-neutral-500 shrink-0 mt-0.5" />
                 <span>
-                  Any watch opened, modified, or repaired by an unauthorized third party.
+                  Any timepiece opened, modified, or repaired by unauthorized third-party technicians.
                 </span>
               </li>
             </ul>
@@ -132,14 +132,18 @@ export default function WarrantyPage() {
 
           <div className="space-y-4 border-t border-white/10 pt-8">
             <h3 className="font-serif-luxury text-2xl font-light text-sand-50">
-              How to Request Service
+              How to Request Service in Pakistan
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              If your watch requires servicing or inspection, please email us at{" "}
-              <a href="mailto:concierge@velora-ateliers.com" className="text-gold-300 underline">
-                concierge@velora-ateliers.com
+              If your watch requires inspection or adjustment, message our Pakistan concierge on WhatsApp at{" "}
+              <a href="https://wa.me/923001234567" target="_blank" rel="noopener noreferrer" className="text-gold-300 underline">
+                +92 300 1234567
               </a>{" "}
-              with your reference number, serial number, and a brief description of the issue. We will arrange insured shipping to our service atelier in Geneva and provide a comprehensive diagnostic report prior to commencing any work.
+              or email{" "}
+              <a href="mailto:concierge@velora.pk" className="text-gold-300 underline">
+                concierge@velora.pk
+              </a>{" "}
+              with your warranty card details. You can drop off your watch at our boutiques in Lahore (Gulberg III), Karachi (Clifton), or Islamabad (Blue Area), or arrange complimentary secure courier pickup.
             </p>
           </div>
         </div>
@@ -151,7 +155,7 @@ export default function WarrantyPage() {
               Have a Question About Your Warranty?
             </h4>
             <p className="text-xs sm:text-sm text-neutral-400 font-light">
-              Our horological advisors are available to review your warranty status or guide you through routine maintenance.
+              Our watch specialists in Pakistan are available to review your warranty status or guide you through routine maintenance.
             </p>
           </div>
           <Link

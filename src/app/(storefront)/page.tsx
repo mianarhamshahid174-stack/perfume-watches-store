@@ -18,13 +18,13 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "VELORA | Haute Horlogerie & High Perfumery",
+  title: "VELORA Pakistan | Luxury Watches & Fine Fragrances",
   description:
-    "Contemporary timepieces and extraits de parfum created for moments that matter. Hand-finished mechanical complications and rare botanical essences from Geneva and Grasse.",
+    "Original luxury automatic timepieces and artisanal fine fragrances. Nationwide complimentary delivery across Pakistan with Cash on Delivery and official 5-year warranty.",
   openGraph: {
-    title: "VELORA | Haute Horlogerie & High Perfumery",
+    title: "VELORA Pakistan | Luxury Watches & Fine Fragrances",
     description:
-      "Contemporary timepieces and extraits de parfum created for moments that matter.",
+      "Original luxury automatic timepieces and fine fragrances. Nationwide delivery with Cash on Delivery across Pakistan.",
     images: [{ url: "/images/velora-hero-editorial.jpg" }],
   },
 };

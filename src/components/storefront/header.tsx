@@ -25,6 +25,7 @@ import { SearchExperience } from "@/components/storefront/search-experience";
 import { useCart } from "@/context/cart-context";
 import { CartDrawer } from "@/components/storefront/cart-drawer";
 import { AnnouncementBar } from "@/components/storefront/announcement-bar";
+import { ThemeToggle } from "@/components/storefront/theme-toggle";
 
 export function Header() {
   const pathname = usePathname();
@@ -68,8 +69,8 @@ export function Header() {
       <header
         className={`fixed top-0 left-0 right-0 z-40 w-full transition-all duration-500 ease-out ${
           isScrolled
-            ? "bg-black/95 backdrop-blur-md border-b border-white/10 shadow-2xl"
-            : "bg-gradient-to-b from-black/80 via-black/40 to-transparent border-b border-transparent"
+            ? "bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-neutral-200 dark:border-white/10 shadow-lg text-neutral-900 dark:text-ivory"
+            : "bg-gradient-to-b from-black/85 via-black/40 to-transparent border-b border-transparent text-ivory"
         }`}
         onMouseLeave={() => setActiveMegaMenu(null)}
       >
@@ -81,7 +82,11 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="p-2 -ml-2 text-ivory hover:text-metallic transition-colors"
+                className={`p-2 -ml-2 transition-colors ${
+                  isScrolled
+                    ? "text-neutral-900 dark:text-ivory hover:text-gold-600 dark:hover:text-metallic"
+                    : "text-ivory hover:text-metallic"
+                }`}
                 aria-label="Open Mobile Menu"
               >
                 <Menu className="h-5 w-5" />
@@ -90,7 +95,11 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-neutral-stone hover:text-ivory transition-colors"
+                className={`p-2 transition-colors ${
+                  isScrolled
+                    ? "text-neutral-600 dark:text-neutral-stone hover:text-neutral-900 dark:hover:text-ivory"
+                    : "text-neutral-stone hover:text-ivory"
+                }`}
                 aria-label="Search"
               >
                 <Search className="h-4 w-4" />
@@ -112,15 +121,19 @@ export function Header() {
                     href={item.href}
                     className={`inline-flex items-center gap-1 text-[10.5px] xl:text-[11px] font-sans font-medium uppercase tracking-editorial transition-colors duration-200 ${
                       activeMegaMenu === item.label
-                        ? "text-metallic"
-                        : "text-ivory/85 hover:text-metallic"
+                        ? "text-gold-600 dark:text-metallic"
+                        : isScrolled
+                        ? "text-neutral-700 dark:text-ivory/85 hover:text-gold-600 dark:hover:text-metallic"
+                        : "text-ivory/90 hover:text-metallic"
                     }`}
                   >
                     <span>{item.label}</span>
                     {item.hasMegaMenu && (
                       <ChevronDown
                         className={`h-3 w-3 transition-transform duration-300 opacity-60 ${
-                          activeMegaMenu === item.label ? "rotate-180 text-metallic opacity-100" : ""
+                          activeMegaMenu === item.label
+                            ? "rotate-180 text-gold-600 dark:text-metallic opacity-100"
+                            : ""
                         }`}
                       />
                     )}
@@ -128,35 +141,58 @@ export function Header() {
 
                   {/* Active Link Indicator */}
                   {pathname === item.href && (
-                    <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-metallic rounded-full" />
+                    <span className="absolute bottom-0 left-0 right-0 h-[1.5px] bg-gold-600 dark:bg-metallic rounded-full" />
                   )}
                 </div>
               ))}
             </nav>
 
-            {/* Center: Maison Brand Logo (shifted slightly right to give ample breathing room from left nav buttons) */}
+            {/* Center: Brand Logo */}
             <div className="text-center absolute left-1/2 -translate-x-1/2 ml-3 sm:ml-4 lg:ml-10 xl:ml-12 pointer-events-auto">
               <Link href="/" className="inline-block group text-center select-none">
-                <span className="font-serif-luxury text-2xl sm:text-3xl font-light tracking-[0.28em] pl-[0.28em] text-ivory group-hover:text-metallic transition-colors duration-300 block">
+                <span
+                  className={`font-serif-luxury text-2xl sm:text-3xl font-light tracking-[0.28em] pl-[0.28em] transition-colors duration-300 block ${
+                    isScrolled
+                      ? "text-neutral-900 dark:text-ivory group-hover:text-gold-600 dark:group-hover:text-metallic"
+                      : "text-ivory group-hover:text-metallic"
+                  }`}
+                >
                   {BRAND.name}
                 </span>
-                <span className="text-[7.5px] font-sans tracking-[0.26em] uppercase text-neutral-stone group-hover:text-metallic/80 transition-colors block -mt-1 pl-[0.26em]">
+                <span
+                  className={`text-[7.5px] font-sans tracking-[0.26em] uppercase transition-colors block -mt-1 pl-[0.26em] ${
+                    isScrolled
+                      ? "text-neutral-500 dark:text-neutral-stone group-hover:text-gold-600/80 dark:group-hover:text-metallic/80"
+                      : "text-neutral-stone group-hover:text-metallic/80"
+                  }`}
+                >
                   {BRAND.atelierLocation}
                 </span>
               </Link>
             </div>
 
-            {/* Right: Actions (Search, Account, Wishlist, Cart) */}
-            <div className="flex items-center space-x-3 sm:space-x-4 text-ivory">
+            {/* Right: Actions (ThemeToggle, Search, Account, Wishlist, Cart) */}
+            <div
+              className={`flex items-center space-x-2 sm:space-x-3 transition-colors ${
+                isScrolled ? "text-neutral-900 dark:text-ivory" : "text-ivory"
+              }`}
+            >
+              {/* Theme Toggle (Light / Dark mode) */}
+              <ThemeToggle />
+
               {/* Desktop Search Button */}
               <button
                 type="button"
                 onClick={() => setIsSearchOpen(true)}
-                className="hidden lg:flex items-center gap-2 p-2 text-neutral-stone hover:text-ivory transition-colors cursor-pointer"
+                className={`hidden lg:flex items-center gap-1.5 p-2 transition-colors cursor-pointer ${
+                  isScrolled
+                    ? "text-neutral-600 dark:text-neutral-stone hover:text-neutral-900 dark:hover:text-ivory"
+                    : "text-neutral-stone hover:text-ivory"
+                }`}
                 aria-label="Search Catalog"
               >
                 <Search className="h-4 w-4" />
-                <span className="text-[10px] font-sans uppercase tracking-editorial text-neutral-stone hover:text-ivory hidden xl:inline">
+                <span className="text-[10px] font-sans uppercase tracking-editorial hidden xl:inline">
                   Search
                 </span>
               </button>
@@ -164,8 +200,12 @@ export function Header() {
               {/* Account Link */}
               <Link
                 href="/account"
-                className="p-2 text-neutral-stone hover:text-ivory transition-colors"
-                aria-label="Patron Account"
+                className={`p-2 transition-colors ${
+                  isScrolled
+                    ? "text-neutral-600 dark:text-neutral-stone hover:text-neutral-900 dark:hover:text-ivory"
+                    : "text-neutral-stone hover:text-ivory"
+                }`}
+                aria-label="Customer Account"
               >
                 <User className="h-4 w-4" />
               </Link>
@@ -173,7 +213,11 @@ export function Header() {
               {/* Wishlist Link */}
               <Link
                 href="/wishlist"
-                className="hidden sm:block p-2 text-neutral-stone hover:text-ivory transition-colors relative"
+                className={`hidden sm:block p-2 transition-colors relative ${
+                  isScrolled
+                    ? "text-neutral-600 dark:text-neutral-stone hover:text-neutral-900 dark:hover:text-ivory"
+                    : "text-neutral-stone hover:text-ivory"
+                }`}
                 aria-label="Saved Pieces"
               >
                 <Heart className="h-4 w-4" />
@@ -183,12 +227,16 @@ export function Header() {
               <button
                 type="button"
                 onClick={openCart}
-                className="p-2 text-neutral-stone hover:text-metallic transition-colors relative cursor-pointer"
+                className={`p-2 transition-colors relative cursor-pointer ${
+                  isScrolled
+                    ? "text-neutral-700 dark:text-neutral-stone hover:text-gold-600 dark:hover:text-metallic"
+                    : "text-neutral-stone hover:text-metallic"
+                }`}
                 aria-label="Shopping Bag"
               >
                 <ShoppingBag className="h-4 w-4" />
                 {itemCount > 0 && (
-                  <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-metallic text-[9px] font-mono font-bold text-black animate-scale-in">
+                  <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-gold-500 text-[9px] font-mono font-bold text-black animate-scale-in">
                     {itemCount}
                   </span>
                 )}
@@ -285,20 +333,24 @@ export function Header() {
         onClose={() => setIsMobileMenuOpen(false)}
         side="left"
         size="md"
-        title="Maison Navigation"
-        subtitle="Haute Horlogerie & Parfumerie d'Auteur"
+        title="VELORA Navigation"
+        subtitle="Luxury Watches & Fine Fragrances"
         footer={
           <div className="space-y-3 text-xs text-neutral-stone">
-            <div className="flex items-center gap-2">
-              <Phone className="h-3.5 w-3.5 text-metallic" />
-              <span>Geneva Concierge: +41 22 819 9200</span>
+            <div className="flex items-center justify-between py-2 border-b border-white/5">
+              <span className="text-[11px] font-sans uppercase tracking-wider text-neutral-400">Appearance</span>
+              <ThemeToggle showLabel />
             </div>
-            <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px]">
+            <div className="flex items-center gap-2">
+              <Phone className="h-3.5 w-3.5 text-gold-400" />
+              <span>Pakistan Support: +92 300 1234567</span>
+            </div>
+            <div className="flex items-center justify-between pt-1 text-[11px]">
               <Link href="/account" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-ivory">
-                Patron Sign In
+                Customer Sign In
               </Link>
-              <Link href="/concierge" onClick={() => setIsMobileMenuOpen(false)} className="text-metallic hover:underline">
-                Private Viewing
+              <Link href="/concierge" onClick={() => setIsMobileMenuOpen(false)} className="text-gold-400 hover:underline">
+                Book Boutique Visit
               </Link>
             </div>
           </div>
@@ -310,7 +362,7 @@ export function Header() {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-stone" />
             <input
               type="text"
-              placeholder="Search timepieces, extraits, collections..."
+              placeholder="Search luxury watches, perfumes, collections..."
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   setIsMobileMenuOpen(false);
@@ -401,7 +453,7 @@ export function Header() {
             >
               <div className="flex items-center justify-between border-b border-white/10 pb-4">
                 <span className="text-xs font-mono uppercase tracking-[0.25em] text-gold-400">
-                  Maison Archive Inquiry
+                  Search Catalog
                 </span>
                 <button
                   type="button"

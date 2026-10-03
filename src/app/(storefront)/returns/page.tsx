@@ -5,14 +5,14 @@ import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { RotateCcw, ShieldCheck, CheckCircle2, AlertCircle, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Returns & Exchanges | VELORA",
+  title: "Returns & Exchanges in Pakistan | VELORA Pakistan",
   description:
-    "Information on VELORA's 14-day return policy, exchange procedure, and refund processing.",
+    "7-day hassle-free returns and exchanges across Pakistan. Doorstep courier pickup or in-person exchange at our Lahore, Karachi, and Islamabad boutiques.",
 };
 
 export default function ReturnsPage() {
   return (
-    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32">
+    <div className="bg-obsidian min-h-screen text-sand-100 pt-28 pb-32 transition-colors duration-300">
       <Container size="wide">
         {/* Breadcrumbs */}
         <div className="mb-8">
@@ -27,13 +27,13 @@ export default function ReturnsPage() {
         {/* Header */}
         <div className="max-w-3xl mb-16">
           <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-gold-400 block mb-3">
-            Customer Guarantee
+            Customer Satisfaction Guarantee
           </span>
           <h1 className="font-serif-luxury text-4xl sm:text-5xl font-light text-sand-50 tracking-tight mb-4">
             Returns & Exchanges Policy
           </h1>
           <p className="text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
-            We want you to be completely delighted with your VELORA purchase. If you are not entirely satisfied, you may return or exchange eligible items within 14 days of delivery.
+            We want you to be completely delighted with your VELORA purchase. If you are not entirely satisfied, you may exchange or return eligible unworn items within 7 days of delivery across Pakistan.
           </p>
         </div>
 
@@ -44,10 +44,10 @@ export default function ReturnsPage() {
               Step 01
             </span>
             <h2 className="font-serif-luxury text-xl font-light text-sand-50">
-              Request Return
+              Contact Concierge
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              Email our support team at concierge@velora-ateliers.com within 14 days of receiving your item with your order number.
+              Message us on WhatsApp at +92 300 1234567 or email concierge@velora.pk with your order number within 7 days of receiving your parcel.
             </p>
           </div>
 
@@ -56,10 +56,10 @@ export default function ReturnsPage() {
               Step 02
             </span>
             <h2 className="font-serif-luxury text-xl font-light text-sand-50">
-              Prepaid Collection
+              Doorstep Pickup or Boutique Visit
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              We provide a prepaid, fully insured courier shipping label and schedule an armored pickup at your preferred address.
+              We arrange a courier pickup via TCS/Leopard from your home, or you can exchange your item at our boutiques in Lahore, Karachi, or Islamabad.
             </p>
           </div>
 
@@ -68,10 +68,10 @@ export default function ReturnsPage() {
               Step 03
             </span>
             <h2 className="font-serif-luxury text-xl font-light text-sand-50">
-              Prompt Refund
+              Swift Exchange or Refund
             </h2>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              Following inspection by our quality specialists, your refund is processed to your original payment method within 5–7 business days.
+              Following quick inspection, your replacement piece is dispatched or your refund is transferred via Raast / Direct Bank Transfer within 2–3 business days.
             </p>
           </div>
         </div>
@@ -80,25 +80,25 @@ export default function ReturnsPage() {
         <div className="max-w-4xl space-y-12">
           <div className="space-y-4 border-t border-white/10 pt-8">
             <h3 className="font-serif-luxury text-2xl font-light text-sand-50">
-              Item Condition Requirements
+              Item Condition Guidelines
             </h3>
             <ul className="space-y-3 text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-gold-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Watches:</strong> Must be unworn, undamaged, with no scratches on the crystal, bezel, case, or strap. All original protective plastics and stickers must remain in place.
+                  <strong>Watches:</strong> Must be unworn, undamaged, with no scratches on the sapphire crystal, bezel, case, or strap. All original protective plastics must remain intact.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-gold-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Documentation:</strong> The original presentation box, instruction manual, and numbered certificate of authenticity must be included in pristine condition.
+                  <strong>Presentation Box & Cards:</strong> The original presentation box, user manual, and numbered 5-year warranty card must be returned in pristine condition.
                 </span>
               </li>
               <li className="flex items-start gap-2.5">
                 <CheckCircle2 className="h-4 w-4 text-gold-400 shrink-0 mt-0.5" />
                 <span>
-                  <strong>Fragrances:</strong> Due to hygiene and health regulations, perfume bottles can only be returned if the cellophane wrapping and tamper-evident security seal are unopened and intact.
+                  <strong>Fragrances:</strong> For hygienic reasons, fragrance bottles can only be returned if the outer cellophane wrap and security seal remain completely unopened and intact.
                 </span>
               </li>
             </ul>
@@ -106,19 +106,19 @@ export default function ReturnsPage() {
 
           <div className="space-y-4 border-t border-white/10 pt-8">
             <h3 className="font-serif-luxury text-2xl font-light text-sand-50">
-              Exchanges
+              Exchange Process in Pakistan
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              If you wish to exchange a watch or fragrance for a different reference or size, please notify us when requesting your return. We will reserve the replacement item for you and dispatch it once the returned piece has passed inspection.
+              If you wish to exchange a watch for a different dial color or strap, or a perfume for another signature scent, please let our concierge team know. We will reserve your preferred replacement item immediately so you don’t have to wait.
             </p>
           </div>
 
           <div className="space-y-4 border-t border-white/10 pt-8">
             <h3 className="font-serif-luxury text-2xl font-light text-sand-50">
-              Damaged or Defective Items
+              Damaged or Incorrect Items
             </h3>
             <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
-              In the unlikely event that your order arrives damaged or defective, please contact us within 48 hours of delivery. We will immediately arrange an urgent priority exchange and cover all associated transit costs.
+              If you receive an item that appears damaged in courier transit or does not match your order, please notify us within 24 hours of delivery. We will arrange an immediate priority courier replacement at zero additional cost to you.
             </p>
           </div>
         </div>
@@ -127,18 +127,20 @@ export default function ReturnsPage() {
         <div className="mt-16 p-8 bg-neutral-950/60 border border-white/10 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-6 max-w-4xl">
           <div>
             <h4 className="font-serif-luxury text-xl font-light text-sand-50 mb-1">
-              Need Help With a Return?
+              Need Help With an Exchange?
             </h4>
             <p className="text-xs sm:text-sm text-neutral-400 font-light">
-              Our concierge team is available to assist you with every step of the return process.
+              Our Pakistan customer care team in Lahore and Karachi is ready to assist you.
             </p>
           </div>
-          <Link
-            href="/contact"
-            className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-[0.2em] transition-colors whitespace-nowrap"
+          <a
+            href="https://wa.me/923001234567"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-3 bg-gold-500 hover:bg-gold-400 text-obsidian text-xs font-semibold uppercase tracking-[0.2em] transition-colors whitespace-nowrap cursor-pointer"
           >
-            Contact Support
-          </Link>
+            WhatsApp Support
+          </a>
         </div>
       </Container>
     </div>

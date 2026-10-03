@@ -67,13 +67,13 @@ export function VipWelcomePopup() {
         <div className="relative h-44 sm:h-52 w-full bg-charcoal-900 overflow-hidden">
           <img
             src={popupConfig.imageUrl || "/images/velora-signature-01.jpg"}
-            alt="Maison Velora Allocation"
+            alt="Velora Pakistan Exclusive"
             className="w-full h-full object-cover object-center filter brightness-[0.8] contrast-[1.1]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/30 to-transparent" />
           <div className="absolute bottom-4 left-6">
             <span className="text-[10px] font-sans uppercase tracking-ultra px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-metallic border border-metallic/40">
-              {popupConfig.badge || "PRIVATE CIRCLE ALLOCATION"}
+              {popupConfig.badge || "EXCLUSIVE WELCOME OFFER"}
             </span>
           </div>
         </div>
@@ -97,7 +97,7 @@ export function VipWelcomePopup() {
               >
                 <div className="text-left">
                   <div className="text-[9px] uppercase font-sans tracking-ultra text-neutral-slate">
-                    Privilege Code
+                    Discount Code
                   </div>
                   <div className="font-mono text-sm font-semibold text-metallic tracking-wider">
                     {popupConfig.couponCode}
@@ -128,13 +128,13 @@ export function VipWelcomePopup() {
               onClick={handleClose}
               className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-none bg-metallic hover:bg-metallic-light text-black text-xs font-semibold uppercase tracking-editorial transition-colors shadow-lg"
             >
-              <span>{popupConfig.ctaText || "CLAIM COLLECTOR ALLOCATION"}</span>
+              <span>{popupConfig.ctaText || "SHOP NEW ARRIVALS"}</span>
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
           <p className="text-[10px] text-neutral-slate pt-1">
-            Concession applicable at checkout. Valid across both Horology and High Perfumery collections.
+            Discount applicable at checkout. Valid across all watches and luxury fragrances.
           </p>
         </div>
       </div>

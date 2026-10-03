@@ -50,29 +50,29 @@ export function JournalPreviewSection({
         "An intimate look into how our Geneva micro-engineers carved three-dimensional titanium bridges to maximize chronometric stability.",
       coverImageUrl:
         "https://images.unsplash.com/photo-1547996160-71dfabb19283?auto=format&fit=crop&w=1200&q=85",
-      category: "Horology Insights",
+      category: "Watchmaking Craft",
       publishedAt: new Date(),
     },
     {
       id: "f2",
-      title: "The Alchemy of Grasse: Macerating Rare Extraits",
+      title: "The Art of Pure Perfume: Macerating Rare Botanicals",
       slug: "alchemy-of-grasse-macerating-rare-extraits",
       excerpt:
-        "How 180 days of slow maceration in seasoned French oak barrels transforms raw agarwood and orris butter into liquid velvet.",
+        "How 180 days of slow aging in seasoned barrels transforms raw agarwood and precious oils into rich, long-lasting fragrances.",
       coverImageUrl:
         "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=85",
-      category: "Haute Parfumerie",
+      category: "Fragrance Mastery",
       publishedAt: new Date(Date.now() - 86400000 * 5),
     },
     {
       id: "f3",
-      title: "The Geometry of Restraint: Defining Contemporary Horology",
+      title: "The Geometry of Restraint: Defining Contemporary Watchmaking",
       slug: "geometry-of-restraint-the-velora-aesthetic",
       excerpt:
         "Why subtracting superfluous ornament reveals the purest harmony between hand-brushed titanium and opaline dials.",
       coverImageUrl:
         "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=1200&q=85",
-      category: "Maison Philosophy",
+      category: "Brand Philosophy",
       publishedAt: new Date(Date.now() - 86400000 * 12),
     },
   ];

@@ -20,8 +20,8 @@ export interface BreadcrumbsProps {
 export function Breadcrumbs({
   items,
   className,
-  homeLabel = "Maison",
-  baseUrl = "https://velora-ateliers.com",
+  homeLabel = "Home",
+  baseUrl = "https://velora.pk",
 }: BreadcrumbsProps) {
   // BreadcrumbList JSON-LD Schema
   const schemaList = [

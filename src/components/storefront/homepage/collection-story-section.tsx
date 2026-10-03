@@ -34,8 +34,8 @@ export function CollectionStorySection({
   const headline = title || "DESIGNED BEYOND THE MOMENT.";
   const description =
     subtitle ||
-    "Where timeless horological discipline transcends fleeting trends. Every gear, bridge, and balance wheel is hand-beveled and finished in our Geneva workshop to endure for generations.";
-  const ctaLabel = content?.ctaText || "EXPLORE OUR ATELIER";
+    "Where timeless watchmaking discipline meets modern refinement. Every gear, dial, and hand is meticulously finished to endure for generations.";
+  const ctaLabel = content?.ctaText || "DISCOVER OUR STORY";
   const ctaLink = content?.ctaLink || "/about";
   const bgImage =
     content?.bgImageUrl ||
@@ -53,7 +53,7 @@ export function CollectionStorySection({
       >
         <img
           src={bgImage}
-          alt="VELORA Atelier Craftsmanship"
+          alt="VELORA Craftsmanship"
           className="w-full h-full object-cover object-center filter brightness-[0.45] contrast-[1.1]"
         />
         {/* Layered cinematic darkening & Vignette */}
@@ -74,7 +74,7 @@ export function CollectionStorySection({
           <div className="inline-flex items-center gap-3 justify-center mb-2">
             <span className="h-px w-10 bg-gold-400/60" />
             <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-gold-300">
-              Maison Philosophy & Heritage
+              Brand Philosophy & Heritage
             </span>
             <span className="h-px w-10 bg-gold-400/60" />
           </div>

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { ProductItem, ProductVariantItem } from "@/types/product";
 import { useCart } from "@/context/cart-context";
+import { formatPrice } from "@/lib/currency";
 
 interface ProductInfoProps {
   product: ProductItem;
@@ -135,15 +136,12 @@ export function ProductInfo({ product }: ProductInfoProps) {
       <div className="flex flex-wrap items-baseline gap-4 py-2 border-y border-white/10">
         <div className="flex items-baseline gap-3">
           <span className="text-2xl sm:text-3xl font-mono font-medium text-gold-300">
-            ${effectivePrice.toLocaleString("en-US", { minimumFractionDigits: 2 })}
-          </span>
-          <span className="text-xs font-sans uppercase tracking-wider text-neutral-400">
-            USD
+            {formatPrice(effectivePrice)}
           </span>
 
           {product.compareAtPrice && Number(product.compareAtPrice) > effectivePrice && (
             <span className="text-sm font-mono line-through text-neutral-500">
-              ${Number(product.compareAtPrice).toLocaleString("en-US", { minimumFractionDigits: 2 })}
+              {formatPrice(Number(product.compareAtPrice))}
             </span>
           )}
         </div>
@@ -367,10 +365,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <Truck className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <h6 className="text-[11px] font-sans font-medium text-sand-100 uppercase tracking-wider">
-              Free Insured Delivery
+              Free Express Delivery
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Dispatched with signature and full tracking.
+              Fast nationwide courier via TCS or Leopard with tracking.
             </p>
           </div>
         </div>
@@ -382,7 +380,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
               5-Year Warranty
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Covers all mechanical and craftsmanship defects.
+              Official guarantee with local service in Lahore & Karachi.
             </p>
           </div>
         </div>
@@ -391,10 +389,10 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <RotateCcw className="w-4 h-4 text-gold-400 shrink-0 mt-0.5" />
           <div className="space-y-0.5">
             <h6 className="text-[11px] font-sans font-medium text-sand-100 uppercase tracking-wider">
-              30-Day Returns
+              Cash on Delivery & Returns
             </h6>
             <p className="text-[10px] text-neutral-400 leading-tight">
-              Complimentary returns in original packaging.
+              Pay upon arrival with 7-day hassle-free exchange.
             </p>
           </div>
         </div>

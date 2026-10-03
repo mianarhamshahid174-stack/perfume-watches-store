@@ -195,7 +195,7 @@ export async function getAutocompleteResults(query: string): Promise<Autocomplet
           sku: p.sku,
           price: Number(p.price),
           imageUrl: p.images[0]?.url || "/images/velora-signature-01.jpg",
-          collectionName: p.collections[0]?.collection.name || "Maison Collection",
+          collectionName: p.collections[0]?.collection.name || "Signature Collection",
         })),
         collections: matchingCollections.map((c) => ({
           id: c.id,
@@ -232,7 +232,7 @@ function fallbackAutocomplete(q: string): AutocompleteResult {
       sku: p.sku,
       price: p.price,
       imageUrl: p.images[0]?.url || "/images/velora-signature-01.jpg",
-      collectionName: p.collections?.[0]?.collection.name || "Maison Collection",
+      collectionName: p.collections?.[0]?.collection.name || "Signature Collection",
     }));
 
   const collections = FALLBACK_COLLECTIONS.filter(

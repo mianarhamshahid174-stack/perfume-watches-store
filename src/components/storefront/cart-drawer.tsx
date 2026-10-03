@@ -149,7 +149,7 @@ export function CartDrawer() {
               <div className="flex justify-between items-center text-gold-400">
                 <span className="flex items-center gap-1.5">
                   <Sparkles className="w-3 h-3" />
-                  <span>Atelier Discount ({appliedCoupon.code})</span>
+                  <span>Discount ({appliedCoupon.code})</span>
                 </span>
                 <span className="font-mono">
                   -{appliedCoupon.formattedDiscountPKR}
@@ -160,7 +160,7 @@ export function CartDrawer() {
             <div className="flex justify-between items-center text-neutral-400">
               <span className="flex items-center gap-1.5">
                 <Truck className="w-3 h-3 text-gold-400" />
-                <span>Insured Delivery</span>
+                <span>Express Delivery (Pakistan)</span>
               </span>
               <span className="text-emerald-400 font-mono text-[11px]">
                 Free
@@ -172,9 +172,6 @@ export function CartDrawer() {
               <div className="text-right">
                 <div className="font-mono text-gold-300 text-base">
                   {formatPKR(totalPKR, { includeCode: true })}
-                </div>
-                <div className="text-[10px] font-mono text-neutral-500 font-normal">
-                  Approx. ${totalUSD.toLocaleString()} USD
                 </div>
               </div>
             </div>
@@ -296,13 +293,10 @@ export function CartDrawer() {
                       </button>
                     </div>
 
-                    {/* Price in PKR and USD */}
+                    {/* Price in PKR */}
                     <div className="text-right">
-                      <div className="text-gold-300 font-mono font-medium">
+                       <div className="text-gold-300 font-mono font-medium">
                         {formatPKR(lineTotalPKR)}
-                      </div>
-                      <div className="text-[10px] text-neutral-500 font-mono">
-                        ${(item.price * item.quantity).toLocaleString()} USD
                       </div>
                     </div>
                   </div>

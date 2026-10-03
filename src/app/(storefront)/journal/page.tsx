@@ -236,7 +236,7 @@ export default async function JournalIndexPage({ searchParams }: JournalPageProp
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {remainingPosts.map((post) => (
+              {remainingPosts.map((post: any) => (
                 <Link
                   key={post.id}
                   href={`/journal/${post.slug}`}

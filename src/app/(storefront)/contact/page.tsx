@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Container } from "@/components/ui/container";
 import { Breadcrumbs } from "@/components/ui/breadcrumbs";
 import { Mail, Phone, MapPin, Clock, MessageSquare, ShieldCheck } from "lucide-react";
+import { ContactForm } from "@/components/storefront/contact-form";
 
 export const metadata: Metadata = {
   title: "Contact Us | VELORA",
@@ -145,85 +146,7 @@ export default function ContactPage() {
                 </p>
               </div>
 
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  alert("Thank you for your message. An advisor will contact you within 24 hours.");
-                }}
-                className="space-y-4 text-xs font-sans"
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                      Full Name *
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. Alexander Vance"
-                      className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      required
-                      placeholder="e.g. alexander@example.com"
-                      className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-1.5">
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                      Phone Number (Optional)
-                    </label>
-                    <input
-                      type="tel"
-                      placeholder="e.g. +41 22 123 4567"
-                      className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors"
-                    />
-                  </div>
-                  <div className="space-y-1.5">
-                    <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                      Topic *
-                    </label>
-                    <select
-                      required
-                      className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 focus:outline-none focus:border-gold-500/60 transition-colors"
-                    >
-                      <option value="order">Order Status & Tracking</option>
-                      <option value="product">Product Information & Sizing</option>
-                      <option value="warranty">Warranty, Service & Repairs</option>
-                      <option value="appointment">Private Appointment in Geneva</option>
-                      <option value="other">General Inquiry</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-                    Your Message *
-                  </label>
-                  <textarea
-                    required
-                    rows={6}
-                    placeholder="How may our advisors assist you today?"
-                    className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors resize-y"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full sm:w-auto px-8 py-3.5 bg-gold-500 hover:bg-gold-400 text-obsidian font-semibold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer"
-                >
-                  Send Message
-                </button>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>

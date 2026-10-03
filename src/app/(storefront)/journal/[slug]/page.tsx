@@ -190,7 +190,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
 
   // Convert raw text into nicely formatted editorial paragraphs
   const paragraphs = post.content
-    ? post.content.split(/\n\s*\n/).filter((p) => p.trim().length > 0)
+    ? post.content.split(/\n\s*\n/).filter((p: string) => p.trim().length > 0)
     : [];
 
   return (
@@ -272,7 +272,7 @@ export default async function JournalArticlePage({ params }: ArticlePageProps) {
       {/* Article Body Content */}
       <Container size="narrow">
         <div className="prose prose-invert max-w-none space-y-8 font-light text-sand-200 text-base sm:text-lg leading-relaxed">
-          {paragraphs.map((p, idx) => {
+          {paragraphs.map((p: string, idx: number) => {
             // First paragraph gets luxury drop-cap effect
             if (idx === 0) {
               const firstLetter = p.charAt(0);

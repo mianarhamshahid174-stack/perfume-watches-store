@@ -42,7 +42,7 @@ export default async function CollectionsIndexPage() {
     orderBy: { createdAt: "asc" },
   });
 
-  const totalProducts = collections.reduce((acc, c) => acc + c.products.length, 0);
+  const totalProducts = collections.reduce((acc: number, c: any) => acc + (c.products?.length || 0), 0);
 
   // Fallback banners if not set
   const fallbackBanners: Record<string, string> = {
@@ -68,7 +68,7 @@ export default async function CollectionsIndexPage() {
 
       <Container size="wide" className="pt-16">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {collections.map((col, idx) => {
+          {collections.map((col: any, idx: number) => {
             const banner =
               col.bannerUrl ||
               col.heroImage ||

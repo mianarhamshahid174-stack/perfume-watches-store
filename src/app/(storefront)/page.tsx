@@ -79,12 +79,12 @@ export default async function StorefrontHomePage() {
     },
   });
 
-  const publishedProducts = rawPublishedProducts.map((p) => ({
+  const publishedProducts = rawPublishedProducts.map((p: any) => ({
     ...p,
     price: Number(p.price),
     compareAtPrice: p.compareAtPrice ? Number(p.compareAtPrice) : null,
     cost: p.cost ? Number(p.cost) : null,
-    variants: p.variants.map((v) => ({
+    variants: p.variants.map((v: any) => ({
       ...v,
       price: Number(v.price),
       attributes: v.attributes as Record<string, string> | null,
@@ -108,9 +108,9 @@ export default async function StorefrontHomePage() {
     orderBy: { createdAt: "asc" },
   });
 
-  const collections = rawCollections.map((col) => ({
+  const collections = rawCollections.map((col: any) => ({
     ...col,
-    products: col.products.map((cp) => ({
+    products: col.products.map((cp: any) => ({
       ...cp,
       product: {
         ...cp.product,
@@ -133,13 +133,13 @@ export default async function StorefrontHomePage() {
   });
 
   // Helper map to quickly find products by slug
-  const productMap = new Map(publishedProducts.map((p) => [p.slug, p]));
+  const productMap = new Map(publishedProducts.map((p: any) => [p.slug, p]));
   const defaultSignatureProduct =
     productMap.get("velora-signature-01") || publishedProducts[0] || null;
 
   return (
     <div className="flex flex-col w-full bg-obsidian text-sand-100 overflow-x-hidden">
-      {sectionsToRender.map((sec) => {
+      {sectionsToRender.map((sec: any) => {
         const key = sec.sectionKey;
         const content = (sec.content as any) || {};
 

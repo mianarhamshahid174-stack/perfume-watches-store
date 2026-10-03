@@ -146,6 +146,8 @@ export const STOREFRONT_NAV: StorefrontNavItem[] = [
       },
     },
   },
+  { label: "Best Sellers", href: "/best-sellers" },
+  { label: "Track Order", href: "/track-order" },
   { label: "Journal", href: "/journal" },
   { label: "Contact", href: "/contact" },
   { label: "FAQ", href: "/faq" },
@@ -155,6 +157,7 @@ export const FOOTER_SECTIONS = [
   {
     title: "Watches",
     links: [
+      { label: "Best Sellers", href: "/best-sellers" },
       { label: "Signature Collection", href: "/collections/signature" },
       { label: "Noir Collection", href: "/collections/noir" },
       { label: "Classic Collection", href: "/collections/classic" },
@@ -166,6 +169,7 @@ export const FOOTER_SECTIONS = [
     links: [
       { label: "All Fragrances", href: "/fragrances" },
       { label: "Nocturne Collection", href: "/collections/nocturne-prive" },
+      { label: "Best Sellers", href: "/best-sellers" },
       { label: "All Collections", href: "/collections" },
       { label: "Search Catalog", href: "/search" },
     ],
@@ -173,6 +177,8 @@ export const FOOTER_SECTIONS = [
   {
     title: "Customer Care",
     links: [
+      { label: "Track Your Order", href: "/track-order" },
+      { label: "Care & Maintenance Guide", href: "/care-guide" },
       { label: "Contact Us", href: "/contact" },
       { label: "Nationwide Shipping", href: "/shipping" },
       { label: "Returns & Exchanges", href: "/returns" },
@@ -185,6 +191,7 @@ export const FOOTER_SECTIONS = [
     links: [
       { label: "Our Story", href: "/journal" },
       { label: "The Journal", href: "/journal" },
+      { label: "Showrooms", href: "/contact" },
       { label: "Privacy Policy", href: "/privacy" },
       { label: "Terms of Service", href: "/terms" },
     ],

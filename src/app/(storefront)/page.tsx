@@ -1,3 +1,4 @@
+import React from "react";
 import { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import {
@@ -14,6 +15,7 @@ import {
   JournalPreviewSection,
   NewsletterSection,
 } from "@/components/storefront/homepage";
+import { PersonalStylist } from "@/components/storefront/personal-stylist";
 
 export const dynamic = "force-dynamic";
 
@@ -230,15 +232,17 @@ export default async function StorefrontHomePage() {
               />
             );
 
-          // SECTION 5 — WATCH + FRAGRANCE (TIME / SCENT SPLIT)
+          // SECTION 5 — WATCH + FRAGRANCE (TIME / SCENT SPLIT) & PERSONAL STYLIST
           case "watch_fragrance_split":
             return (
-              <WatchFragranceSplitSection
-                key={sec.id}
-                title={sec.title}
-                subtitle={sec.subtitle}
-                content={content}
-              />
+              <React.Fragment key={sec.id}>
+                <WatchFragranceSplitSection
+                  title={sec.title}
+                  subtitle={sec.subtitle}
+                  content={content}
+                />
+                <PersonalStylist />
+              </React.Fragment>
             );
 
           // SECTION 6 — SIGNATURE PRODUCT (VELORA SIGNATURE 01)

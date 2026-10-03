@@ -100,8 +100,8 @@ html.light, [data-theme="light"] {
   --surface-hover: #f5f2eb;
   --border-subtle: rgba(18, 19, 22, 0.08);
   --border-strong: rgba(18, 19, 22, 0.18);
-  --accent-metallic: #9a7d52;
-  --accent-metallic-glow: rgba(154, 125, 82, 0.15);
+  --accent-metallic: #b8860b;
+  --accent-metallic-glow: rgba(184, 134, 11, 0.22);
 
   --color-obsidian: #fbf9f5;
   --color-noir: #ffffff;
@@ -127,11 +127,14 @@ html.light, [data-theme="light"] {
   --color-ivory: #141519;
 
   --color-neutral-stone: #6b7280;
-  --color-gold-300: #b08d48;
-  --color-gold-400: #9c7a3c;
-  --color-gold-500: #88662c;
-  --color-gold-600: #6f4d14;
-  --color-metallic: #9c7a3c;
+  --color-gold-300: #d4af37;
+  --color-gold-400: #c59b27;
+  --color-gold-500: #b8860b;
+  --color-gold-600: #996515;
+  --color-metallic: #b8860b;
+  --color-metallic-light: #f5e6b8;
+  --color-metallic-brass: #c59b27;
+  --color-metallic-bronze: #a0781c;
 }
 
 /* Base resets & typography */
@@ -220,6 +223,68 @@ body {
 
 .light .text-ivory {
   color: #141519 !important;
+}
+
+.light .text-gold-300 {
+  color: #c59b27 !important;
+}
+
+.light .text-gold-400 {
+  color: #b8860b !important;
+}
+
+.light .text-gold-500 {
+  color: #996515 !important;
+}
+
+.light .text-metallic {
+  color: #b8860b !important;
+}
+
+.light .bg-metallic {
+  background-color: #c59b27 !important;
+  color: #000000 !important;
+}
+
+.light .bg-metallic:hover {
+  background-color: #d4af37 !important;
+}
+
+.light .border-gold-400 {
+  border-color: #c59b27 !important;
+}
+
+.light .border-gold-500 {
+  border-color: #b8860b !important;
+}
+
+.light .border-metallic {
+  border-color: #c59b27 !important;
+}
+
+/* Light Mode Search Dialog Box */
+.light .search-dialog-modal {
+  background-color: #ffffff !important;
+  border-color: rgba(18, 19, 22, 0.12) !important;
+  color: #121316 !important;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.18) !important;
+}
+
+.light .search-input-box {
+  background-color: #f6f4ee !important;
+  border-color: rgba(18, 19, 22, 0.15) !important;
+  color: #121316 !important;
+}
+
+.light .search-input-box input {
+  color: #121316 !important;
+}
+
+.light .search-dropdown-menu {
+  background-color: #ffffff !important;
+  border-color: rgba(18, 19, 22, 0.12) !important;
+  color: #121316 !important;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.15) !important;
 }
 
 /* Editorial Typography Utilities */

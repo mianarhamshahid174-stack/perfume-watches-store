@@ -60,36 +60,28 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-  // 2. CUSTOMER ACCOUNT ROUTE PROTECTION
+  // 2. OPTIONAL CUSTOMER SESSION ATTACHMENT (NO FORCED REDIRECT)
   if (pathname.startsWith("/account")) {
     const customerToken = req.cookies.get(CUSTOMER_COOKIE_NAME)?.value;
-    if (!customerToken) {
-      const loginUrl = new URL("/login", req.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      return NextResponse.redirect(loginUrl);
-    }
+    if (customerToken) {
+      try {
+        const { payload } = await jwtVerify(customerToken, SECRET_KEY);
+        if (payload.type === "customer") {
+          const requestHeaders = new Headers(req.headers);
+          requestHeaders.set("x-user-id", payload.userId as string);
+          requestHeaders.set("x-user-role", payload.role as string);
 
-    try {
-      const { payload } = await jwtVerify(customerToken, SECRET_KEY);
-      if (payload.type !== "customer") {
-        const loginUrl = new URL("/login", req.url);
-        return NextResponse.redirect(loginUrl);
+          return NextResponse.next({
+            request: {
+              headers: requestHeaders,
+            },
+          });
+        }
+      } catch {
+        // Token expired/invalid, allow guest view
       }
-
-      const requestHeaders = new Headers(req.headers);
-      requestHeaders.set("x-user-id", payload.userId as string);
-      requestHeaders.set("x-user-role", payload.role as string);
-
-      return NextResponse.next({
-        request: {
-          headers: requestHeaders,
-        },
-      });
-    } catch {
-      const loginUrl = new URL("/login", req.url);
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      return NextResponse.redirect(loginUrl);
     }
+    return NextResponse.next();
   }
 
   // 3. REDIRECT ALREADY LOGGED IN USERS AWAY FROM LOGIN/REGISTER

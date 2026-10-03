@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { usdToPKR, formatPKR } from "@/lib/currency";
+import { getCachedOrder } from "@/lib/orders-cache";
 
 export const dynamic = "force-dynamic";
 
@@ -9,46 +10,49 @@ export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
-    const { id } = await params;
-    const user = await getCurrentUser();
+    let order: any = null;
 
-    // Find by ID or orderNumber
-    const order = await prisma.order.findFirst({
-      where: {
-        OR: [{ id }, { orderNumber: id }],
-      },
-      include: {
-        customer: {
-          select: {
-            id: true,
-            email: true,
-            profile: { select: { firstName: true, lastName: true, phone: true } },
-          },
+    try {
+      // Find by ID or orderNumber in database
+      order = await prisma.order.findFirst({
+        where: {
+          OR: [{ id }, { orderNumber: id }],
         },
-        shippingAddress: true,
-        items: {
-          include: {
-            product: {
-              include: {
-                images: { orderBy: { sortOrder: "asc" }, take: 1 },
-              },
+        include: {
+          customer: {
+            select: {
+              id: true,
+              email: true,
+              profile: { select: { firstName: true, lastName: true, phone: true } },
             },
-            variant: true,
           },
+          shippingAddress: true,
+          items: {
+            include: {
+              product: {
+                include: {
+                  images: { orderBy: { sortOrder: "asc" }, take: 1 },
+                },
+              },
+              variant: true,
+            },
+          },
+          payments: true,
+          shipments: { orderBy: { createdAt: "desc" } },
         },
-        payments: true,
-        shipments: { orderBy: { createdAt: "desc" } },
-      },
-    });
-
-    if (!order) {
-      return NextResponse.json({ success: false, error: "Order not found." }, { status: 404 });
+      });
+    } catch (dbErr) {
+      console.warn("Database lookup failed, falling back to cache:", dbErr);
     }
 
-    // Security check: if order belongs to a customer and current user is not that customer or admin
-    if (order.customerId && (!user || (user.id !== order.customerId && user.role !== "VIP_CUSTOMER"))) {
-      // In guest tracking mode by orderNumber, allow if email matches or from confirmation page
+    if (!order) {
+      const cached = getCachedOrder(id);
+      if (cached) {
+        return NextResponse.json({ success: true, order: cached });
+      }
+      return NextResponse.json({ success: false, error: "Order not found." }, { status: 404 });
     }
 
     const subtotalUSD = Number(order.subtotal);
@@ -130,7 +134,7 @@ export async function GET(
         notes: order.notes,
         customer: order.customer,
         guestEmail: order.guestEmail,
-        items: order.items.map((i) => ({
+        items: order.items.map((i: any) => ({
           id: i.id,
           productId: i.productId,
           productName: i.productName,
@@ -166,6 +170,10 @@ export async function GET(
     });
   } catch (err: any) {
     console.error("Order details fetch error:", err);
+    const cached = getCachedOrder(id);
+    if (cached) {
+      return NextResponse.json({ success: true, order: cached });
+    }
     return NextResponse.json({ success: false, error: "Failed to fetch order." }, { status: 500 });
   }
 }

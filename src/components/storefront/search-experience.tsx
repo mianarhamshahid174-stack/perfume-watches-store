@@ -157,8 +157,8 @@ export function SearchExperience({
     <div ref={containerRef} className={`relative w-full ${className}`}>
       {/* Search Input Bar */}
       <form onSubmit={handleSubmit} className="relative w-full">
-        <div className="relative flex items-center bg-neutral-950 border border-white/15 focus-within:border-gold-500/70 transition-all duration-300">
-          <div className="pl-4 pr-3 text-neutral-400">
+        <div className="relative flex items-center bg-neutral-100 dark:bg-neutral-950 border border-neutral-300 dark:border-white/15 focus-within:border-gold-500 transition-all duration-300 search-input-box">
+          <div className="pl-4 pr-3 text-neutral-500 dark:text-neutral-400">
             <Search className="h-4 w-4" />
           </div>
 
@@ -173,13 +173,13 @@ export function SearchExperience({
             onFocus={() => setIsOpen(true)}
             placeholder="Search watches, fragrances, collections..."
             autoFocus={autoFocus}
-            className="w-full bg-transparent py-3.5 pr-10 text-xs sm:text-sm text-sand-50 placeholder:text-neutral-500 focus:outline-none font-sans"
+            className="w-full bg-transparent py-3.5 pr-10 text-xs sm:text-sm text-neutral-900 dark:text-sand-50 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none font-sans"
           />
 
           {/* Clear button or loading indicator */}
           <div className="pr-3 flex items-center gap-2">
             {isLoading && (
-              <span className="h-4 w-4 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
+              <span className="h-4 w-4 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
             )}
 
             {query && (
@@ -189,7 +189,7 @@ export function SearchExperience({
                   setQuery("");
                   inputRef.current?.focus();
                 }}
-                className="p-1 text-neutral-500 hover:text-sand-100 transition-colors"
+                className="p-1 text-neutral-500 hover:text-neutral-900 dark:hover:text-sand-100 transition-colors cursor-pointer"
                 aria-label="Clear search"
               >
                 <X className="h-4 w-4" />
@@ -198,7 +198,7 @@ export function SearchExperience({
 
             <button
               type="submit"
-              className="px-4 py-2 bg-sand-50 hover:bg-gold-300 text-black text-xs font-mono uppercase tracking-wider transition-colors hidden sm:block"
+              className="px-4 py-2 bg-metallic hover:bg-gold-500 text-black text-xs font-mono uppercase tracking-wider font-semibold transition-colors hidden sm:block cursor-pointer"
             >
               Search
             </button>
@@ -214,29 +214,29 @@ export function SearchExperience({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 z-50 mt-2 bg-neutral-950/98 backdrop-blur-xl border border-white/15 shadow-2xl text-sand-100 overflow-hidden max-h-[80vh] overflow-y-auto"
+            className="absolute top-full left-0 right-0 z-50 mt-2 bg-white dark:bg-neutral-950/98 backdrop-blur-xl border border-neutral-200 dark:border-white/15 shadow-2xl text-neutral-900 dark:text-sand-100 overflow-hidden max-h-[80vh] overflow-y-auto search-dropdown-menu"
           >
             {/* 1. Loading State */}
             {isLoading && !hasAnyResults && (
               <div className="p-8 text-center space-y-3">
-                <span className="inline-block h-6 w-6 border-2 border-gold-400 border-t-transparent rounded-full animate-spin" />
-                <p className="text-xs font-mono text-neutral-400 tracking-wider">
-                  Searching products...
+                <span className="inline-block h-6 w-6 border-2 border-gold-500 border-t-transparent rounded-full animate-spin" />
+                <p className="text-xs font-mono text-neutral-500 dark:text-neutral-400 tracking-wider">
+                  Searching catalog...
                 </p>
               </div>
             )}
 
             {/* 2. Error State */}
             {hasError && (
-              <div className="p-6 text-center space-y-3 bg-rose-950/20 border-b border-rose-500/20">
-                <AlertCircle className="h-5 w-5 text-rose-400 mx-auto" />
-                <p className="text-xs text-rose-300 font-light">
+              <div className="p-6 text-center space-y-3 bg-rose-50 dark:bg-rose-950/20 border-b border-rose-200 dark:border-rose-500/20">
+                <AlertCircle className="h-5 w-5 text-rose-500 dark:text-rose-400 mx-auto" />
+                <p className="text-xs text-rose-700 dark:text-rose-300 font-light">
                   Unable to complete search. Please check your connection and try again.
                 </p>
                 <button
                   type="button"
                   onClick={() => handleSubmit()}
-                  className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-rose-400 hover:text-rose-300 underline"
+                  className="inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-wider text-rose-600 dark:text-rose-400 hover:underline cursor-pointer"
                 >
                   <RotateCcw className="h-3 w-3" />
                   <span>Retry Search</span>
@@ -248,16 +248,16 @@ export function SearchExperience({
             {isSearchActive && !isLoading && !hasError && !hasAnyResults && (
               <div className="p-8 text-center space-y-4">
                 <div className="space-y-1">
-                  <h4 className="font-serif-luxury text-lg text-sand-50">
+                  <h4 className="font-serif-luxury text-lg text-neutral-900 dark:text-sand-50">
                     No Results Found
                   </h4>
-                  <p className="text-xs text-neutral-400 font-light max-w-sm mx-auto">
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 font-light max-w-sm mx-auto">
                     We couldn&apos;t find any watches, fragrances, or collections matching &quot;{query}&quot;.
                   </p>
                 </div>
 
                 <div className="pt-2">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-gold-400 block mb-2">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-gold-600 dark:text-gold-400 block mb-2 font-semibold">
                     Suggested Searches
                   </span>
                   <div className="flex flex-wrap justify-center gap-2">
@@ -266,7 +266,7 @@ export function SearchExperience({
                         key={term}
                         type="button"
                         onClick={() => handleSelectTerm(term)}
-                        className="px-3 py-1 bg-neutral-900 border border-white/10 hover:border-gold-500/40 text-xs text-sand-200 transition-colors"
+                        className="px-3 py-1 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 border border-neutral-200 dark:border-white/10 text-xs text-neutral-800 dark:text-sand-200 transition-colors cursor-pointer"
                       >
                         {term}
                       </button>
@@ -278,11 +278,11 @@ export function SearchExperience({
 
             {/* 4. Active Results Display */}
             {hasAnyResults && (
-              <div className="divide-y divide-white/5">
+              <div className="divide-y divide-neutral-200 dark:divide-white/5">
                 {/* Matching Collections */}
                 {results.collections.length > 0 && (
                   <div className="p-4 sm:p-5">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block mb-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-600 dark:text-gold-400 block mb-3 font-semibold">
                       Matching Collections
                     </span>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -295,11 +295,11 @@ export function SearchExperience({
                             setIsOpen(false);
                             if (onSelectResult) onSelectResult();
                           }}
-                          className="flex items-center justify-between p-2.5 bg-neutral-900/60 hover:bg-neutral-900 border border-white/5 hover:border-gold-500/30 transition-all group"
+                          className="flex items-center justify-between p-2.5 bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-900/60 dark:hover:bg-neutral-900 border border-neutral-200 dark:border-white/5 hover:border-gold-500/40 transition-all group"
                         >
                           <div className="flex items-center gap-2.5">
-                            <Layers className="h-4 w-4 text-gold-400" />
-                            <span className="text-xs font-serif-luxury text-sand-100 group-hover:text-gold-300 transition-colors">
+                            <Layers className="h-4 w-4 text-gold-600 dark:text-gold-400" />
+                            <span className="text-xs font-serif-luxury text-neutral-900 dark:text-sand-100 group-hover:text-gold-600 dark:group-hover:text-gold-300 transition-colors">
                               {col.name}
                             </span>
                           </div>
@@ -315,7 +315,7 @@ export function SearchExperience({
                 {/* Matching Products */}
                 {results.products.length > 0 && (
                   <div className="p-4 sm:p-5">
-                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 block mb-3">
+                    <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-600 dark:text-gold-400 block mb-3 font-semibold">
                       Matching Products
                     </span>
                     <div className="space-y-2">
@@ -328,10 +328,10 @@ export function SearchExperience({
                             setIsOpen(false);
                             if (onSelectResult) onSelectResult();
                           }}
-                          className="flex items-center justify-between p-2 hover:bg-neutral-900/80 transition-colors border border-transparent hover:border-white/5 group"
+                          className="flex items-center justify-between p-2 hover:bg-neutral-100 dark:hover:bg-neutral-900/80 transition-colors border border-transparent hover:border-neutral-200 dark:hover:border-white/5 group"
                         >
                           <div className="flex items-center gap-3">
-                            <div className="h-12 w-12 rounded bg-neutral-900 overflow-hidden shrink-0 border border-white/10">
+                            <div className="h-12 w-12 rounded bg-neutral-100 dark:bg-neutral-900 overflow-hidden shrink-0 border border-neutral-200 dark:border-white/10">
                               <img
                                 src={p.imageUrl}
                                 alt={p.name}
@@ -342,15 +342,15 @@ export function SearchExperience({
                               <span className="text-[9px] font-mono uppercase tracking-wider text-neutral-500 block">
                                 {p.collectionName} • {p.sku}
                               </span>
-                              <h5 className="font-serif-luxury text-sm text-sand-50 group-hover:text-gold-300 transition-colors line-clamp-1">
+                              <h5 className="font-serif-luxury text-sm text-neutral-900 dark:text-sand-50 group-hover:text-gold-600 dark:group-hover:text-gold-300 transition-colors line-clamp-1">
                                 {p.name}
                               </h5>
                             </div>
                           </div>
 
                           <div className="text-right pl-3 shrink-0">
-                            <span className="font-mono text-xs text-gold-300 block">
-                              ${p.price.toLocaleString()}
+                            <span className="font-mono text-xs text-gold-600 dark:text-gold-300 block font-semibold">
+                              Rs. {p.price.toLocaleString()}
                             </span>
                           </div>
                         </Link>
@@ -358,11 +358,11 @@ export function SearchExperience({
                     </div>
 
                     {/* View all results button */}
-                    <div className="pt-4 border-t border-white/5 mt-3 text-center">
+                    <div className="pt-4 border-t border-neutral-200 dark:border-white/5 mt-3 text-center">
                       <button
                         type="button"
                         onClick={() => handleSubmit()}
-                        className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-sand-100 hover:text-gold-300 transition-colors"
+                        className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-neutral-900 dark:text-sand-100 hover:text-gold-600 dark:hover:text-gold-300 transition-colors cursor-pointer"
                       >
                         <span>View All Results for "{query}"</span>
                         <ArrowRight className="h-3.5 w-3.5" />
@@ -380,14 +380,14 @@ export function SearchExperience({
                 {recentSearches.length > 0 && (
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 flex items-center gap-1.5">
-                        <Clock className="h-3 w-3 text-gold-400" />
+                      <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5 font-semibold">
+                        <Clock className="h-3 w-3 text-gold-600 dark:text-gold-400" />
                         <span>Recent Searches</span>
                       </span>
                       <button
                         type="button"
                         onClick={clearRecentSearches}
-                        className="text-[10px] font-mono text-neutral-500 hover:text-gold-300 underline transition-colors"
+                        className="text-[10px] font-mono text-neutral-400 hover:text-gold-600 dark:hover:text-gold-300 underline transition-colors cursor-pointer"
                       >
                         Clear
                       </button>
@@ -399,9 +399,9 @@ export function SearchExperience({
                           key={term}
                           type="button"
                           onClick={() => handleSelectTerm(term)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-900 border border-white/10 hover:border-gold-500/40 text-xs text-sand-200 transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 border border-neutral-200 dark:border-white/10 text-xs text-neutral-800 dark:text-sand-200 transition-colors cursor-pointer"
                         >
-                          <Clock className="h-2.5 w-2.5 text-neutral-500" />
+                          <Clock className="h-2.5 w-2.5 text-neutral-400" />
                           <span>{term}</span>
                         </button>
                       ))}
@@ -411,7 +411,7 @@ export function SearchExperience({
 
                 {/* Popular Searches */}
                 <div className="space-y-3">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-400 flex items-center gap-1.5">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-gold-600 dark:text-gold-400 flex items-center gap-1.5 font-semibold">
                     <Sparkles className="h-3 w-3" />
                     <span>Popular Searches</span>
                   </span>
@@ -421,7 +421,7 @@ export function SearchExperience({
                         key={term}
                         type="button"
                         onClick={() => handleSelectTerm(term)}
-                        className="px-3.5 py-1.5 bg-neutral-900/80 border border-white/10 hover:border-gold-500/40 text-xs text-sand-200 transition-colors"
+                        className="px-3.5 py-1.5 bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900/80 border border-neutral-200 dark:border-white/10 text-xs text-neutral-800 dark:text-sand-200 transition-colors cursor-pointer"
                       >
                         {term}
                       </button>

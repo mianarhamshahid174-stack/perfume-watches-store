@@ -441,7 +441,7 @@ export function Header() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsSearchOpen(false)}
-              className="fixed inset-0 bg-black/85 backdrop-blur-xl"
+              className="fixed inset-0 bg-black/60 dark:bg-black/85 backdrop-blur-md"
             />
 
             <motion.div
@@ -449,16 +449,16 @@ export function Header() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -16, scale: 0.98 }}
               transition={{ duration: 0.4, ease: LUXURY_EASE }}
-              className="relative z-10 w-full max-w-2xl bg-neutral-950 border border-white/15 p-6 sm:p-8 shadow-2xl space-y-6"
+              className="relative z-10 w-full max-w-2xl bg-white dark:bg-neutral-950 border border-neutral-200 dark:border-white/15 p-6 sm:p-8 shadow-2xl space-y-6 search-dialog-modal text-neutral-900 dark:text-sand-50"
             >
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
-                <span className="text-xs font-mono uppercase tracking-[0.25em] text-gold-400">
+              <div className="flex items-center justify-between border-b border-neutral-200 dark:border-white/10 pb-4">
+                <span className="text-xs font-mono uppercase tracking-[0.25em] text-gold-600 dark:text-gold-400 font-semibold">
                   Search Catalog
                 </span>
                 <button
                   type="button"
                   onClick={() => setIsSearchOpen(false)}
-                  className="p-1.5 text-neutral-400 hover:text-white transition-colors"
+                  className="p-1.5 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer"
                 >
                   <X className="h-5 w-5" />
                 </button>

@@ -198,6 +198,24 @@ export default function CheckoutPage() {
       // Clear local bag
       clearCart();
 
+      // Save order to recent orders list in localStorage for seamless guest retrieval
+      try {
+        const orderNum = data.orderNumber || data.orderId;
+        const saved = JSON.parse(localStorage.getItem("velora_recent_orders") || "[]");
+        saved.unshift({
+          orderNumber: orderNum,
+          orderId: data.orderId || orderNum,
+          createdAt: new Date().toISOString(),
+          totalPKR: totalPKR,
+          itemsCount: items.length,
+          paymentMethod: paymentMethod.toUpperCase(),
+          customerEmail: contact.email,
+        });
+        localStorage.setItem("velora_recent_orders", JSON.stringify(saved.slice(0, 10)));
+      } catch (e) {
+        // ignore
+      }
+
       // Redirect to confirmation page with order number
       router.push(`/order-confirmation/${data.orderNumber || data.orderId}`);
     } catch (err: any) {
@@ -245,16 +263,25 @@ export default function CheckoutPage() {
         <div className="border-b border-white/10 pb-6 mb-8">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-400 block mb-1">
+              <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-gold-500 dark:text-gold-400 block mb-1">
                 VELORA • Pakistan Delivery
               </span>
-              <h1 className="font-serif-luxury text-2xl sm:text-3xl lg:text-4xl text-sand-50 font-light">
+              <h1 className="font-serif-luxury text-2xl sm:text-3xl lg:text-4xl text-neutral-900 dark:text-sand-50 font-light">
                 Checkout
               </h1>
+              <p className="text-xs text-neutral-600 dark:text-neutral-400 font-light mt-1">
+                Place your order directly as a guest. Cash on Delivery (COD) available with open-parcel inspection across Pakistan.
+              </p>
             </div>
-            <div className="flex items-center gap-2 text-xs font-mono text-neutral-400">
-              <Lock className="w-3.5 h-3.5 text-gold-400" />
-              <span>256-Bit SSL Secure Checkout</span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-[11px] font-sans font-medium">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Guest Checkout • No Login Required</span>
+              </span>
+              <div className="hidden sm:flex items-center gap-1.5 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+                <Lock className="w-3.5 h-3.5 text-gold-500" />
+                <span>256-Bit SSL Secure</span>
+              </div>
             </div>
           </div>
 

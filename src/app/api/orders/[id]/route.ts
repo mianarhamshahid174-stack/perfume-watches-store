@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth";
 import { usdToPKR, formatPKR } from "@/lib/currency";
 import { getCachedOrder } from "@/lib/orders-cache";
+import { getOrderFromFirebase } from "@/lib/firebase-db";
 
 export const dynamic = "force-dynamic";
 
@@ -48,6 +49,116 @@ export async function GET(
     }
 
     if (!order) {
+      // 1. Try Firebase Firestore Database lookup
+      try {
+        const fbOrder = await getOrderFromFirebase(id);
+        if (fbOrder) {
+          const totalPKR = fbOrder.pricing.totalPKR || 0;
+          const subtotalPKR = fbOrder.pricing.subtotalPKR || totalPKR;
+          const discountPKR = fbOrder.pricing.discountPKR || 0;
+          const shippingPKR = fbOrder.pricing.shippingPKR || 0;
+
+          const statuses = ["Confirmed", "Processing", "Packed", "Shipped", "Delivered"];
+          const currentStatusIndex = statuses.indexOf(fbOrder.status);
+          const activeStep = currentStatusIndex >= 0 ? currentStatusIndex : 0;
+
+          const timeline = [
+            {
+              step: "Order Created",
+              status: "Completed",
+              date: typeof fbOrder.createdAt === "string" ? fbOrder.createdAt : new Date().toISOString(),
+              description: "Order registered in VELORA master fulfillment system.",
+              isDone: true,
+            },
+            {
+              step: "Verification & Atelier Inspection",
+              status: activeStep >= 1 ? "Completed" : "In Progress",
+              description: "Horological verification and luxury presentation boxing.",
+              isDone: activeStep >= 1,
+            },
+            {
+              step: "Dispatched via Express Courier",
+              status: activeStep >= 3 ? "In Transit" : "Pending",
+              description: `Dispatched via ${fbOrder.courier?.carrier || "TCS / Leopard Express"} (${fbOrder.courier?.trackingNumber || "Assigned"}).`,
+              isDone: activeStep >= 3,
+            },
+            {
+              step: "Delivered & Handed Over",
+              status: activeStep >= 4 ? "Delivered" : "Pending",
+              description: fbOrder.payment.isCOD ? "Open-parcel inspection and payment handover." : "White-glove courier delivery.",
+              isDone: activeStep >= 4,
+            },
+          ];
+
+          return NextResponse.json({
+            success: true,
+            order: {
+              id: fbOrder.id,
+              orderNumber: fbOrder.orderNumber,
+              status: fbOrder.status,
+              fulfillmentStatus: fbOrder.fulfillmentStatus || "Unfulfilled",
+              createdAt: typeof fbOrder.createdAt === "string" ? fbOrder.createdAt : new Date().toISOString(),
+              updatedAt: typeof fbOrder.updatedAt === "string" ? fbOrder.updatedAt : new Date().toISOString(),
+              trackingNumber: fbOrder.courier?.trackingNumber || "",
+              shippingAddress: fbOrder.shippingAddress,
+              notes: fbOrder.notes,
+              customer: {
+                email: fbOrder.customer.email,
+                profile: {
+                  firstName: fbOrder.customer.firstName,
+                  lastName: fbOrder.customer.lastName,
+                  phone: fbOrder.customer.phone || null,
+                },
+              },
+              guestEmail: fbOrder.customer.email,
+              items: fbOrder.items.map((i) => ({
+                id: i.productId,
+                productId: i.productId,
+                productName: i.productName,
+                productSku: i.productSku,
+                slug: "",
+                imageUrl: i.imageUrl || "/images/products/watches/velora-signature-01/front.jpg",
+                quantity: i.quantity,
+                unitPricePKR: i.pricePKR,
+                totalPricePKR: i.totalPKR,
+                unitPriceUSD: Math.round(i.pricePKR / 280),
+                totalPriceUSD: Math.round(i.totalPKR / 280),
+                variantTitle: i.variantTitle || null,
+              })),
+              pricing: {
+                subtotalUSD: Math.round(subtotalPKR / 280),
+                discountUSD: Math.round(discountPKR / 280),
+                shippingUSD: Math.round(shippingPKR / 280),
+                totalUSD: Math.round(totalPKR / 280),
+                subtotalPKR,
+                discountPKR,
+                shippingPKR,
+                totalPKR,
+                formattedTotalPKR: fbOrder.pricing.formattedTotalPKR || formatPKR(totalPKR),
+                formattedSubtotalPKR: formatPKR(subtotalPKR),
+                formattedDiscountPKR: formatPKR(discountPKR),
+                formattedShippingPKR: shippingPKR > 0 ? formatPKR(shippingPKR) : "Complimentary",
+              },
+              payment: {
+                method: fbOrder.payment.method,
+                status: fbOrder.payment.status,
+                amountPKR: fbOrder.pricing.formattedTotalPKR || formatPKR(totalPKR),
+                amountUSD: `$${Math.round(totalPKR / 280)} USD`,
+                isCOD: fbOrder.payment.isCOD,
+              },
+              timeline,
+              shipment: {
+                carrier: fbOrder.courier?.carrier || "TCS / Leopard Express Logistics",
+                trackingNumber: fbOrder.courier?.trackingNumber || "",
+                status: activeStep >= 3 ? "IN_TRANSIT" : "PREPARING",
+              },
+            },
+          });
+        }
+      } catch (fbErr) {
+        console.warn("[Firebase] Order query warning:", fbErr);
+      }
+
       const cached = getCachedOrder(id);
       if (cached) {
         return NextResponse.json({ success: true, order: cached });

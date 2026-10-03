@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
+import { saveSubscriberToFirebase } from "@/lib/firebase-db";
 
 const newsletterSchema = z.object({
   email: z.string().email("A valid email address is required"),
@@ -17,7 +18,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // In a production setup, this would register with CRM / SendGrid / Klaviyo or database
+    // Save subscriber into Firebase Cloud Firestore
+    await saveSubscriberToFirebase(validated.data.email, {
+      source: "homepage_newsletter",
+    });
+
     console.log(`[Patron Circle Subscription]: ${validated.data.email}`);
 
     return NextResponse.json({

@@ -1,35 +1,73 @@
 "use client";
 
 import React, { useState } from "react";
-import { CheckCircle2, Send } from "lucide-react";
+import { CheckCircle2, Send, AlertCircle } from "lucide-react";
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    topic: "order",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit inquiry.");
+      }
+
       setSubmitted(true);
-    }, 600);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        topic: "order",
+        message: "",
+      });
+    } catch (err: any) {
+      setError(err.message || "An error occurred while sending your message.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (submitted) {
     return (
-      <div className="py-12 text-center space-y-4 bg-neutral-900/60 border border-gold-500/30 rounded-xl p-8">
-        <CheckCircle2 className="h-12 w-12 text-gold-400 mx-auto" />
-        <h3 className="font-serif-luxury text-2xl font-light text-sand-50">
-          Message Received
+      <div className="py-12 text-center space-y-4 bg-card border border-gold-500/30 rounded-xl p-8 transition-colors duration-300">
+        <CheckCircle2 className="h-12 w-12 text-gold-500 mx-auto" />
+        <h3 className="font-serif-luxury text-2xl font-light text-foreground">
+          Inquiry Received
         </h3>
-        <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-md mx-auto leading-relaxed">
-          Thank you for reaching out. A dedicated client advisor will review your inquiry and respond within 24 hours.
+        <p className="text-xs sm:text-sm text-neutral-stone font-light max-w-md mx-auto leading-relaxed">
+          Thank you for reaching out to VELORA Pakistan. Your request has been logged in our client database and a personal concierge will review and connect with you within 24 hours.
         </p>
         <button
           type="button"
           onClick={() => setSubmitted(false)}
-          className="mt-4 px-6 py-2.5 bg-neutral-800 hover:bg-neutral-700 text-gold-300 border border-gold-500/20 text-xs font-mono uppercase tracking-wider transition-colors"
+          className="mt-4 px-6 py-2.5 bg-muted hover:bg-muted/80 text-foreground border border-border text-xs font-mono uppercase tracking-wider transition-colors cursor-pointer"
         >
           Send Another Message
         </button>
@@ -39,77 +77,99 @@ export function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 text-xs font-sans">
+      {error && (
+        <div className="p-3 bg-red-500/10 border border-red-500/30 text-red-500 text-xs flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 shrink-0" />
+          <span>{error}</span>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
+          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-stone">
             Full Name *
           </label>
           <input
             type="text"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
             required
-            placeholder="e.g. Alexander Vance"
-            className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors"
+            placeholder="e.g. Arham Shahid"
+            className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground placeholder:text-neutral-500 focus:outline-none focus:border-gold-500 transition-colors"
           />
         </div>
         <div className="space-y-1.5">
-          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
+          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-stone">
             Email Address *
           </label>
           <input
             type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
-            placeholder="e.g. alexander@example.com"
-            className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors"
+            placeholder="e.g. arham@example.com"
+            className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground placeholder:text-neutral-500 focus:outline-none focus:border-gold-500 transition-colors"
           />
         </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-1.5">
-          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
-            Phone Number (Optional)
+          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-stone">
+            Phone Number (Pakistan)
           </label>
           <input
             type="tel"
-            placeholder="e.g. +41 22 123 4567"
-            className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="e.g. +92 300 1234567"
+            className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground placeholder:text-neutral-500 focus:outline-none focus:border-gold-500 transition-colors"
           />
         </div>
         <div className="space-y-1.5">
-          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
+          <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-stone">
             Topic *
           </label>
           <select
+            name="topic"
+            value={formData.topic}
+            onChange={handleChange}
             required
-            className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 focus:outline-none focus:border-gold-500/60 transition-colors"
+            className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground focus:outline-none focus:border-gold-500 transition-colors cursor-pointer"
           >
             <option value="order">Order Status & Tracking</option>
-            <option value="product">Product Information & Sizing</option>
+            <option value="product">Product Information & Horology</option>
             <option value="warranty">Warranty, Service & Repairs</option>
-            <option value="appointment">Private Appointment in Geneva</option>
-            <option value="other">General Inquiry</option>
+            <option value="appointment">Private Appointment in Lahore / Karachi / Islamabad</option>
+            <option value="other">General Concierge Inquiry</option>
           </select>
         </div>
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-400">
+        <label className="text-[11px] font-mono uppercase tracking-wider text-neutral-stone">
           Your Message *
         </label>
         <textarea
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
           required
           rows={6}
           placeholder="How may our advisors assist you today?"
-          className="w-full px-4 py-3 bg-neutral-900 border border-white/10 rounded-sm text-sand-100 placeholder:text-neutral-600 focus:outline-none focus:border-gold-500/60 transition-colors resize-y"
+          className="w-full px-4 py-3 bg-background border border-border rounded-sm text-foreground placeholder:text-neutral-500 focus:outline-none focus:border-gold-500 transition-colors resize-y"
         />
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full sm:w-auto px-8 py-3.5 bg-gold-500 hover:bg-gold-400 disabled:opacity-50 text-obsidian font-semibold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer flex items-center justify-center gap-2"
+        className="w-full sm:w-auto px-8 py-3.5 bg-metallic hover:bg-gold-500 disabled:opacity-50 text-black font-semibold text-xs uppercase tracking-[0.2em] transition-colors cursor-pointer flex items-center justify-center gap-2 shadow-sm"
       >
-        <span>{loading ? "Sending..." : "Send Message"}</span>
+        <span>{loading ? "Registering Inquiry..." : "Send Message"}</span>
         <Send className="h-3.5 w-3.5" />
       </button>
     </form>

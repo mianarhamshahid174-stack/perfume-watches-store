@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { GlobalStructuredData } from "@/components/seo/structured-data";
 import { ThemeProvider } from "@/context/theme-context";
+import { FirebaseAnalyticsProvider } from "@/components/providers/firebase-analytics";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-serif",
@@ -66,6 +67,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-obsidian text-sand-100 selection:bg-gold-500/30 selection:text-gold-300">
         <ThemeProvider>
+          <FirebaseAnalyticsProvider />
           <GlobalStructuredData />
           {children}
         </ThemeProvider>

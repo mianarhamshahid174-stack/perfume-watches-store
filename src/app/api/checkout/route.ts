@@ -6,6 +6,7 @@ import { usdToPKR, formatPKR } from "@/lib/currency";
 import { OrderStatus, PaymentStatus, FulfillmentStatus, ShipmentStatus, InventoryTransactionType, Prisma } from "@prisma/client";
 import { FALLBACK_PRODUCTS } from "@/lib/catalog-data";
 import { saveCachedOrder, CachedOrder } from "@/lib/orders-cache";
+import { saveOrderToFirebase } from "@/lib/firebase-db";
 import bcrypt from "bcryptjs";
 
 export const dynamic = "force-dynamic";
@@ -426,6 +427,61 @@ export async function POST(req: NextRequest) {
     };
 
     saveCachedOrder(cachedOrder);
+
+    // Save order directly into Firebase Cloud Firestore Database
+    try {
+      await saveOrderToFirebase({
+        id: order?.id || orderNumber,
+        orderNumber,
+        status: "Confirmed",
+        fulfillmentStatus: "Unfulfilled",
+        customer: {
+          firstName: contact.firstName,
+          lastName: contact.lastName,
+          email: contact.email,
+          phone: contact.phone || "",
+        },
+        shippingAddress: {
+          street1: shippingAddress.street1,
+          street2: shippingAddress.street2 || "",
+          city: shippingAddress.city,
+          state: shippingAddress.state,
+          postalCode: shippingAddress.postalCode || "74000",
+          country: "Pakistan",
+        },
+        items: verifiedItems.map((vi) => ({
+          productId: vi.productId,
+          productName: vi.productName,
+          productSku: vi.productSku,
+          quantity: vi.quantity,
+          pricePKR: usdToPKR(vi.unitPriceUSD),
+          totalPKR: usdToPKR(vi.totalPriceUSD),
+          imageUrl: "/images/products/watches/velora-signature-01/front.jpg",
+          variantTitle: null,
+        })),
+        pricing: {
+          subtotalPKR,
+          shippingPKR,
+          discountPKR,
+          totalPKR,
+          formattedTotalPKR: formatPKR(totalPKR),
+        },
+        payment: {
+          method: paymentMethod.toUpperCase(),
+          status: paymentMethod === "cod" ? "Pending (Cash on Delivery)" : "Confirmed",
+          isCOD: paymentMethod === "cod",
+        },
+        courier: {
+          carrier: "TCS / Leopard Express Logistics (Pakistan)",
+          trackingNumber,
+        },
+        notes: notes || undefined,
+        createdAt: new Date().toISOString(),
+        brand: "VELORA Pakistan",
+      });
+    } catch (fbErr) {
+      console.warn("[Firebase] Order save caught warning:", fbErr);
+    }
 
     return NextResponse.json({
       success: true,
